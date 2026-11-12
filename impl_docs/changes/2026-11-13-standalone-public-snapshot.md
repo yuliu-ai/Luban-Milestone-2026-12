@@ -17,4 +17,6 @@ The preceding runtime snapshot passed1072 CPU tests without skips. This change o
 
 ## Remaining Work
 
-Complete anonymous server reproduction and the server-owned test queue. Provide Gitee push commands for the same standalone snapshot.
+The standalone snapshot was rebuilt with uv build, producing the source distribution and wheel. A second detached six-environment installation queue is scheduled after the first installer. Its environments and source directory are separate, while downloaded resources are reused.
+
+Complete anonymous server reproduction and both server-owned queues. Provide Gitee push commands for the same standalone snapshot.

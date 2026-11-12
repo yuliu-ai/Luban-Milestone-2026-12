@@ -48,11 +48,11 @@ VLABench未筛选的60回合中，Luban54成功、5正常失败、1仿真异常�
 
 资源监测记录CPU、负载和可用内存。已完成批次的监测窗口为5212秒，CPU峰值18.24%、1分钟负载峰值32.99/192，内存峰值91.97%，其中14个采样点达到内存高压阈值。原安装监测目录为resources，新续装监测目录为resources_resume，进程号见启动记录。当前资源已回落，无CPU过载。
 
-两份测评Word均为8页，位于outputs/luban_milestone_forms_20261113，空白表与实测表已完成逐页渲染检查。实测表采用本次43/55及27.91%增益，公开仓库部分将在本轮验证后更新。
+两份测评Word均为8页，位于outputs/luban_milestone_forms_20261113，空白表与实测表已完成逐页渲染检查。实测表采用本次43/55及27.91%增益，已补入公开仓库URL、匿名下载和原生安装结果，完整复现仍标为进行中。更新后的8页已逐页检查。独立公开快照的源码包与wheel已重新构建成功。
 
 用户已刷新Gitee侧边页面，读取后确认账号为liuyusdu，仓库列表为空。用户授权GitHub替代发布，并要求新建仓库。已发布公开仓库 https://github.com/yuliu-ai/Luban-Milestone-2026-12 ，旧Luban仓库的临时上传分支已移除，默认分支未修改。现有授权不含workflow scope，CI配置保留于.github/workflow-templates，验证仍通过scripts/ci.sh执行。
 
-服务器已匿名下载新仓库源码至/data/Liuyu/runs/luban_github_reproduction_20261113/src，原生环境绑定公开源码后，30项新组合与四类恢复均通过。HTTP服务测试正在执行。剩余GPU测试由同目录server_queue.py接管，等待六环境安装完成后自动绑定公开源码并运行atomic32、robocasa100和vlabench50，GPU固定0、1、2，每卡5个worker。协调器与资源监测进程已脱离SSH会话，运行不依赖本机在线。进程号、日志和状态保存在launch.json、status.json及resources/中。六套环境目前完成五套，RoboCasa大型依赖仍在下载。
+服务器已匿名下载新仓库源码至/data/Liuyu/runs/luban_github_reproduction_20261113/src，原生环境绑定公开源码后，30项新组合与四类恢复均通过。HTTP服务测试正在执行。剩余GPU测试由同目录server_queue.py接管，等待六环境安装完成后自动绑定公开源码并运行atomic32、robocasa100和vlabench50，GPU固定0、1、2，每卡5个worker。协调器与资源监测进程已脱离SSH会话，运行不依赖本机在线。进程号、日志和状态保存在launch.json、status.json及resources/中。六套环境目前完成五套，RoboCasa大型依赖仍在下载。第二套完整公开源码部署已排入/data/Liuyu/runs/luban_public_deployment_b_20261113/server_install.py，等待首套安装结束后匿名下载源码，使用独立六环境及共享下载缓存、SDK和权重，随后运行核心闭环、模块健康检查、真实物理任务与五类环境导入检查。其协调器同样脱离SSH。
 
 ## 未完成交付
 
