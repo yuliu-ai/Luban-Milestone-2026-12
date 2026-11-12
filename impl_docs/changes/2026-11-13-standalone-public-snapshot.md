@@ -13,7 +13,7 @@ Published the milestone delivery as a standalone repository under yuliu-ai, as r
 
 ## Verification
 
-The preceding runtime snapshot passed1072 CPU tests without skips. This change only moves the CI template and updates its documentation. The snapshot passed the Markdown check for378 pages. The server anonymously downloaded the new public repository, installed its native package, and passed unseen30 and all four recovery cases. HTTP stability and the GPU suites remain in progress. The detached supervisor and resource monitor have PPID1 and independent sessions, so local network loss does not stop the queue.
+The preceding runtime snapshot passed1072 CPU tests without skips. This change only moves the CI template and updates its documentation. The snapshot passed the Markdown check for378 pages. The server anonymously downloaded the new public repository, installed its native package, and passed unseen30 and all four recovery cases. The first six environments are installed with system-site-packages disabled. Public-source atomic32 passed96/96, including3/3 for each of the four replacement skills. RoboCasa100 is now running with five workers on each of GPUs0,1,2; VLABench50 follows. HTTP stability and the second six-environment deployment remain in progress. The detached supervisor and resource monitor have PPID1 and independent sessions, so local network loss does not stop the queue.
 
 ## Remaining Work
 

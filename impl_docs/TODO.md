@@ -1,6 +1,6 @@
 # Tasks
 
-- [ ] `IN_PROGRESS` 固定表9-13送测发布：统一复测96/96成功，30项新组合30/30，末尾四类M12物理扰动均在10秒内恢复。RoboCasa100回合重跑完成，基座43/100、Luban55/100，无运行异常，相对增益27.91%。VLABench固定50回合记录为50/50与0/50，官方参考OpenVLA权重低成功率问题已查明。两套独立核心环境均5/5部署通过，真实HTTP调用100/100，接入额外耗时P95为0.506秒，3721秒稳定性测试153/153，17项异常测试通过。独立公开仓库yuliu-ai/Luban-Milestone-2026-12已发布，服务器匿名下载及原生安装成功，公开源码30项组合和四类恢复均通过。六环境完整复现已由服务器独立队列接管，GPU部分等待最后一套依赖安装，两份8页测评Word已生成并完成逐页排版检查（[计划](plans/2026-11-12-luban-milestone-release.md)）。
+- [ ] `IN_PROGRESS` 固定表9-13送测发布：统一复测96/96成功，30项新组合30/30，末尾四类M12物理扰动均在10秒内恢复。RoboCasa100回合重跑完成，基座43/100、Luban55/100，无运行异常，相对增益27.91%。VLABench固定50回合记录为50/50与0/50，官方参考OpenVLA权重低成功率问题已查明。两套独立核心环境均5/5部署通过，真实HTTP调用100/100，接入额外耗时P95为0.506秒，3721秒稳定性测试153/153，17项异常测试通过。独立公开仓库yuliu-ai/Luban-Milestone-2026-12已发布，服务器匿名下载及原生安装成功，公开源码96次原子技能调用、30项组合和四类恢复均通过。第一套六环境安装完成且均不共享系统site-packages，第二套六环境安装中，RoboCasa100与后续VLABench50由服务器独立队列执行，两份8页测评Word已生成并完成逐页排版检查（[计划](plans/2026-11-12-luban-milestone-release.md)）。
 
 - [ ] `IN_PROGRESS` Configurable one- and two-branch execution and a simulator-informed single-agent evaluation ([plan](plans/2026-11-10-single-branch-simulator-info.md)).
 
