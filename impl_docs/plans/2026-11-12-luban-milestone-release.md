@@ -52,7 +52,7 @@ VLABench未筛选的60回合中，Luban54成功、5正常失败、1仿真异常�
 
 用户已刷新Gitee侧边页面，读取后确认账号为liuyusdu，仓库列表为空。用户授权GitHub替代发布，并要求新建仓库。已发布公开仓库 https://github.com/yuliu-ai/Luban-Milestone-2026-12 ，旧Luban仓库的临时上传分支已移除，默认分支未修改。现有授权不含workflow scope，CI配置保留于.github/workflow-templates，验证仍通过scripts/ci.sh执行。
 
-服务器已匿名下载新仓库源码至/data/Liuyu/runs/luban_github_reproduction_20261113/src，原生环境绑定公开源码后，30项新组合与四类恢复均通过。HTTP服务测试正在执行。剩余GPU测试由同目录server_queue.py接管，已在六环境安装完成后自动绑定公开源码并运行atomic32、robocasa100和vlabench50，GPU固定0、1、2，每卡5个worker。协调器与资源监测进程已脱离SSH会话，运行不依赖本机在线。进程号、日志和状态保存在launch.json、status.json及resources/中。第一套六环境已全部安装完成，environment_isolation.json记录六套解释器均存在且include-system-site-packages为false。第二套完整公开源码部署已排入/data/Liuyu/runs/luban_public_deployment_b_20261113/server_install.py，等待首套安装结束后匿名下载源码，使用独立六环境及共享下载缓存、SDK和权重，随后运行核心闭环、模块健康检查、真实物理任务与五类环境导入检查。其协调器同样脱离SSH。
+服务器已匿名下载新仓库源码至/data/Liuyu/runs/luban_github_reproduction_20261113/src，原生环境绑定公开源码后，30项新组合与四类恢复均通过。HTTP服务测试已通过。剩余GPU测试由同目录server_queue.py接管，已在六环境安装完成后自动绑定公开源码并运行atomic32、robocasa100和vlabench50，GPU固定0、1、2，每卡5个worker。协调器与资源监测进程已脱离SSH会话，运行不依赖本机在线。进程号、日志和状态保存在launch.json、status.json及resources/中。第一套六环境已全部安装完成，environment_isolation.json记录六套解释器均存在且include-system-site-packages为false。第二套完整公开源码部署已排入/data/Liuyu/runs/luban_public_deployment_b_20261113/server_install.py，等待首套安装结束后匿名下载源码，使用独立六环境及共享下载缓存、SDK和权重，随后运行核心闭环、模块健康检查、真实物理任务与五类环境导入检查。其协调器同样脱离SSH。
 
 2026-11-13续装时发现本机pip缓存中已有完整的Python3.11版Torch2.7.1及cuDNN9.5.1.17轮子，与依赖要求一致。保留原下载日志和阶段记录后，暂停两个等待协调器，终止仅属于本任务的旧安装进程，使用完整本地轮子完成首套依赖，并为第二套RoboCasa独立环境预装相同两包。原CPU服务测试持续运行。缓存续装全部成功后自动恢复两个协调器，记录为cache_resume.json。此处为有依据的缓存续装，没有改变依赖版本或测试判据。
 
@@ -60,6 +60,8 @@ VLABench未筛选的60回合中，Luban54成功、5正常失败、1仿真异常�
 
 公开发布后发现通用入门页仍保留旧私有仓库的克隆命令，已将README、quickstart、access、new-machine中英文入口及包元数据改为独立公开仓库main分支，去除匿名读取不需要的邀请与认证步骤。此修改只涉及入口文档和项目URL。
 
+公开源码服务组已结束，100次真实物理调用100/100，17项异常及注入后的正常调用全部通过。服务器本机连续运行3706.041383秒，153/153成功，0次重启或不可达。本机往返减同次核心函数耗时的P95为0.005804秒，跨网络SSH隧道的P95仍单独引用此前0.506298秒的实测，二者不混用。CPU侧三组全部通过，原始结果在cpu/service，本地副本为runs/public_reproduction_20261113/service。
+
 ## 未完成交付
 
-完成公开源码剩余基准与服务复现，处理实际出现的依赖或运行问题。补齐测评表的公开仓库部分，重新构建最终源码包，并交付Gitee推送命令及给师弟的部署测试消息。完整GPU复现与HTTP稳定性测试结束前，任务保持IN_PROGRESS。arXiv中文分工Word已经单独交付。
+完成公开源码RoboCasa100与VLABench50基准复现，处理实际出现的依赖或运行问题。补齐测评表的公开仓库部分，重新构建最终源码包，并交付Gitee推送命令及给师弟的部署测试消息。完整GPU复现结束前，任务保持IN_PROGRESS。arXiv中文分工Word已经单独交付。
