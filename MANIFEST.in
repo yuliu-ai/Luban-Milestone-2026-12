@@ -9,7 +9,7 @@ recursive-include configs *.yaml *.json *.jsonl *.txt *.md
 recursive-include catalogs *.json *.jsonl *.md *.py *.png
 recursive-include scripts *.py *.sh
 recursive-include tests *.py
-recursive-include docs *.md *.svg *.png *.gif *.mp4 *.json
+recursive-include docs *.md *.svg *.png *.gif *.mp4 *.json *.docx
 recursive-include impl_docs *.md
 recursive-include rules *.md
 global-exclude *.py[cod]
