@@ -140,9 +140,9 @@ bash scripts/milestone/deploy_check.sh https://github.com/yuliu-ai/Luban-Milesto
 
 ## 1.8 对标 OpenVLA
 
-采用VLABench比较Luban + XR-1与OpenVLA，固定50个回合。当前 [`vlabench50.json`](../configs/milestone/vlabench50.json) 包含官方第一轨道的46个书籍选择回合与4个水果选择回合，每回合200步。两个方法使用相同清单、初态和步数限制，程序按清单实际执行50个回合。
+采用VLABench比较Luban + XR-1与OpenVLA，固定50个回合。当前 [`vlabench50.json`](../configs/milestone/vlabench50.json) 包含官方第一轨道的36个书籍回合、3个水果回合、11个画作回合，每回合200步。双方使用相同清单、初态和步数限制。
 
-新版固定50回合清单正在修订，修订后将重新执行双方。上一版公开源码隔离复现中，Luban成功44/50（88%），OpenVLA成功0/50（0%），双方各50个回合完整，运行异常为0。对照权重为 [VLABench/openvla-lora](https://huggingface.co/VLABench/openvla-lora)，官方模型卡注明这版参考权重的成功率接近零。结果对应本文固定50回合及所用权重。
+新版固定50回合已完整重跑，Luban成功46/50（92%），OpenVLA成功12/50（24%），双方各50个回合完整，运行异常为0。对照权重为 [VLABench/openvla-lora](https://huggingface.co/VLABench/openvla-lora)，结果对应本清单与所用权重。
 
 在准备好VLABench SDK、资源、两个模型的推理服务和语言模型环境变量后，可执行以下命令。`--sdk-root`填写SDK所在目录。示例中XR-1服务在GPU1，两个相同OpenVLA服务分别在GPU2、GPU0，三个服务各5个回合worker，总计15个。模型权重由服务共享，Luban每个回合worker内部保留两个Agent分支。
 
@@ -322,3 +322,7 @@ python scripts/milestone/platform_check.py soak \
   --url http://127.0.0.1:8765 --config physical --seconds 3700 \
   --interval 20 --sample-every 5 --output runs/service-soak
 ```
+
+## 测评表下载
+
+[实测记录](milestone-forms/Luban里程碑测评实测记录.docx)与[空白记录表](milestone-forms/Luban里程碑测评空白记录表.docx)均为8页，实测版使用本轮完整重跑结果。

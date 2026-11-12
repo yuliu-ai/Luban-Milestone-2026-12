@@ -21,14 +21,6 @@
       "category": "track_1_in_distribution"
     },
     {
-      "task_id": "select_book:002",
-      "task": "select_book",
-      "episode": 2,
-      "seed": 42,
-      "horizon": 200,
-      "category": "track_1_in_distribution"
-    },
-    {
       "task_id": "select_book:003",
       "task": "select_book",
       "episode": 3,
@@ -48,14 +40,6 @@
       "task_id": "select_book:005",
       "task": "select_book",
       "episode": 5,
-      "seed": 42,
-      "horizon": 200,
-      "category": "track_1_in_distribution"
-    },
-    {
-      "task_id": "select_book:006",
-      "task": "select_book",
-      "episode": 6,
       "seed": 42,
       "horizon": 200,
       "category": "track_1_in_distribution"
@@ -85,14 +69,6 @@
       "category": "track_1_in_distribution"
     },
     {
-      "task_id": "select_book:011",
-      "task": "select_book",
-      "episode": 11,
-      "seed": 42,
-      "horizon": 200,
-      "category": "track_1_in_distribution"
-    },
-    {
       "task_id": "select_book:012",
       "task": "select_book",
       "episode": 12,
@@ -112,14 +88,6 @@
       "task_id": "select_book:014",
       "task": "select_book",
       "episode": 14,
-      "seed": 42,
-      "horizon": 200,
-      "category": "track_1_in_distribution"
-    },
-    {
-      "task_id": "select_book:015",
-      "task": "select_book",
-      "episode": 15,
       "seed": 42,
       "horizon": 200,
       "category": "track_1_in_distribution"
@@ -149,9 +117,9 @@
       "category": "track_1_in_distribution"
     },
     {
-      "task_id": "select_book:019",
+      "task_id": "select_book:020",
       "task": "select_book",
-      "episode": 19,
+      "episode": 20,
       "seed": 42,
       "horizon": 200,
       "category": "track_1_in_distribution"
@@ -176,14 +144,6 @@
       "task_id": "select_book:023",
       "task": "select_book",
       "episode": 23,
-      "seed": 42,
-      "horizon": 200,
-      "category": "track_1_in_distribution"
-    },
-    {
-      "task_id": "select_book:025",
-      "task": "select_book",
-      "episode": 25,
       "seed": 42,
       "horizon": 200,
       "category": "track_1_in_distribution"
@@ -221,14 +181,6 @@
       "category": "track_1_in_distribution"
     },
     {
-      "task_id": "select_book:030",
-      "task": "select_book",
-      "episode": 30,
-      "seed": 42,
-      "horizon": 200,
-      "category": "track_1_in_distribution"
-    },
-    {
       "task_id": "select_book:031",
       "task": "select_book",
       "episode": 31,
@@ -248,14 +200,6 @@
       "task_id": "select_book:033",
       "task": "select_book",
       "episode": 33,
-      "seed": 42,
-      "horizon": 200,
-      "category": "track_1_in_distribution"
-    },
-    {
-      "task_id": "select_book:034",
-      "task": "select_book",
-      "episode": 34,
       "seed": 42,
       "horizon": 200,
       "category": "track_1_in_distribution"
@@ -285,14 +229,6 @@
       "category": "track_1_in_distribution"
     },
     {
-      "task_id": "select_book:038",
-      "task": "select_book",
-      "episode": 38,
-      "seed": 42,
-      "horizon": 200,
-      "category": "track_1_in_distribution"
-    },
-    {
       "task_id": "select_book:039",
       "task": "select_book",
       "episode": 39,
@@ -312,14 +248,6 @@
       "task_id": "select_book:041",
       "task": "select_book",
       "episode": 41,
-      "seed": 42,
-      "horizon": 200,
-      "category": "track_1_in_distribution"
-    },
-    {
-      "task_id": "select_book:042",
-      "task": "select_book",
-      "episode": 42,
       "seed": 42,
       "horizon": 200,
       "category": "track_1_in_distribution"
@@ -349,14 +277,6 @@
       "category": "track_1_in_distribution"
     },
     {
-      "task_id": "select_book:047",
-      "task": "select_book",
-      "episode": 47,
-      "seed": 42,
-      "horizon": 200,
-      "category": "track_1_in_distribution"
-    },
-    {
       "task_id": "select_book:048",
       "task": "select_book",
       "episode": 48,
@@ -381,14 +301,6 @@
       "category": "track_1_in_distribution"
     },
     {
-      "task_id": "select_fruit:009",
-      "task": "select_fruit",
-      "episode": 9,
-      "seed": 42,
-      "horizon": 200,
-      "category": "track_1_in_distribution"
-    },
-    {
       "task_id": "select_fruit:016",
       "task": "select_fruit",
       "episode": 16,
@@ -400,6 +312,94 @@
       "task_id": "select_fruit:026",
       "task": "select_fruit",
       "episode": 26,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_painting:000",
+      "task": "select_painting",
+      "episode": 0,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_painting:001",
+      "task": "select_painting",
+      "episode": 1,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_painting:003",
+      "task": "select_painting",
+      "episode": 3,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_painting:004",
+      "task": "select_painting",
+      "episode": 4,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_painting:007",
+      "task": "select_painting",
+      "episode": 7,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_painting:008",
+      "task": "select_painting",
+      "episode": 8,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_painting:009",
+      "task": "select_painting",
+      "episode": 9,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_painting:011",
+      "task": "select_painting",
+      "episode": 11,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_painting:013",
+      "task": "select_painting",
+      "episode": 13,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_painting:015",
+      "task": "select_painting",
+      "episode": 15,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_painting:016",
+      "task": "select_painting",
+      "episode": 16,
       "seed": 42,
       "horizon": 200,
       "category": "track_1_in_distribution"

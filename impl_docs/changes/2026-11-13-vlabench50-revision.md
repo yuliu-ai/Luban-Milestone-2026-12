@@ -5,16 +5,16 @@ Related plan: ../plans/2026-11-12-luban-milestone-release.md
 
 ## Changed
 
-Reopened the VLABench fixed50 delivery at the user's request. The episode count remains50, and both methods will run the revised identical manifest. Previous completed results remain associated with the previous manifest.
+Published the revised identical 50-episode manifest for both methods and updated result documentation and Word forms. Runtime code is unchanged.
 
 ## Files
 
-impl_docs/TODO.md, the milestone plan and docs/milestone-2026-12.zh-CN.md. The new manifest and final result statements will be updated after the new executions.
+configs/milestone/vlabench50.json, the milestone guide, architecture evidence, TODO, milestone plan and docs/milestone-forms/*.docx.
 
 ## Verification
 
-The original six-group public-source reproduction remains complete. The new server-owned queue uses GPUs0,1,2 with five workers per GPU. Markdown links and the scoped diff are checked for this status update.
+Both methods completed all50 episodes without execution errors. Luban succeeded in46/50 and OpenVLA in12/50. The measured and blank Word forms each rendered to eight pages, and all16 page images passed the visual layout review. The previous complete six-group reproduction remains retained with its original manifest.
 
 ## Remaining Work
 
-Complete the revised50-episode comparison, publish its manifest and result documentation to the standalone repository, and update the measured Word form.
+None within the revised fixed50 delivery.
