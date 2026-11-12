@@ -85,7 +85,7 @@ connections only. Service startup/shutdown remains an operator action.
 Verified paths include the CPU counter, one real RoboCasa/XR-1 simple task, and
 all 32 atomic milestone skills with three successful Linux calls each across
 separate native, SDK and model batches and a unified fresh 96/96 run. The
-internal 30-composition batch also passed all 30 tasks. The fixed 50-episode VLABench comparison and two independent native installations have records. The fresh RoboCasa100 comparison completed with43 baseline and55 Luban successes, no error pairs, and27.91% relative gain. Public release reproduction remains in progress. LIBERO, RoboTwin, EB-ALFRED,
+internal 30-composition batch also passed all 30 tasks. The fixed 50-episode VLABench comparison and two independent native installations have records. The public-source RoboCasa100 reproduction completed with43 baseline and53 Luban successes, no error pairs, and23.26% relative gain. The public-source VLABench50 reproduction remains in progress. LIBERO, RoboTwin, EB-ALFRED,
 Chemistry, OpenPI and experimental spatial,
 graph/evolution modules have source/contracts and varying optional test coverage;
 no new complete live matrix is claimed. ROS2 has injected transport contracts,
