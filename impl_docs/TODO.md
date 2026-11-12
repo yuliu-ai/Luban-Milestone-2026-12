@@ -1,6 +1,6 @@
 # Tasks
 
-- [x] `DONE` 固定表9-13送测发布：独立公开仓库已发布，匿名源码六组隔离复现全部通过。原子技能96/96、组合30/30、四类恢复均小于10秒。RoboCasa基座43/100、Luban53/100，相对增益23.26%，VLABench为Luban44/50、OpenVLA0/50，均无异常回合。两套六环境安装通过，HTTP正常调用100/100、17项异常通过、3706秒连续运行153/153，单独跨网络P95为0.506秒。两份8页测评Word、arXiv中文分工和部署测试消息已完成（[计划](plans/2026-11-12-luban-milestone-release.md)）。
+- [ ] `IN_PROGRESS` 固定表9-13送测发布：独立公开仓库已发布，匿名源码六组隔离复现全部通过。原子技能96/96、组合30/30、四类恢复均小于10秒。RoboCasa基座43/100、Luban53/100，相对增益23.26%，VLABench为Luban44/50、OpenVLA0/50，均无异常回合。两套六环境安装通过，HTTP正常调用100/100、17项异常通过、3706秒连续运行153/153，单独跨网络P95为0.506秒。原版两份8页测评Word、arXiv中文分工和部署测试消息已完成。按用户追加要求修订1.8固定50回合清单，随后重新执行双方并同步GitHub和实测表（[计划](plans/2026-11-12-luban-milestone-release.md)）。
 
 - [ ] `IN_PROGRESS` Configurable one- and two-branch execution and a simulator-informed single-agent evaluation ([plan](plans/2026-11-10-single-branch-simulator-info.md)).
 
