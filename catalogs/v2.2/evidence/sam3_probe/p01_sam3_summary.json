@@ -1,0 +1,99 @@
+{
+  "status": "unverified",
+  "verification_verdict": "passed",
+  "verification_reason": "全部检测框合法且分数达到阈值",
+  "verification_independent": false,
+  "detections": [
+    {
+      "object_id": "video.robot0_agentview_left/0/counter/0",
+      "class_name": "counter",
+      "bbox_xyxy": [
+        92.60929107666016,
+        149.8994140625,
+        238.7144775390625,
+        242.51612854003906
+      ],
+      "score": 0.3445351719856262
+    },
+    {
+      "object_id": "video.robot0_agentview_left/0/counter/4",
+      "class_name": "counter",
+      "bbox_xyxy": [
+        93.10379791259766,
+        149.9004364013672,
+        507.3011169433594,
+        257.1854248046875
+      ],
+      "score": 0.6006693840026855
+    },
+    {
+      "object_id": "video.robot0_agentview_left/0/counter/5",
+      "class_name": "counter",
+      "bbox_xyxy": [
+        522.544189453125,
+        47.87733459472656,
+        773.0326538085938,
+        248.0938262939453
+      ],
+      "score": 0.3968183398246765
+    },
+    {
+      "object_id": "video.robot0_agentview_left/0/counter/6",
+      "class_name": "counter",
+      "bbox_xyxy": [
+        86.16673278808594,
+        108.4131088256836,
+        255.74411010742188,
+        162.566162109375
+      ],
+      "score": 0.11333316564559937
+    },
+    {
+      "object_id": "video.robot0_agentview_left/0/counter/7",
+      "class_name": "counter",
+      "bbox_xyxy": [
+        298.84698486328125,
+        154.18141174316406,
+        507.39056396484375,
+        257.2880554199219
+      ],
+      "score": 0.39456284046173096
+    },
+    {
+      "object_id": "video.robot0_agentview_left/0/counter/10",
+      "class_name": "counter",
+      "bbox_xyxy": [
+        509.49505615234375,
+        249.35032653808594,
+        770.365234375,
+        288.333251953125
+      ],
+      "score": 0.10032758116722107
+    },
+    {
+      "object_id": "video.robot0_agentview_left/0/counter/15",
+      "class_name": "counter",
+      "bbox_xyxy": [
+        327.7701416015625,
+        113.60195922851562,
+        512.5387573242188,
+        168.27102661132812
+      ],
+      "score": 0.12731099128723145
+    }
+  ],
+  "model_version": "sam3@unknown",
+  "signals": {
+    "done": true,
+    "provider": "sam3",
+    "entity_count": 28,
+    "threshold_dropped": 21,
+    "latency_ms": 474.37121346592903,
+    "warnings": []
+  },
+  "elapsed_s": 0.5133156776428223,
+  "image": "<HISTORICAL_PROJECT_ROOT>/runs/sam3_probe/input_frame.png",
+  "provider": "sam3",
+  "client_requests": 1,
+  "client_failures": 0
+}

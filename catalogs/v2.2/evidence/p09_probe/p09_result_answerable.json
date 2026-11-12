@@ -1,0 +1,239 @@
+{
+  "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+  "skill_ref": "P09@2.2.0",
+  "status": "unverified",
+  "success": false,
+  "started_at": "2026-09-13T08:04:52.322Z",
+  "finished_at": "2026-09-13T08:04:54.095Z",
+  "duration_s": 1.773146215826273,
+  "outputs": {
+    "object_id": "cutting-board-1",
+    "states": {
+      "open_state": "open"
+    },
+    "confidence_by_state": {
+      "open_state": 1.0
+    },
+    "captured_at_s": 1789286694.094533
+  },
+  "observation": {
+    "environment_executed": true,
+    "outputs": {
+      "object_id": "cutting-board-1",
+      "states": {
+        "open_state": "open"
+      },
+      "confidence_by_state": {
+        "open_state": 1.0
+      },
+      "captured_at_s": 1789286694.094533
+    },
+    "post_state": {
+      "observation_ref": "<HISTORICAL_PROJECT_ROOT>/runs/p09_probe/crop_cutting_board.png",
+      "camera_id": "video.robot0_eye_in_hand"
+    },
+    "signals": {
+      "done": true,
+      "environment_kind": "molmo2_state",
+      "provider": "molmo2",
+      "model_version": "molmo2",
+      "answered_keys": [
+        "open_state"
+      ],
+      "unknown_keys": [],
+      "raw_answers": {
+        "open_state": "open"
+      },
+      "confidence_source": "candidate_set_match",
+      "latency_ms": 1766.5770798921585,
+      "warnings": [
+        "vqa mode: the model reports no calibrated confidence; entity confidence is 0.0 and means 'unavailable'"
+      ]
+    },
+    "trace": [
+      {
+        "stage": "molmo2_state_vqa",
+        "camera_id": "video.robot0_eye_in_hand",
+        "state_keys": [
+          "open_state"
+        ],
+        "answered": 1
+      }
+    ],
+    "error_code": null,
+    "error_message": null,
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "passed",
+    "reason": "每个请求状态有值或显式unknown且置信度合法",
+    "verifier_key": "verify_estimate_object_state",
+    "independent": false,
+    "criteria": {
+      "evidence": {
+        "观测引用": "<HISTORICAL_PROJECT_ROOT>/runs/p09_probe/crop_cutting_board.png",
+        "允许取值": {
+          "open_state": [
+            "open",
+            "closed"
+          ]
+        },
+        "状态结果": {
+          "open_state": "open"
+        },
+        "逐项置信度": {
+          "open_state": 1.0
+        },
+        "采集时刻": 1789286694.094533
+      }
+    },
+    "metrics": {
+      "state_count": 1.0,
+      "unknown_count": 0.0
+    }
+  },
+  "events": [
+    {
+      "event_id": "011837c9-5971-41b7-be80-2fb3385b12c9",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:52.322Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "P09",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "f41c1ea9-ca6d-49b7-b2d7-6309fe176bee",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:52.322Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "P09@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "0cba6ac1-ada5-4a4f-ab92-62f30ad8f71a",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:52.322Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "P09@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "79d41d16-5262-4bc2-900a-aad589760168",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:52.322Z",
+      "event_type": "preflight_started",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "909f4dde-ce4a-4fe4-b79e-dfcb0e8a2c5e",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:52.322Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "caae7983-f52e-4dec-985c-1e18f41deb00",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:52.324Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "554e8ea0-9d32-490a-ae3c-85aff0a2c0a1",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:52.324Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "backend_key": "estimate_object_state"
+      }
+    },
+    {
+      "event_id": "0f5bc71a-96d0-473a-8b16-13d7d6080573",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:52.324Z",
+      "event_type": "command_prepared",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "backend_key": "estimate_object_state",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "6f6c3c64-8f4d-4bdb-a22f-09e398fe7dba",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:52.324Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "environment_key": "molmo2_state"
+      }
+    },
+    {
+      "event_id": "ebc2ab65-b8d1-46af-9a89-c73c776801ad",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:54.094Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "environment_key": "molmo2_state",
+        "environment_executed": true
+      }
+    },
+    {
+      "event_id": "154f4715-b2cc-49c0-9eab-2eec0b870fa1",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:54.095Z",
+      "event_type": "outputs_validated",
+      "skill_ref": "P09@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "15d45e30-6551-4cec-b5c2-504274148495",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:54.095Z",
+      "event_type": "verification_started",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "verifier_key": "verify_estimate_object_state"
+      }
+    },
+    {
+      "event_id": "ce92c1b2-5ecf-4d85-a3be-1517c868922f",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:54.095Z",
+      "event_type": "verification_finished",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "verdict": "passed",
+        "verifier_key": "verify_estimate_object_state",
+        "independent": false
+      }
+    },
+    {
+      "event_id": "d8a12ff3-b65f-44a9-9888-a473ffc59b3e",
+      "invocation_id": "eb7dce1f-64f2-4750-82c8-fa74bfe7619f",
+      "occurred_at": "2026-09-13T08:04:54.095Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "status": "unverified"
+      }
+    }
+  ],
+  "error_code": "verification_inconclusive",
+  "error_message": "每个请求状态有值或显式unknown且置信度合法"
+}

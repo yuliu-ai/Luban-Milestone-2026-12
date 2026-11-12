@@ -1,0 +1,19 @@
+agent_config: ../agents/recovery_visual_servo.yaml
+pipeline:
+  class_path: luban.pipelines.DirectPipeline
+runtime:
+  class_path: luban.runtimes.SyncRuntime
+  init_args:
+    max_environment_steps: 900
+    max_action_chunks: 150
+    max_pipeline_iterations: 150
+    timeout_seconds: 60
+    output_dir: ${LUBAN_SERVICE_OUTPUT:-runs/recovery_service}/runtime
+environment:
+  class_path: luban.environments.atomic.tracking_recovery.TrackingRecoveryEnvironment
+  init_args:
+    kind: target_jump
+    output_dir: ${LUBAN_SERVICE_OUTPUT:-runs/recovery_service}/physics
+    unique_output: true
+task:
+  name: M12

@@ -1,0 +1,35 @@
+# External retrieval references; no SDK source is vendored.
+[robocasa]
+url = "https://github.com/robocasa/robocasa.git"
+revision = "456174f62b89b8fca99eaaf33949c29fec9cfc2a"
+version = "1.0.1"
+license = "MIT"
+
+[robosuite]
+revision = "5ce6643f3092639d08f7b0f90ed1c6a84f50552c"
+url = "https://github.com/ARISE-Initiative/robosuite"
+version = "1.5.2"
+license = "MIT"
+
+[openpi_client]
+url = "https://github.com/robocasa-benchmark/openpi"
+revision = "5a6beda9ff99da30b4e1b59320f6a32971d7c397"
+subdirectory = "packages/openpi-client"
+
+[xiaomi_code]
+url = "https://github.com/XiaomiRobotics/Xiaomi-Robotics-1"
+retrieval_revision = "0dd7aef8dc87296246aae812a1f59ccb708e5546"
+validation_identity = "preinstalled source archive, no Git identity; fingerprints recorded separately"
+license = "Apache-2.0"
+
+[xiaomi_weights]
+url = "https://huggingface.co/XiaomiRobotics/Xiaomi-Robotics-1-RoboCasa365"
+retrieval_revision = "3a6d0293bfa90759d34a7fc48c2c62413cd7bcf4"
+validation_identity = "existing local checkpoint; selected file fingerprints recorded separately"
+license = "Apache-2.0 (model card and checkpoint LICENSE)"
+
+[embodiedbench_legacy]
+url = "https://github.com/EmbodiedBench/EmbodiedBench"
+revision = "9be4e980e9cd6bcb38373cd4aab7c32724bdd401"
+license = "not established"
+bundled = false

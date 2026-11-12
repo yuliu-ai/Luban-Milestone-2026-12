@@ -1,0 +1,128 @@
+agent_config: ../agents/self_evolving_xr1_atomic_v23.yaml
+
+pipeline:
+  class_path: luban.pipelines.AtomicSpatialSkillExecutionPipeline
+  init_args:
+    perception_clients:
+      - class_path: luban.perception.client.VisualPerceptionClient
+        init_args:
+          provider: sam3
+          host: 127.0.0.1
+          port: 18200
+          timeout_seconds: 900
+          camera_ids:
+            - video.robot0_agentview_left
+            - video.robot0_agentview_right
+            - video.robot0_eye_in_hand
+    perception_required: false
+    perception_interval_chunks: 32
+    spatial_memory_enabled: true
+    allow_privileged_object_state: false
+    atomic_recovery_enabled: true
+    atomic_execute_steps: 8
+    max_atomic_invocations_per_node: 1
+    # 第 3 步：在真机 episode 内对活动节点做一次 P01 影子绑定核验
+    # （注解按 bound_execution 判定、执行走真实 SAM3、episode 仍是 planning_shadow）。
+    atomic_node_binding:
+      enabled: true
+      catalog_path: catalogs/v2.2/atomic_skills.json
+      route_profile_path: configs/routes/xr1_atomic_routes_v22.json
+      out_dir: runs/sidecar_smoke_v23_run22/atomic_node_binding
+      skill_id: P01
+      camera_key: video.robot0_agentview_left
+      queries: [counter, bowl, sink, faucet handle]
+      score_threshold: 0.10
+    require_action_summary: false
+    record_deferred_verification: false
+    config:
+      action_execution_mode: full
+      planner_check_interval_chunks: 8
+      planner_replan_only: true
+      max_chunks_per_skill: 96
+      replan_on_chunk_budget: true
+      max_attempts_per_execution: 10
+      max_uncertain_verifications: 8
+      replan_on_uncertain_exhaustion: true
+      # 恢复机制：uncertain 预算反复耗尽也计入节点失败，让 bounded atomic recovery
+      # 有机会介入（真机 run5：24 次 uncertain 因每次清零 consecutive_failures 而
+      # 始终达不到阈值，节点空转到 horizon 耗尽）。
+      uncertain_exhaustion_counts_as_failure: true
+      replan_task_graph_on_uncertain_exhaustion: true
+      task_graph_revision_after_uncertain_replans: 3
+      # 用户决策（2026-09-14）：高层重规划不设预算——episode 只允许在跑满环境步上限
+      # 或权威任务成功时结束（run19 曾在 1632 步因该预算=2 以 max_replans 提前终止）。
+      # null = 无限制；环境步数上限与 original-task-prompt 降级路径仍然兜底。
+      high_level_replan_limit: null
+      world_model_mode: disabled
+      recovery_enabled: true
+      node_selective_recovery_enabled: true
+      # 确定性无进展通道（2026-09-15 启用）：此前从未配置，run22 的静止场景
+      # 因此一路判 in_progress 到 horizon（188 chunks 仅 1 次 replan）。
+      # 证据链：spatial memory 有新感知且实体差分不变 + body/夹爪信号冻结，
+      # 连续 2 次判定后短路；原子恢复预算用尽时升级为 failed + wrong_plan，
+      # 交给高层重新规划。感知每 32 chunks 刷新一次，因此单次判定最快在
+      # 第一个刷新周期之后给出，避免把感知间隔误判成停滞。
+      deterministic_no_progress_limit: 2
+
+# 第 2 步 sidecar/atomic 真机冒烟：单集，chunk 预算给到 horizon 之上（B7 同款约定：
+# 让 horizon 而不是 chunk 上限约束 episode），horizon = ceil(1200 × 2.5) = 3000。
+runtime:
+  class_path: luban.runtimes.SyncRuntime
+  init_args:
+    config:
+      max_environment_steps: 3000
+      max_action_chunks: 3000
+      max_pipeline_iterations: 400
+      max_invalid_actions: 10
+      max_retries: 2
+      timeout_seconds: 7200
+      trace_compression: none
+      output_dir: runs/sidecar_smoke_v23_run22/traces
+      observability:
+        class_path: luban.observability.LocalEpisodeRecorder
+        init_args:
+          record_agent_trace: true
+          record_video: false
+          video_camera_keys:
+            - video.robot0_agentview_left
+            - video.robot0_agentview_right
+            - video.robot0_eye_in_hand
+          video_fps: 4
+
+environment:
+  class_path: luban.environments.benchmarks.robocasa.RoboCasaEnvironment
+  init_args:
+    robocasa_root: benchmarks/RoboCasa  # Or your compatible RoboCasa installation.
+    enable_render: true
+    render_gpu_device_id: 0
+    camera_height: 256
+    camera_width: 256
+    available_skills:
+      - Close_Door
+      - Open_Door
+      - Close_Lid
+      - Open_Lid
+      - Insertion
+      - Navigation
+      - Pick_Place
+      - Press_Button
+      - Slide_Rack
+      - Turn_Lever
+      - Twist_Knob
+
+benchmark:
+  class_path: luban.evals.benchmarks.robocasa.RoboCasa365Evaluator
+  init_args:
+    task_set: target50
+    split: target
+    task_names: [ScrubCuttingBoard]
+    max_tasks: 1
+    episodes_per_task: 2
+    episode_indices: [10, 11]
+    seed: 7
+    seed_episode_stride: 50
+    # RoboCasa365 实验的固定约定：官方 horizon 的 2.5 倍（registry 1200 → 3000）。
+    horizon_multiplier: 2.5
+    resume: false
+    defer_api_errors: false
+    output_dir: runs/sidecar_smoke_v23_run22

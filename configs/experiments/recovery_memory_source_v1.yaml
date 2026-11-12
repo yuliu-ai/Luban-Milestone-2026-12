@@ -1,0 +1,118 @@
+# 恢复—记忆研究协议 v1
+#
+# 本文件冻结本轮实验的所有可变量。任何字段在正式运行开始后都不得修改；
+# 修改即意味着新协议与新 protocol_hash，必须按预定规则重跑完整比较块。
+
+study_id: recovery_memory_source_v1
+protocol_version: 1
+
+# 环境 horizon 与 runtime max_environment_steps 同时乘以该系数。
+# 只改环境 horizon 会被 runtime 的固定上限截断，实验作废。
+horizon_multiplier: 2.5
+
+# 8 个 composite_seen 任务。horizon 为现场 registry 原值，不是乘完的值。
+tasks:
+  - {name: ScrubCuttingBoard, registry_horizon: 1200, domain_split: composite_seen}
+  - {name: KettleBoiling, registry_horizon: 1500, domain_split: composite_seen}
+  - {name: WashLettuce, registry_horizon: 1650, domain_split: composite_seen}
+  - {name: PrepareCoffee, registry_horizon: 1800, domain_split: composite_seen}
+  - {name: LoadDishwasher, registry_horizon: 1800, domain_split: composite_seen}
+  - {name: StackBowlsCabinet, registry_horizon: 2100, domain_split: composite_seen}
+  - {name: SteamInMicrowave, registry_horizon: 2100, domain_split: composite_seen}
+  - {name: StirVegetables, registry_horizon: 2400, domain_split: composite_seen}
+
+# 五臂。A/B/C 为主比较，D/E 为归因控制臂。
+#   A 无恢复无顾问 / B 节点选择性恢复 / C B+冻结顾问（检索+LLM）
+#   D B+检索直接拼接不过 LLM / E B+无检索的额外 LLM 调用
+arms: [A, B, C, D, E]
+
+# 开发集：可训练。用于开发跨 episode 记忆与冻结顾问。
+development:
+  initial_conditions: 3
+  # 身份区间 [0, 3)：episode_index = offset + i，决定真实 reset seed
+  episode_offset: 0
+  research_split: development
+  arms: [A, B, C, D, E]
+
+# 诊断评估集：冻结，只读，禁止训练。根实例与来源轨迹不得与开发集重叠。
+diagnostic:
+  initial_conditions: 10
+  # 身份区间 [10, 20)：与开发集 [0, 3) 严格不重叠；禁止改成与开发集相同的区间。
+  episode_offset: 10
+  research_split: diagnostic_eval_only
+  arms: [A, B, C, D, E]
+
+# 小规模演示（用户指定，2026-09-11）：每个任务 1 个实例，跑完整协议 horizon，
+# 用于展示"知识注入 + Planner/Verifier 输入 + 成功/失败"。
+# 结果标记 excluded_from_statistics，不作为正式统计或 recovery 证据。
+demo:
+  tasks: [StackBowlsCabinet, StirVegetables]
+  initial_conditions: 1
+  episode_offset: 0
+  research_split: development
+  arms: [B]
+
+# 链路 smoke：独立身份区间 [30, 34)，结论不进入主结果，也不作为 recovery 证据。
+smoke:
+  # 只用一个任务，避免 smoke 规模溢出；身份区间 [30, 34)
+  tasks: [ScrubCuttingBoard]
+  initial_conditions: 4
+  episode_offset: 30
+  max_environment_steps: 64
+  max_action_chunks: 32
+  max_pipeline_iterations: 64
+  # true 时把节点 chunk 预算压到 1，强制触发选择性恢复与顾问链（仅链路验收）
+  forced_trigger: false
+
+# G1 证据包：每个 trial 封存 manifest + sha256，并可在离线模式下重建。
+evidence:
+  bundle: true
+  advisor_media: true
+  # 正式运行默认关闭视频；开启会显著占用磁盘，需要显式预算
+  record_video: false
+
+# 顾问配置。正式运行开始后冻结。
+advisor:
+  mode: advisor
+  top_k: 3
+  event_window: 16
+  max_images: 6
+  max_calls_per_episode: 4
+  max_concurrent_per_worker: 1
+  response_format_mode: json_object
+  max_tokens: 4096
+  temperature: 0.0
+  robot_profile: xr1_mobile_manipulator
+
+# 跨 episode 记忆库。正式运行期间只读；禁止写回。
+memory_bank:
+  version: v0
+  path: runs/recovery_memory_study/memory_bank/v0/bank.jsonl
+  allowed_evidence_states: [development_evidence_checked, reference_unvalidated]
+  # 冻结后填入 fingerprint，运行前核对；null 表示尚未冻结。
+  frozen_fingerprint: null
+
+# 检索必须按根 episode 做 leave-one-source-group-out，禁止读到本源答案。
+retrieval:
+  leave_one_source_group_out: true
+
+budgets:
+  max_attempts_per_trial: 2
+  infrastructure_retry_limit: 1
+  max_wall_seconds_per_trial: 14400
+  # 断点分支的局部窗口上限
+  branch_window_max_environment_steps: 512
+
+# 运行安全熔断与模块候选 settle 独立。
+safety:
+  pause_on_safety_violation: true
+  pause_on_consecutive_action_errors: 3
+  pause_on_evidence_corruption: true
+
+# 双卡调度：每个 worker 一个活动 episode，同一实例的各臂在同一 worker 上相邻执行。
+workers:
+  count: 2
+  max_active_episodes_per_worker: 1
+  # 由启动器按 worker 覆盖，不用改本文件
+  gpu_indices: [0, 1]
+  xr1_ports: [18100, 18101]

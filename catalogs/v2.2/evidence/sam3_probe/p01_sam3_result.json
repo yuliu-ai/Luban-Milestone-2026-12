@@ -1,0 +1,448 @@
+{
+  "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+  "skill_ref": "P01@2.1.0-draft.1",
+  "status": "unverified",
+  "success": false,
+  "started_at": "2026-09-12T16:22:06.061Z",
+  "finished_at": "2026-09-12T16:22:06.574Z",
+  "duration_s": 0.5133017748594284,
+  "outputs": {
+    "detections": [
+      {
+        "object_id": "video.robot0_agentview_left/0/counter/0",
+        "class_name": "counter",
+        "bbox_xyxy": [
+          92.60929107666016,
+          149.8994140625,
+          238.7144775390625,
+          242.51612854003906
+        ],
+        "score": 0.3445351719856262
+      },
+      {
+        "object_id": "video.robot0_agentview_left/0/counter/4",
+        "class_name": "counter",
+        "bbox_xyxy": [
+          93.10379791259766,
+          149.9004364013672,
+          507.3011169433594,
+          257.1854248046875
+        ],
+        "score": 0.6006693840026855
+      },
+      {
+        "object_id": "video.robot0_agentview_left/0/counter/5",
+        "class_name": "counter",
+        "bbox_xyxy": [
+          522.544189453125,
+          47.87733459472656,
+          773.0326538085938,
+          248.0938262939453
+        ],
+        "score": 0.3968183398246765
+      },
+      {
+        "object_id": "video.robot0_agentview_left/0/counter/6",
+        "class_name": "counter",
+        "bbox_xyxy": [
+          86.16673278808594,
+          108.4131088256836,
+          255.74411010742188,
+          162.566162109375
+        ],
+        "score": 0.11333316564559937
+      },
+      {
+        "object_id": "video.robot0_agentview_left/0/counter/7",
+        "class_name": "counter",
+        "bbox_xyxy": [
+          298.84698486328125,
+          154.18141174316406,
+          507.39056396484375,
+          257.2880554199219
+        ],
+        "score": 0.39456284046173096
+      },
+      {
+        "object_id": "video.robot0_agentview_left/0/counter/10",
+        "class_name": "counter",
+        "bbox_xyxy": [
+          509.49505615234375,
+          249.35032653808594,
+          770.365234375,
+          288.333251953125
+        ],
+        "score": 0.10032758116722107
+      },
+      {
+        "object_id": "video.robot0_agentview_left/0/counter/15",
+        "class_name": "counter",
+        "bbox_xyxy": [
+          327.7701416015625,
+          113.60195922851562,
+          512.5387573242188,
+          168.27102661132812
+        ],
+        "score": 0.12731099128723145
+      }
+    ],
+    "captured_at_s": 1789230126.5735292,
+    "model_version": "sam3@unknown"
+  },
+  "observation": {
+    "environment_executed": true,
+    "outputs": {
+      "detections": [
+        {
+          "object_id": "video.robot0_agentview_left/0/counter/0",
+          "class_name": "counter",
+          "bbox_xyxy": [
+            92.60929107666016,
+            149.8994140625,
+            238.7144775390625,
+            242.51612854003906
+          ],
+          "score": 0.3445351719856262
+        },
+        {
+          "object_id": "video.robot0_agentview_left/0/counter/4",
+          "class_name": "counter",
+          "bbox_xyxy": [
+            93.10379791259766,
+            149.9004364013672,
+            507.3011169433594,
+            257.1854248046875
+          ],
+          "score": 0.6006693840026855
+        },
+        {
+          "object_id": "video.robot0_agentview_left/0/counter/5",
+          "class_name": "counter",
+          "bbox_xyxy": [
+            522.544189453125,
+            47.87733459472656,
+            773.0326538085938,
+            248.0938262939453
+          ],
+          "score": 0.3968183398246765
+        },
+        {
+          "object_id": "video.robot0_agentview_left/0/counter/6",
+          "class_name": "counter",
+          "bbox_xyxy": [
+            86.16673278808594,
+            108.4131088256836,
+            255.74411010742188,
+            162.566162109375
+          ],
+          "score": 0.11333316564559937
+        },
+        {
+          "object_id": "video.robot0_agentview_left/0/counter/7",
+          "class_name": "counter",
+          "bbox_xyxy": [
+            298.84698486328125,
+            154.18141174316406,
+            507.39056396484375,
+            257.2880554199219
+          ],
+          "score": 0.39456284046173096
+        },
+        {
+          "object_id": "video.robot0_agentview_left/0/counter/10",
+          "class_name": "counter",
+          "bbox_xyxy": [
+            509.49505615234375,
+            249.35032653808594,
+            770.365234375,
+            288.333251953125
+          ],
+          "score": 0.10032758116722107
+        },
+        {
+          "object_id": "video.robot0_agentview_left/0/counter/15",
+          "class_name": "counter",
+          "bbox_xyxy": [
+            327.7701416015625,
+            113.60195922851562,
+            512.5387573242188,
+            168.27102661132812
+          ],
+          "score": 0.12731099128723145
+        }
+      ],
+      "captured_at_s": 1789230126.5735292,
+      "model_version": "sam3@unknown"
+    },
+    "post_state": {
+      "image_ref": "<HISTORICAL_PROJECT_ROOT>/runs/sam3_probe/input_frame.png",
+      "frame_id": "robocasa_agentview_left"
+    },
+    "signals": {
+      "done": true,
+      "provider": "sam3",
+      "entity_count": 28,
+      "threshold_dropped": 21,
+      "latency_ms": 474.37121346592903,
+      "warnings": []
+    },
+    "trace": [
+      {
+        "stage": "sam3_analyze",
+        "camera_id": "video.robot0_agentview_left",
+        "queries": [
+          "bowl",
+          "straw",
+          "cup",
+          "plate",
+          "counter",
+          "sink"
+        ],
+        "entities": 28
+      }
+    ],
+    "error_code": null,
+    "error_message": null,
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "passed",
+    "reason": "全部检测框合法且分数达到阈值",
+    "verifier_key": "verify_detect_objects",
+    "independent": false,
+    "criteria": {
+      "evidence": {
+        "原始帧引用": "<HISTORICAL_PROJECT_ROOT>/runs/sam3_probe/input_frame.png",
+        "检测列表": [
+          {
+            "object_id": "video.robot0_agentview_left/0/counter/0",
+            "class_name": "counter",
+            "bbox_xyxy": [
+              92.60929107666016,
+              149.8994140625,
+              238.7144775390625,
+              242.51612854003906
+            ],
+            "score": 0.3445351719856262
+          },
+          {
+            "object_id": "video.robot0_agentview_left/0/counter/4",
+            "class_name": "counter",
+            "bbox_xyxy": [
+              93.10379791259766,
+              149.9004364013672,
+              507.3011169433594,
+              257.1854248046875
+            ],
+            "score": 0.6006693840026855
+          },
+          {
+            "object_id": "video.robot0_agentview_left/0/counter/5",
+            "class_name": "counter",
+            "bbox_xyxy": [
+              522.544189453125,
+              47.87733459472656,
+              773.0326538085938,
+              248.0938262939453
+            ],
+            "score": 0.3968183398246765
+          },
+          {
+            "object_id": "video.robot0_agentview_left/0/counter/6",
+            "class_name": "counter",
+            "bbox_xyxy": [
+              86.16673278808594,
+              108.4131088256836,
+              255.74411010742188,
+              162.566162109375
+            ],
+            "score": 0.11333316564559937
+          },
+          {
+            "object_id": "video.robot0_agentview_left/0/counter/7",
+            "class_name": "counter",
+            "bbox_xyxy": [
+              298.84698486328125,
+              154.18141174316406,
+              507.39056396484375,
+              257.2880554199219
+            ],
+            "score": 0.39456284046173096
+          },
+          {
+            "object_id": "video.robot0_agentview_left/0/counter/10",
+            "class_name": "counter",
+            "bbox_xyxy": [
+              509.49505615234375,
+              249.35032653808594,
+              770.365234375,
+              288.333251953125
+            ],
+            "score": 0.10032758116722107
+          },
+          {
+            "object_id": "video.robot0_agentview_left/0/counter/15",
+            "class_name": "counter",
+            "bbox_xyxy": [
+              327.7701416015625,
+              113.60195922851562,
+              512.5387573242188,
+              168.27102661132812
+            ],
+            "score": 0.12731099128723145
+          }
+        ],
+        "模型版本": "sam3@unknown",
+        "时间戳": 1789230126.5735292
+      }
+    },
+    "metrics": {
+      "detection_count": 7.0,
+      "score_threshold": 0.1
+    }
+  },
+  "events": [
+    {
+      "event_id": "e5d2dece-1c59-4f8c-b153-9944c0c3608a",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.061Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "P01",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "f59aa18a-9e97-4f20-929e-02a3faccbaaf",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.061Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "P01@2.1.0-draft.1",
+      "data": {}
+    },
+    {
+      "event_id": "3cabd19a-6014-4da8-8163-6b88c99e574c",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.062Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "P01@2.1.0-draft.1",
+      "data": {}
+    },
+    {
+      "event_id": "1cac1294-a74b-4eb5-af79-c36bf1e2e01a",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.062Z",
+      "event_type": "preflight_started",
+      "skill_ref": "P01@2.1.0-draft.1",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "1f170567-f5b6-459e-b9c6-8cd69e432462",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.062Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "P01@2.1.0-draft.1",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "78c4f1f8-73cc-4aa3-b680-05608f58a234",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.064Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "P01@2.1.0-draft.1",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "4fcefa89-b8ba-4501-a429-5164c191793e",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.064Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "P01@2.1.0-draft.1",
+      "data": {
+        "backend_key": "detect_objects"
+      }
+    },
+    {
+      "event_id": "d8224034-f679-4d5e-9704-6def04ab4755",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.064Z",
+      "event_type": "command_prepared",
+      "skill_ref": "P01@2.1.0-draft.1",
+      "data": {
+        "backend_key": "detect_objects",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "d61dd457-8370-45a8-b4be-3b6b1ecaf1aa",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.064Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "P01@2.1.0-draft.1",
+      "data": {
+        "environment_key": "sam3_perception"
+      }
+    },
+    {
+      "event_id": "f5572d29-7764-401d-92d7-5f5bd9d6cd10",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.573Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "P01@2.1.0-draft.1",
+      "data": {
+        "environment_key": "sam3_perception",
+        "environment_executed": true
+      }
+    },
+    {
+      "event_id": "34dc0a47-b8be-4ad7-8339-78716a317e02",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.574Z",
+      "event_type": "outputs_validated",
+      "skill_ref": "P01@2.1.0-draft.1",
+      "data": {}
+    },
+    {
+      "event_id": "173671b5-0ca1-4c34-8dea-034a9850f412",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.574Z",
+      "event_type": "verification_started",
+      "skill_ref": "P01@2.1.0-draft.1",
+      "data": {
+        "verifier_key": "verify_detect_objects"
+      }
+    },
+    {
+      "event_id": "3aad37a9-c090-4a3b-8670-4c4e48c55a38",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.574Z",
+      "event_type": "verification_finished",
+      "skill_ref": "P01@2.1.0-draft.1",
+      "data": {
+        "verdict": "passed",
+        "verifier_key": "verify_detect_objects",
+        "independent": false
+      }
+    },
+    {
+      "event_id": "79a44e1b-2d93-4c84-bd1e-e8f8f038e3f9",
+      "invocation_id": "a85c1808-428b-4849-8766-439fcb98f1e8",
+      "occurred_at": "2026-09-12T16:22:06.574Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "P01@2.1.0-draft.1",
+      "data": {
+        "status": "unverified"
+      }
+    }
+  ],
+  "error_code": "verification_inconclusive",
+  "error_message": "全部检测框合法且分数达到阈值"
+}

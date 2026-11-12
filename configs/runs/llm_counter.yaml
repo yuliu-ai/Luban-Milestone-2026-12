@@ -1,0 +1,15 @@
+# Live LLM, mock counter. This does not measure robot/model performance.
+agent_config: ../agents/llm_counter.yaml
+pipeline:
+  class_path: luban.pipelines.DirectPipeline
+runtime:
+  class_path: luban.runtimes.SyncRuntime
+  init_args:
+    max_steps: 3
+    timeout_seconds: 240
+    output_dir: runs/llm_counter
+environment:
+  class_path: luban.examples.offline.CounterEnvironment
+task:
+  name: increment
+  instruction: Increment the counter twice. Select increment each time.

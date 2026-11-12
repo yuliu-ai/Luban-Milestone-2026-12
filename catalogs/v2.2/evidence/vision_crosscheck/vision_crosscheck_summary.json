@@ -1,0 +1,970 @@
+{
+  "started_at_s": 1789304196.0477366,
+  "task": "robocasa/ScrubCuttingBoard",
+  "split": "pretrain",
+  "seed": 0,
+  "gpu": "NVIDIA GeForce RTX 4090, 17107 MiB, 24564 MiB",
+  "control_freq_hz": 20.0,
+  "camera": {
+    "camera_pos_world": [
+      2.6480009294014666,
+      -1.3278382086193223,
+      1.7500000323373515
+    ],
+    "fovy_deg": 60.0,
+    "focal_px": 221.7025033688163
+  },
+  "base_site": "mobilebase0_center",
+  "ee_site": "gripper0_right_grip_site",
+  "profile": {
+    "profile_revision": 3,
+    "profile_history": {
+      "v1_outcome": "entities[0] of the first query with detections; 'robot gripper'/'gripper' returned 0 entities and 'robot arm' returned 41-44 fragments, so entities[0] was arbitrary. Evidence: runs/vision_crosscheck_v1_profile.",
+      "v2_outcome": "smallest-containing-box tracking across frames: SAM3 arm fragments are not stable trackers at the ~6 px displacement scale, so box-centroid displacement direction/magnitude checks are unreliable (direction cosines swung negative).  Fragment tracking DROPPED in v3; v2 evidence: runs/vision_crosscheck_v2_profile."
+    },
+    "camera": "robot0_agentview_left",
+    "frame_size_px": 256,
+    "ee_world_source": "gripper0_right_grip_site",
+    "gripper_queries": [
+      "white robot arm",
+      "robot hand",
+      "robotic arm"
+    ],
+    "endpoint_rule": "v3 endpoint check: the projected EE (or target) pixel must be covered by a wrist-scale detection fragment from SAM3, i.e. the smallest containing box within the margin must have area <= endpoint_area_max_px2.  No trajectory tracking is attempted.",
+    "box_margin_px": 15.0,
+    "endpoint_area_max_px2": 8000.0,
+    "endpoint_area_calibration": "resting-EE smallest box ~441 px^2; observed wrist-scale fragments 1.9k-3.9k px^2; whole-arm fragments ~20k px^2 (256x256 frame)",
+    "m01": {
+      "check": "runtime passed + wrist-scale fragment at the projected target pixel"
+    },
+    "m02": {
+      "design": "two contract-valid single-waypoint legs (out, back)",
+      "check": "runtime passed + wrist-scale fragment at each leg's projected target pixel"
+    },
+    "m03": {
+      "check": "runtime passed + wrist-scale fragment at the held EE pixel after rotation"
+    },
+    "m04": {
+      "check": "runtime passed + wrist-scale fragment at the projected target pixel"
+    },
+    "p12": {
+      "rel_recheck_tolerance_m": 0.001,
+      "check": "rel recheck + wrist-scale fragment at the EE pixel"
+    }
+  },
+  "runs": {
+    "M01_linear": {
+      "skill": "M01",
+      "runtime_status": "unverified",
+      "runtime_verdict": "passed",
+      "runtime_outputs": {
+        "final_pose": [
+          0.27039244771003723,
+          0.002909204224124551,
+          0.6092568635940552,
+          -0.9859065782329203,
+          -0.06411972881834035,
+          -0.1542238650800797,
+          0.009585343659909719
+        ],
+        "position_error_m": 0.0075941836097192334,
+        "path_length_m": 0.10000000000000003,
+        "duration_s": 1.0,
+        "actual_distance_m": 0.02411079257233598,
+        "max_lateral_error_m": 0.0011448840340295933
+      },
+      "runtime_inputs": {
+        "target_mode": "absolute_position",
+        "target_position": [
+          0.2774035918712616,
+          0.005692837052047253,
+          0.6101325750350952
+        ],
+        "frame_id": "robot0_base",
+        "speed_mps": 0.1,
+        "position_tolerance_m": 0.008,
+        "orientation_mode": "hold",
+        "orientation_tolerance_rad": 0.08,
+        "lateral_tolerance_m": 0.015,
+        "verification_profile_ref": "profile://motion/linear-v1"
+      },
+      "world_ee_before": [
+        3.0024186702125526,
+        -0.5804870478948214,
+        1.3101325858746011
+      ],
+      "world_ee_after": [
+        2.9952108372136292,
+        -0.5575009193611039,
+        1.30925684054999
+      ],
+      "sam3_before": {
+        "query": "white robot arm",
+        "entities": 17,
+        "attempts": [
+          {
+            "query": "white robot arm",
+            "entities": 17
+          }
+        ]
+      },
+      "sam3_after": {
+        "query": "white robot arm",
+        "entities": 11,
+        "attempts": [
+          {
+            "query": "white robot arm",
+            "entities": 11
+          }
+        ]
+      },
+      "fragment_before": {
+        "bbox_xyxy": [
+          152.97769165039062,
+          96.25247955322266,
+          170.20892333984375,
+          116.67292022705078
+        ],
+        "area_px2": 351.8693444514647,
+        "centroid": [
+          161.5933074951172,
+          106.46269989013672
+        ],
+        "containing_fragment_count": 11,
+        "containing_fragment_areas_px2": [
+          351.9,
+          2248.5,
+          2430.4,
+          2547.0,
+          3206.2,
+          4074.0,
+          5241.1,
+          5461.1,
+          16075.2,
+          21448.3,
+          21726.4
+        ]
+      },
+      "legs": [
+        {
+          "leg": 0,
+          "target_pixel_uv": [
+            169.16,
+            110.76
+          ],
+          "wrist_fragment": {
+            "bbox_xyxy": [
+              155.28024291992188,
+              71.0108413696289,
+              207.17257690429688,
+              108.50720977783203
+            ],
+            "area_px2": 1945.7740726396441,
+            "centroid": [
+              181.22640991210938,
+              89.75902557373047
+            ],
+            "containing_fragment_count": 8,
+            "containing_fragment_areas_px2": [
+              1945.8,
+              2104.6,
+              2427.5,
+              4042.7,
+              5409.5,
+              16079.2,
+              22184.3,
+              22497.3
+            ]
+          },
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    "M03_rotate": {
+      "skill": "M03",
+      "runtime_status": "unverified",
+      "runtime_verdict": "passed",
+      "runtime_outputs": {
+        "final_pose": [
+          0.27109846472740173,
+          0.005061072763055563,
+          0.6081674695014954,
+          -0.9748797518350505,
+          -0.16138022319651674,
+          -0.15157403773304032,
+          0.024314689148237187
+        ],
+        "orientation_error_rad": 0.048091814287005326,
+        "position_drift_m": 0.002513121112591587,
+        "duration_s": 2.0500000000000003
+      },
+      "runtime_inputs": {
+        "target_orientation": [
+          -0.9711005129402686,
+          -0.18449908057032774,
+          -0.1486286808537928,
+          0.028868638061267535
+        ],
+        "frame_id": "robot0_base",
+        "angular_speed_radps": 0.4,
+        "orientation_tolerance_rad": 0.05,
+        "position_hold_tolerance_m": 0.01,
+        "verification_profile_ref": "profile://motion/rotate-v1"
+      },
+      "projected_ee_pixel": [
+        169.78,
+        111.85
+      ],
+      "fragment_before": {
+        "bbox_xyxy": [
+          155.28024291992188,
+          71.0108413696289,
+          207.17257690429688,
+          108.50720977783203
+        ],
+        "area_px2": 1945.7740726396441,
+        "centroid": [
+          181.22640991210938,
+          89.75902557373047
+        ],
+        "containing_fragment_count": 8,
+        "containing_fragment_areas_px2": [
+          1945.8,
+          2104.6,
+          2427.5,
+          4042.7,
+          5409.5,
+          16079.2,
+          22184.3,
+          22497.3
+        ]
+      },
+      "fragment_after": {
+        "bbox_xyxy": [
+          152.94732666015625,
+          68.47894287109375,
+          212.61172485351562,
+          121.121337890625
+        ],
+        "area_px2": 3140.876818297431,
+        "centroid": [
+          182.77952575683594,
+          94.80014038085938
+        ],
+        "containing_fragment_count": 7,
+        "containing_fragment_areas_px2": [
+          3140.9,
+          3196.6,
+          4641.9,
+          5678.2,
+          15851.3,
+          21838.0,
+          22130.8
+        ]
+      },
+      "sam3_before": {
+        "query": "white robot arm",
+        "entities": 11,
+        "attempts": [
+          {
+            "query": "white robot arm",
+            "entities": 11
+          }
+        ]
+      },
+      "sam3_after": {
+        "query": "white robot arm",
+        "entities": 10,
+        "attempts": [
+          {
+            "query": "white robot arm",
+            "entities": 10
+          }
+        ]
+      },
+      "passed": true
+    },
+    "M02_waypoint_out": {
+      "skill": "M02",
+      "runtime_status": "unverified",
+      "runtime_verdict": "passed",
+      "runtime_outputs": {
+        "final_pose": [
+          0.2712379992008209,
+          0.004146316088736057,
+          0.6084023714065552,
+          -0.9821929323431509,
+          -0.11159959421643377,
+          -0.1500886825848716,
+          0.017775308318776408
+        ],
+        "reached_waypoints": 1,
+        "duration_s": 1.25
+      },
+      "runtime_inputs": {
+        "waypoints": [
+          [
+            0.2674035918712616,
+            0.005692837052047253,
+            0.6101325750350952,
+            -0.9821950348662897,
+            -0.11121614292968979,
+            -0.15037397719746365,
+            0.017650779520115924
+          ]
+        ],
+        "frame_id": "robot0_base",
+        "speed_mps": 0.1,
+        "waypoint_tolerance_m": 0.008,
+        "stop_at_each": true,
+        "verification_profile_ref": "profile://motion/waypoints-v1"
+      },
+      "world_ee_before": [
+        2.993074051072014,
+        -0.556790875288724,
+        1.3081695907036386
+      ],
+      "world_ee_after": [
+        2.9939602979673863,
+        -0.5566515565301211,
+        1.308404454341458
+      ],
+      "sam3_before": {
+        "query": "white robot arm",
+        "entities": 10,
+        "attempts": [
+          {
+            "query": "white robot arm",
+            "entities": 10
+          }
+        ]
+      },
+      "sam3_after": {
+        "query": "white robot arm",
+        "entities": 13,
+        "attempts": [
+          {
+            "query": "white robot arm",
+            "entities": 13
+          }
+        ]
+      },
+      "fragment_before": {
+        "bbox_xyxy": [
+          152.94732666015625,
+          68.47894287109375,
+          212.61172485351562,
+          121.121337890625
+        ],
+        "area_px2": 3140.876818297431,
+        "centroid": [
+          182.77952575683594,
+          94.80014038085938
+        ],
+        "containing_fragment_count": 7,
+        "containing_fragment_areas_px2": [
+          3140.9,
+          3196.6,
+          4641.9,
+          5678.2,
+          15851.3,
+          21838.0,
+          22130.8
+        ]
+      },
+      "legs": [
+        {
+          "leg": 0,
+          "target_pixel_uv": [
+            170.01,
+            111.86
+          ],
+          "wrist_fragment": {
+            "bbox_xyxy": [
+              157.064697265625,
+              67.46272277832031,
+              210.66268920898438,
+              105.71638488769531
+            ],
+            "area_px2": 2050.319473542273,
+            "centroid": [
+              183.8636932373047,
+              86.58955383300781
+            ],
+            "containing_fragment_count": 11,
+            "containing_fragment_areas_px2": [
+              2050.3,
+              2279.0,
+              2349.1,
+              2384.1,
+              3967.0,
+              4676.7,
+              5242.4,
+              15627.1,
+              15853.4,
+              21872.5,
+              22327.8
+            ]
+          },
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    "M02_waypoint_back": {
+      "skill": "M02",
+      "runtime_status": "unverified",
+      "runtime_verdict": "passed",
+      "runtime_outputs": {
+        "final_pose": [
+          0.2531134784221649,
+          -0.001863814308308065,
+          0.6098686456680298,
+          -0.9863381662489202,
+          -0.06186204948397511,
+          -0.15233782930655163,
+          0.010163385091963576
+        ],
+        "reached_waypoints": 1,
+        "duration_s": 1.0
+      },
+      "runtime_inputs": {
+        "waypoints": [
+          [
+            0.2474035918712616,
+            -0.004307162947952747,
+            0.6101325750350952,
+            -0.9865260372644646,
+            -0.06198785980674937,
+            -0.15106822017998883,
+            0.010113154181632757
+          ]
+        ],
+        "frame_id": "robot0_base",
+        "speed_mps": 0.1,
+        "waypoint_tolerance_m": 0.008,
+        "stop_at_each": true,
+        "verification_profile_ref": "profile://motion/waypoints-v1"
+      },
+      "world_ee_before": [
+        2.9939602979673863,
+        -0.5566515565301211,
+        1.308404454341458
+      ],
+      "world_ee_after": [
+        2.999943064887105,
+        -0.5747763980659387,
+        1.3098708382868502
+      ],
+      "sam3_before": {
+        "query": "white robot arm",
+        "entities": 13,
+        "attempts": [
+          {
+            "query": "white robot arm",
+            "entities": 13
+          }
+        ]
+      },
+      "sam3_after": {
+        "query": "white robot arm",
+        "entities": 16,
+        "attempts": [
+          {
+            "query": "white robot arm",
+            "entities": 16
+          }
+        ]
+      },
+      "fragment_before": {
+        "bbox_xyxy": [
+          157.064697265625,
+          67.46272277832031,
+          210.66268920898438,
+          105.71638488769531
+        ],
+        "area_px2": 2050.319473542273,
+        "centroid": [
+          183.8636932373047,
+          86.58955383300781
+        ],
+        "containing_fragment_count": 11,
+        "containing_fragment_areas_px2": [
+          2050.3,
+          2279.0,
+          2349.1,
+          2384.1,
+          3967.0,
+          4676.7,
+          5242.4,
+          15627.1,
+          15853.4,
+          21872.5,
+          22327.8
+        ]
+      },
+      "legs": [
+        {
+          "leg": 0,
+          "target_pixel_uv": [
+            174.03,
+            113.92
+          ],
+          "wrist_fragment": {
+            "bbox_xyxy": [
+              173.34413146972656,
+              49.334815979003906,
+              214.87452697753906,
+              106.4684066772461
+            ],
+            "area_px2": 2372.7806184794754,
+            "centroid": [
+              194.1093292236328,
+              77.901611328125
+            ],
+            "containing_fragment_count": 9,
+            "containing_fragment_areas_px2": [
+              2372.8,
+              2404.9,
+              2432.8,
+              2528.6,
+              4012.1,
+              5556.2,
+              16414.8,
+              21552.5,
+              21858.5
+            ]
+          },
+          "passed": true
+        }
+      ],
+      "passed": true
+    },
+    "M04_pose": {
+      "skill": "M04",
+      "runtime_status": "unverified",
+      "runtime_verdict": "passed",
+      "runtime_outputs": {
+        "final_pose": [
+          0.23310744762420654,
+          -0.01172825787216425,
+          0.6028493046760559,
+          -0.9884452808703355,
+          -0.012163713560724255,
+          -0.15106800181558536,
+          0.0025356705271981444
+        ],
+        "position_error_m": 0.006823880258504336,
+        "orientation_error_rad": 0.04912854790109603,
+        "duration_s": 1.05
+      },
+      "runtime_inputs": {
+        "target_pose": [
+          0.2274035918712616,
+          -0.014307162947952748,
+          0.6001325750350952,
+          -0.9883974653264544,
+          0.01210650653116722,
+          -0.1514013156180316,
+          -0.0012347732505318518
+        ],
+        "frame_id": "robot0_base",
+        "max_linear_speed_mps": 0.1,
+        "max_angular_speed_radps": 0.4,
+        "position_tolerance_m": 0.008,
+        "orientation_tolerance_rad": 0.05,
+        "verification_profile_ref": "profile://motion/pose-v1"
+      },
+      "world_ee_before": [
+        2.999943064887105,
+        -0.5747763980659387,
+        1.3098708382868502
+      ],
+      "world_ee_after": [
+        3.009795057070457,
+        -0.5947816660162333,
+        1.3028529554471084
+      ],
+      "sam3_before": {
+        "query": "white robot arm",
+        "entities": 16,
+        "attempts": [
+          {
+            "query": "white robot arm",
+            "entities": 16
+          }
+        ]
+      },
+      "sam3_after": {
+        "query": "white robot arm",
+        "entities": 17,
+        "attempts": [
+          {
+            "query": "white robot arm",
+            "entities": 17
+          }
+        ]
+      },
+      "fragment_before": {
+        "bbox_xyxy": [
+          173.34413146972656,
+          49.334815979003906,
+          214.87452697753906,
+          106.4684066772461
+        ],
+        "area_px2": 2372.7806184794754,
+        "centroid": [
+          194.1093292236328,
+          77.901611328125
+        ],
+        "containing_fragment_count": 9,
+        "containing_fragment_areas_px2": [
+          2372.8,
+          2404.9,
+          2432.8,
+          2528.6,
+          4012.1,
+          5556.2,
+          16414.8,
+          21552.5,
+          21858.5
+        ]
+      },
+      "legs": [
+        {
+          "leg": 0,
+          "target_pixel_uv": [
+            177.85,
+            118.19
+          ],
+          "wrist_fragment": {
+            "bbox_xyxy": [
+              158.37326049804688,
+              76.41157531738281,
+              212.076171875,
+              119.80625915527344
+            ],
+            "area_px2": 2330.4208603771403,
+            "centroid": [
+              185.22471618652344,
+              98.10891723632812
+            ],
+            "containing_fragment_count": 8,
+            "containing_fragment_areas_px2": [
+              2330.4,
+              2536.3,
+              4264.3,
+              5700.5,
+              5912.9,
+              15583.8,
+              20804.4,
+              20990.6
+            ]
+          },
+          "passed": true
+        }
+      ],
+      "passed": true
+    }
+  },
+  "p12_samples": [
+    {
+      "sample": "start",
+      "state_read_relative": [
+        0.2474035918712616,
+        -0.004307162947952747,
+        0.6101325750350952
+      ],
+      "sim_recomputed_relative": [
+        0.247404,
+        -0.004307,
+        0.610133
+      ],
+      "state_vs_sim_gap_m": 2.156155430254706e-08,
+      "ee_world": [
+        3.0024186702125526,
+        -0.5804870478948214,
+        1.3101325858746011
+      ],
+      "projected_pixel_uv": [
+        174.03,
+        113.92
+      ],
+      "depth_m": 0.9154929441770858,
+      "sam3_query_used": "white robot arm",
+      "sam3_attempts": [
+        {
+          "query": "white robot arm",
+          "entities": 17
+        }
+      ],
+      "wrist_fragment": {
+        "bbox_xyxy": [
+          152.97769165039062,
+          96.25247955322266,
+          170.20892333984375,
+          116.67292022705078
+        ],
+        "area_px2": 351.8693444514647,
+        "centroid": [
+          161.5933074951172,
+          106.46269989013672
+        ],
+        "containing_fragment_count": 11,
+        "containing_fragment_areas_px2": [
+          351.9,
+          2248.5,
+          2430.4,
+          2547.0,
+          3206.2,
+          4074.0,
+          5241.1,
+          5461.1,
+          16075.2,
+          21448.3,
+          21726.4
+        ]
+      },
+      "passed": true
+    },
+    {
+      "sample": "after_M01",
+      "state_read_relative": [
+        0.27039244771003723,
+        0.002909204224124551,
+        0.6092568635940552
+      ],
+      "sim_recomputed_relative": [
+        0.270392,
+        0.002909,
+        0.609257
+      ],
+      "state_vs_sim_gap_m": 1.2287744477529368e-08,
+      "ee_world": [
+        2.9952108372136292,
+        -0.5575009193611039,
+        1.30925684054999
+      ],
+      "projected_pixel_uv": [
+        170.35,
+        111.66
+      ],
+      "depth_m": 0.9336408232497257,
+      "sam3_query_used": "white robot arm",
+      "sam3_attempts": [
+        {
+          "query": "white robot arm",
+          "entities": 11
+        }
+      ],
+      "wrist_fragment": {
+        "bbox_xyxy": [
+          155.28024291992188,
+          71.0108413696289,
+          207.17257690429688,
+          108.50720977783203
+        ],
+        "area_px2": 1945.7740726396441,
+        "centroid": [
+          181.22640991210938,
+          89.75902557373047
+        ],
+        "containing_fragment_count": 8,
+        "containing_fragment_areas_px2": [
+          1945.8,
+          2104.6,
+          2427.5,
+          4042.7,
+          5409.5,
+          16079.2,
+          22184.3,
+          22497.3
+        ]
+      },
+      "passed": true
+    },
+    {
+      "sample": "after_M03",
+      "state_read_relative": [
+        0.27109846472740173,
+        0.005061072763055563,
+        0.6081674695014954
+      ],
+      "sim_recomputed_relative": [
+        0.271098,
+        0.005061,
+        0.608167
+      ],
+      "state_vs_sim_gap_m": 1.1726501799123294e-08,
+      "ee_world": [
+        2.993074051072014,
+        -0.556790875288724,
+        1.3081695907036386
+      ],
+      "projected_pixel_uv": [
+        169.78,
+        111.85
+      ],
+      "depth_m": 0.9344305197268261,
+      "sam3_query_used": "white robot arm",
+      "sam3_attempts": [
+        {
+          "query": "white robot arm",
+          "entities": 10
+        }
+      ],
+      "wrist_fragment": {
+        "bbox_xyxy": [
+          152.94732666015625,
+          68.47894287109375,
+          212.61172485351562,
+          121.121337890625
+        ],
+        "area_px2": 3140.876818297431,
+        "centroid": [
+          182.77952575683594,
+          94.80014038085938
+        ],
+        "containing_fragment_count": 7,
+        "containing_fragment_areas_px2": [
+          3140.9,
+          3196.6,
+          4641.9,
+          5678.2,
+          15851.3,
+          21838.0,
+          22130.8
+        ]
+      },
+      "passed": true
+    },
+    {
+      "sample": "after_M02",
+      "state_read_relative": [
+        0.2531134784221649,
+        -0.001863814308308065,
+        0.6098686456680298
+      ],
+      "sim_recomputed_relative": [
+        0.253113,
+        -0.001864,
+        0.609869
+      ],
+      "state_vs_sim_gap_m": 1.782570324605672e-08,
+      "ee_world": [
+        2.999943064887105,
+        -0.5747763980659387,
+        1.3098708382868502
+      ],
+      "projected_pixel_uv": [
+        172.94,
+        113.38
+      ],
+      "depth_m": 0.919903627376824,
+      "sam3_query_used": "white robot arm",
+      "sam3_attempts": [
+        {
+          "query": "white robot arm",
+          "entities": 16
+        }
+      ],
+      "wrist_fragment": {
+        "bbox_xyxy": [
+          173.34413146972656,
+          49.334815979003906,
+          214.87452697753906,
+          106.4684066772461
+        ],
+        "area_px2": 2372.7806184794754,
+        "centroid": [
+          194.1093292236328,
+          77.901611328125
+        ],
+        "containing_fragment_count": 9,
+        "containing_fragment_areas_px2": [
+          2372.8,
+          2404.9,
+          2432.8,
+          2528.6,
+          4012.1,
+          5556.2,
+          16414.8,
+          21552.5,
+          21858.5
+        ]
+      },
+      "passed": true
+    },
+    {
+      "sample": "final",
+      "state_read_relative": [
+        0.23310744762420654,
+        -0.01172825787216425,
+        0.6028493046760559
+      ],
+      "sim_recomputed_relative": [
+        0.233107,
+        -0.011728,
+        0.602849
+      ],
+      "state_vs_sim_gap_m": 1.1657243724234008e-08,
+      "ee_world": [
+        3.009795057070457,
+        -0.5947816660162333,
+        1.3028529554471084
+      ],
+      "projected_pixel_uv": [
+        176.8,
+        116.99
+      ],
+      "depth_m": 0.9089216218648826,
+      "sam3_query_used": "white robot arm",
+      "sam3_attempts": [
+        {
+          "query": "white robot arm",
+          "entities": 17
+        }
+      ],
+      "wrist_fragment": {
+        "bbox_xyxy": [
+          158.37326049804688,
+          76.41157531738281,
+          212.076171875,
+          119.80625915527344
+        ],
+        "area_px2": 2330.4208603771403,
+        "centroid": [
+          185.22471618652344,
+          98.10891723632812
+        ],
+        "containing_fragment_count": 8,
+        "containing_fragment_areas_px2": [
+          2330.4,
+          2536.3,
+          4264.3,
+          5700.5,
+          5912.9,
+          15583.8,
+          20804.4,
+          20990.6
+        ]
+      },
+      "passed": true
+    }
+  ],
+  "finished_at_s": 1789304207.204824,
+  "p12_passed": true,
+  "skills_passed": {
+    "M01_linear": true,
+    "M03_rotate": true,
+    "M02_waypoint_out": true,
+    "M02_waypoint_back": true,
+    "M04_pose": true
+  },
+  "limitations": [
+    "M03/M04 的姿态部分不做视觉判定（单目无深度且无标志物），姿态由 sim 状态与契约验证器判定，如实记录。",
+    "SAM3 框质心与 grip_site 存在恒定偏移；方向用位移向量比较，幅度仅要求量级一致（预注册倍率区间）。",
+    "M02 按契约拆成两次单航点调用（minItems=1），每段独立前后帧判定；与原始两航点探针口径的差异已记录。"
+  ]
+}

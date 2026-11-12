@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "routes": [
+    {
+      "source_skill_name": "P01",
+      "target_skill_id": "P01",
+      "order": 0,
+      "version_constraint": "==2.2.0",
+      "input_bindings": {
+        "image_ref": "$.params.image_ref",
+        "score_threshold": "$.params.score_threshold",
+        "frame_id": "$.params.frame_id",
+        "verification_profile_ref": "$.params.verification_profile_ref"
+      },
+      "note": "V2.2 自映射：P01 在 V2.2 中为 implemented/backend_bound，可进入 bound_execution。"
+    },
+    {
+      "source_skill_name": "T04",
+      "target_skill_id": "T04",
+      "order": 0,
+      "version_constraint": "==2.2.0",
+      "input_bindings": {
+        "tool_attachment_id": "$.params.tool_attachment_id",
+        "tool_id": "$.params.tool_id",
+        "surface_id": "$.params.surface_id",
+        "path_xy": "$.params.path_xy",
+        "surface_frame": "$.params.surface_frame",
+        "normal_force_n": "$.params.normal_force_n",
+        "speed_mps": "$.params.speed_mps",
+        "verification_profile_ref": "$.params.verification_profile_ref",
+        "force_limit_n": "$.params.force_limit_n",
+        "min_path_completion": "$.params.min_path_completion",
+        "min_cleanliness_delta": "$.params.min_cleanliness_delta"
+      },
+      "note": "T04 在 V2.2 中仍为 backend_pending/declared，绑定后不会被判定为可执行。"
+    },
+    {
+      "source_skill_name": "F07",
+      "target_skill_id": "F07",
+      "order": 0,
+      "version_constraint": "==2.2.0",
+      "input_bindings": {
+        "vehicle_id": "$.params.vehicle_id",
+        "frame_id": "$.params.frame_id",
+        "frame_convention": "$.params.frame_convention",
+        "origin_ref": "$.params.origin_ref",
+        "safety_profile_ref": "$.params.safety_profile_ref",
+        "geofence_ref": "$.params.geofence_ref",
+        "max_state_age_ms": "$.params.max_state_age_ms",
+        "max_duration_s": "$.params.max_duration_s",
+        "max_speed_mps": "$.params.max_speed_mps",
+        "max_acceleration_mps2": "$.params.max_acceleration_mps2",
+        "max_jerk_mps3": "$.params.max_jerk_mps3",
+        "min_obstacle_clearance_m": "$.params.min_obstacle_clearance_m",
+        "path_xy": "$.params.path_xy",
+        "corridor_ref": "$.params.corridor_ref",
+        "terrain_stream_ref": "$.params.terrain_stream_ref",
+        "height_reference": "$.params.height_reference",
+        "target_agl_m": "$.params.target_agl_m",
+        "agl_tolerance_m": "$.params.agl_tolerance_m",
+        "min_terrain_clearance_m": "$.params.min_terrain_clearance_m",
+        "max_terrain_age_ms": "$.params.max_terrain_age_ms",
+        "min_terrain_confidence": "$.params.min_terrain_confidence",
+        "terrain_lookahead_m": "$.params.terrain_lookahead_m",
+        "max_climb_rate_mps": "$.params.max_climb_rate_mps",
+        "max_descent_rate_mps": "$.params.max_descent_rate_mps",
+        "verification_profile_ref": "$.params.verification_profile_ref"
+      },
+      "note": "F07 在 V2.2 中仍为 declared；机型 multirotor_uav 与 mobile_manipulator profile 不匹配。"
+    }
+  ]
+}

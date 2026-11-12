@@ -1,0 +1,915 @@
+{
+  "name": "robocasa365-unseen100-retest",
+  "version": "1.0.1",
+  "split": "pretrain",
+  "category": "composite_unseen",
+  "episode_count": 100,
+  "task_count": 16,
+  "history_composition": {
+    "baseline_successes": 25,
+    "luban_successes": 75
+  },
+  "rerun_horizon_multiplier": 1.0,
+  "cases": [
+    {
+      "task": "ArrangeBreadBasket",
+      "task_index": 34,
+      "episode": 1,
+      "seed": 1708,
+      "official_horizon": 4350,
+      "case_id": "RCU-001",
+      "horizon": 4350
+    },
+    {
+      "task": "ArrangeTea",
+      "task_index": 35,
+      "episode": 2,
+      "seed": 1759,
+      "official_horizon": 2250,
+      "case_id": "RCU-002",
+      "horizon": 2250
+    },
+    {
+      "task": "BreadSelection",
+      "task_index": 36,
+      "episode": 2,
+      "seed": 1809,
+      "official_horizon": 1950,
+      "case_id": "RCU-003",
+      "horizon": 1950
+    },
+    {
+      "task": "CuttingToolSelection",
+      "task_index": 38,
+      "episode": 1,
+      "seed": 1908,
+      "official_horizon": 1200,
+      "case_id": "RCU-004",
+      "horizon": 1200
+    },
+    {
+      "task": "GarnishPancake",
+      "task_index": 39,
+      "episode": 2,
+      "seed": 1959,
+      "official_horizon": 2700,
+      "case_id": "RCU-005",
+      "horizon": 2700
+    },
+    {
+      "task": "MakeIceLemonade",
+      "task_index": 42,
+      "episode": 0,
+      "seed": 2107,
+      "official_horizon": 3000,
+      "case_id": "RCU-006",
+      "horizon": 3000
+    },
+    {
+      "task": "PortionHotDogs",
+      "task_index": 44,
+      "episode": 12,
+      "seed": 2219,
+      "official_horizon": 2250,
+      "case_id": "RCU-007",
+      "horizon": 2250
+    },
+    {
+      "task": "RecycleBottlesByType",
+      "task_index": 45,
+      "episode": 16,
+      "seed": 2273,
+      "official_horizon": 2850,
+      "case_id": "RCU-008",
+      "horizon": 2850
+    },
+    {
+      "task": "SeparateFreezerRack",
+      "task_index": 46,
+      "episode": 9,
+      "seed": 2316,
+      "official_horizon": 2400,
+      "case_id": "RCU-009",
+      "horizon": 2400
+    },
+    {
+      "task": "WaffleReheat",
+      "task_index": 47,
+      "episode": 1,
+      "seed": 2358,
+      "official_horizon": 4050,
+      "case_id": "RCU-010",
+      "horizon": 4050
+    },
+    {
+      "task": "WashFruitColander",
+      "task_index": 48,
+      "episode": 0,
+      "seed": 2407,
+      "official_horizon": 3150,
+      "case_id": "RCU-011",
+      "horizon": 3150
+    },
+    {
+      "task": "WeighIngredients",
+      "task_index": 49,
+      "episode": 7,
+      "seed": 2464,
+      "official_horizon": 3000,
+      "case_id": "RCU-012",
+      "horizon": 3000
+    },
+    {
+      "task": "ArrangeBreadBasket",
+      "task_index": 34,
+      "episode": 2,
+      "seed": 1709,
+      "official_horizon": 4350,
+      "case_id": "RCU-013",
+      "horizon": 4350
+    },
+    {
+      "task": "ArrangeTea",
+      "task_index": 35,
+      "episode": 4,
+      "seed": 1761,
+      "official_horizon": 2250,
+      "case_id": "RCU-014",
+      "horizon": 2250
+    },
+    {
+      "task": "BreadSelection",
+      "task_index": 36,
+      "episode": 3,
+      "seed": 1810,
+      "official_horizon": 1950,
+      "case_id": "RCU-015",
+      "horizon": 1950
+    },
+    {
+      "task": "CuttingToolSelection",
+      "task_index": 38,
+      "episode": 2,
+      "seed": 1909,
+      "official_horizon": 1200,
+      "case_id": "RCU-016",
+      "horizon": 1200
+    },
+    {
+      "task": "GarnishPancake",
+      "task_index": 39,
+      "episode": 3,
+      "seed": 1960,
+      "official_horizon": 2700,
+      "case_id": "RCU-017",
+      "horizon": 2700
+    },
+    {
+      "task": "MakeIceLemonade",
+      "task_index": 42,
+      "episode": 7,
+      "seed": 2114,
+      "official_horizon": 3000,
+      "case_id": "RCU-018",
+      "horizon": 3000
+    },
+    {
+      "task": "RecycleBottlesByType",
+      "task_index": 45,
+      "episode": 28,
+      "seed": 2285,
+      "official_horizon": 2850,
+      "case_id": "RCU-019",
+      "horizon": 2850
+    },
+    {
+      "task": "SeparateFreezerRack",
+      "task_index": 46,
+      "episode": 11,
+      "seed": 2318,
+      "official_horizon": 2400,
+      "case_id": "RCU-020",
+      "horizon": 2400
+    },
+    {
+      "task": "WaffleReheat",
+      "task_index": 47,
+      "episode": 2,
+      "seed": 2359,
+      "official_horizon": 4050,
+      "case_id": "RCU-021",
+      "horizon": 4050
+    },
+    {
+      "task": "WashFruitColander",
+      "task_index": 48,
+      "episode": 1,
+      "seed": 2408,
+      "official_horizon": 3150,
+      "case_id": "RCU-022",
+      "horizon": 3150
+    },
+    {
+      "task": "WeighIngredients",
+      "task_index": 49,
+      "episode": 9,
+      "seed": 2466,
+      "official_horizon": 3000,
+      "case_id": "RCU-023",
+      "horizon": 3000
+    },
+    {
+      "task": "ArrangeBreadBasket",
+      "task_index": 34,
+      "episode": 6,
+      "seed": 1713,
+      "official_horizon": 4350,
+      "case_id": "RCU-024",
+      "horizon": 4350
+    },
+    {
+      "task": "ArrangeTea",
+      "task_index": 35,
+      "episode": 5,
+      "seed": 1762,
+      "official_horizon": 2250,
+      "case_id": "RCU-025",
+      "horizon": 2250
+    },
+    {
+      "task": "ArrangeBreadBasket",
+      "task_index": 34,
+      "episode": 3,
+      "seed": 1710,
+      "official_horizon": 4350,
+      "case_id": "RCU-026",
+      "horizon": 4350
+    },
+    {
+      "task": "ArrangeTea",
+      "task_index": 35,
+      "episode": 0,
+      "seed": 1757,
+      "official_horizon": 2250,
+      "case_id": "RCU-027",
+      "horizon": 2250
+    },
+    {
+      "task": "BreadSelection",
+      "task_index": 36,
+      "episode": 0,
+      "seed": 1807,
+      "official_horizon": 1950,
+      "case_id": "RCU-028",
+      "horizon": 1950
+    },
+    {
+      "task": "CategorizeCondiments",
+      "task_index": 37,
+      "episode": 6,
+      "seed": 1863,
+      "official_horizon": 1650,
+      "case_id": "RCU-029",
+      "horizon": 1650
+    },
+    {
+      "task": "CuttingToolSelection",
+      "task_index": 38,
+      "episode": 3,
+      "seed": 1910,
+      "official_horizon": 1200,
+      "case_id": "RCU-030",
+      "horizon": 1200
+    },
+    {
+      "task": "GarnishPancake",
+      "task_index": 39,
+      "episode": 0,
+      "seed": 1957,
+      "official_horizon": 2700,
+      "case_id": "RCU-031",
+      "horizon": 2700
+    },
+    {
+      "task": "GatherTableware",
+      "task_index": 40,
+      "episode": 2,
+      "seed": 2009,
+      "official_horizon": 2250,
+      "case_id": "RCU-032",
+      "horizon": 2250
+    },
+    {
+      "task": "HeatKebabSandwich",
+      "task_index": 41,
+      "episode": 28,
+      "seed": 2085,
+      "official_horizon": 2700,
+      "case_id": "RCU-033",
+      "horizon": 2700
+    },
+    {
+      "task": "MakeIceLemonade",
+      "task_index": 42,
+      "episode": 1,
+      "seed": 2108,
+      "official_horizon": 3000,
+      "case_id": "RCU-034",
+      "horizon": 3000
+    },
+    {
+      "task": "PanTransfer",
+      "task_index": 43,
+      "episode": 25,
+      "seed": 2182,
+      "official_horizon": 1800,
+      "case_id": "RCU-035",
+      "horizon": 1800
+    },
+    {
+      "task": "PortionHotDogs",
+      "task_index": 44,
+      "episode": 0,
+      "seed": 2207,
+      "official_horizon": 2250,
+      "case_id": "RCU-036",
+      "horizon": 2250
+    },
+    {
+      "task": "RecycleBottlesByType",
+      "task_index": 45,
+      "episode": 19,
+      "seed": 2276,
+      "official_horizon": 2850,
+      "case_id": "RCU-037",
+      "horizon": 2850
+    },
+    {
+      "task": "SeparateFreezerRack",
+      "task_index": 46,
+      "episode": 2,
+      "seed": 2309,
+      "official_horizon": 2400,
+      "case_id": "RCU-038",
+      "horizon": 2400
+    },
+    {
+      "task": "WaffleReheat",
+      "task_index": 47,
+      "episode": 0,
+      "seed": 2357,
+      "official_horizon": 4050,
+      "case_id": "RCU-039",
+      "horizon": 4050
+    },
+    {
+      "task": "WashFruitColander",
+      "task_index": 48,
+      "episode": 2,
+      "seed": 2409,
+      "official_horizon": 3150,
+      "case_id": "RCU-040",
+      "horizon": 3150
+    },
+    {
+      "task": "WeighIngredients",
+      "task_index": 49,
+      "episode": 8,
+      "seed": 2465,
+      "official_horizon": 3000,
+      "case_id": "RCU-041",
+      "horizon": 3000
+    },
+    {
+      "task": "ArrangeBreadBasket",
+      "task_index": 34,
+      "episode": 4,
+      "seed": 1711,
+      "official_horizon": 4350,
+      "case_id": "RCU-042",
+      "horizon": 4350
+    },
+    {
+      "task": "ArrangeTea",
+      "task_index": 35,
+      "episode": 6,
+      "seed": 1763,
+      "official_horizon": 2250,
+      "case_id": "RCU-043",
+      "horizon": 2250
+    },
+    {
+      "task": "BreadSelection",
+      "task_index": 36,
+      "episode": 5,
+      "seed": 1812,
+      "official_horizon": 1950,
+      "case_id": "RCU-044",
+      "horizon": 1950
+    },
+    {
+      "task": "CategorizeCondiments",
+      "task_index": 37,
+      "episode": 19,
+      "seed": 1876,
+      "official_horizon": 1650,
+      "case_id": "RCU-045",
+      "horizon": 1650
+    },
+    {
+      "task": "CuttingToolSelection",
+      "task_index": 38,
+      "episode": 6,
+      "seed": 1913,
+      "official_horizon": 1200,
+      "case_id": "RCU-046",
+      "horizon": 1200
+    },
+    {
+      "task": "GarnishPancake",
+      "task_index": 39,
+      "episode": 6,
+      "seed": 1963,
+      "official_horizon": 2700,
+      "case_id": "RCU-047",
+      "horizon": 2700
+    },
+    {
+      "task": "GatherTableware",
+      "task_index": 40,
+      "episode": 6,
+      "seed": 2013,
+      "official_horizon": 2250,
+      "case_id": "RCU-048",
+      "horizon": 2250
+    },
+    {
+      "task": "MakeIceLemonade",
+      "task_index": 42,
+      "episode": 2,
+      "seed": 2109,
+      "official_horizon": 3000,
+      "case_id": "RCU-049",
+      "horizon": 3000
+    },
+    {
+      "task": "PortionHotDogs",
+      "task_index": 44,
+      "episode": 2,
+      "seed": 2209,
+      "official_horizon": 2250,
+      "case_id": "RCU-050",
+      "horizon": 2250
+    },
+    {
+      "task": "RecycleBottlesByType",
+      "task_index": 45,
+      "episode": 22,
+      "seed": 2279,
+      "official_horizon": 2850,
+      "case_id": "RCU-051",
+      "horizon": 2850
+    },
+    {
+      "task": "SeparateFreezerRack",
+      "task_index": 46,
+      "episode": 3,
+      "seed": 2310,
+      "official_horizon": 2400,
+      "case_id": "RCU-052",
+      "horizon": 2400
+    },
+    {
+      "task": "WaffleReheat",
+      "task_index": 47,
+      "episode": 3,
+      "seed": 2360,
+      "official_horizon": 4050,
+      "case_id": "RCU-053",
+      "horizon": 4050
+    },
+    {
+      "task": "WashFruitColander",
+      "task_index": 48,
+      "episode": 4,
+      "seed": 2411,
+      "official_horizon": 3150,
+      "case_id": "RCU-054",
+      "horizon": 3150
+    },
+    {
+      "task": "WeighIngredients",
+      "task_index": 49,
+      "episode": 22,
+      "seed": 2479,
+      "official_horizon": 3000,
+      "case_id": "RCU-055",
+      "horizon": 3000
+    },
+    {
+      "task": "ArrangeBreadBasket",
+      "task_index": 34,
+      "episode": 5,
+      "seed": 1712,
+      "official_horizon": 4350,
+      "case_id": "RCU-056",
+      "horizon": 4350
+    },
+    {
+      "task": "ArrangeTea",
+      "task_index": 35,
+      "episode": 9,
+      "seed": 1766,
+      "official_horizon": 2250,
+      "case_id": "RCU-057",
+      "horizon": 2250
+    },
+    {
+      "task": "BreadSelection",
+      "task_index": 36,
+      "episode": 8,
+      "seed": 1815,
+      "official_horizon": 1950,
+      "case_id": "RCU-058",
+      "horizon": 1950
+    },
+    {
+      "task": "CategorizeCondiments",
+      "task_index": 37,
+      "episode": 28,
+      "seed": 1885,
+      "official_horizon": 1650,
+      "case_id": "RCU-059",
+      "horizon": 1650
+    },
+    {
+      "task": "CuttingToolSelection",
+      "task_index": 38,
+      "episode": 7,
+      "seed": 1914,
+      "official_horizon": 1200,
+      "case_id": "RCU-060",
+      "horizon": 1200
+    },
+    {
+      "task": "GarnishPancake",
+      "task_index": 39,
+      "episode": 11,
+      "seed": 1968,
+      "official_horizon": 2700,
+      "case_id": "RCU-061",
+      "horizon": 2700
+    },
+    {
+      "task": "MakeIceLemonade",
+      "task_index": 42,
+      "episode": 3,
+      "seed": 2110,
+      "official_horizon": 3000,
+      "case_id": "RCU-062",
+      "horizon": 3000
+    },
+    {
+      "task": "PortionHotDogs",
+      "task_index": 44,
+      "episode": 4,
+      "seed": 2211,
+      "official_horizon": 2250,
+      "case_id": "RCU-063",
+      "horizon": 2250
+    },
+    {
+      "task": "SeparateFreezerRack",
+      "task_index": 46,
+      "episode": 4,
+      "seed": 2311,
+      "official_horizon": 2400,
+      "case_id": "RCU-064",
+      "horizon": 2400
+    },
+    {
+      "task": "WaffleReheat",
+      "task_index": 47,
+      "episode": 4,
+      "seed": 2361,
+      "official_horizon": 4050,
+      "case_id": "RCU-065",
+      "horizon": 4050
+    },
+    {
+      "task": "WashFruitColander",
+      "task_index": 48,
+      "episode": 7,
+      "seed": 2414,
+      "official_horizon": 3150,
+      "case_id": "RCU-066",
+      "horizon": 3150
+    },
+    {
+      "task": "WeighIngredients",
+      "task_index": 49,
+      "episode": 25,
+      "seed": 2482,
+      "official_horizon": 3000,
+      "case_id": "RCU-067",
+      "horizon": 3000
+    },
+    {
+      "task": "ArrangeBreadBasket",
+      "task_index": 34,
+      "episode": 18,
+      "seed": 1725,
+      "official_horizon": 4350,
+      "case_id": "RCU-068",
+      "horizon": 4350
+    },
+    {
+      "task": "ArrangeTea",
+      "task_index": 35,
+      "episode": 11,
+      "seed": 1768,
+      "official_horizon": 2250,
+      "case_id": "RCU-069",
+      "horizon": 2250
+    },
+    {
+      "task": "BreadSelection",
+      "task_index": 36,
+      "episode": 9,
+      "seed": 1816,
+      "official_horizon": 1950,
+      "case_id": "RCU-070",
+      "horizon": 1950
+    },
+    {
+      "task": "CuttingToolSelection",
+      "task_index": 38,
+      "episode": 9,
+      "seed": 1916,
+      "official_horizon": 1200,
+      "case_id": "RCU-071",
+      "horizon": 1200
+    },
+    {
+      "task": "GarnishPancake",
+      "task_index": 39,
+      "episode": 15,
+      "seed": 1972,
+      "official_horizon": 2700,
+      "case_id": "RCU-072",
+      "horizon": 2700
+    },
+    {
+      "task": "MakeIceLemonade",
+      "task_index": 42,
+      "episode": 4,
+      "seed": 2111,
+      "official_horizon": 3000,
+      "case_id": "RCU-073",
+      "horizon": 3000
+    },
+    {
+      "task": "PortionHotDogs",
+      "task_index": 44,
+      "episode": 5,
+      "seed": 2212,
+      "official_horizon": 2250,
+      "case_id": "RCU-074",
+      "horizon": 2250
+    },
+    {
+      "task": "SeparateFreezerRack",
+      "task_index": 46,
+      "episode": 6,
+      "seed": 2313,
+      "official_horizon": 2400,
+      "case_id": "RCU-075",
+      "horizon": 2400
+    },
+    {
+      "task": "ArrangeBreadBasket",
+      "task_index": 34,
+      "episode": 12,
+      "seed": 1719,
+      "official_horizon": 4350,
+      "case_id": "RCU-076",
+      "horizon": 4350
+    },
+    {
+      "task": "ArrangeTea",
+      "task_index": 35,
+      "episode": 3,
+      "seed": 1760,
+      "official_horizon": 2250,
+      "case_id": "RCU-077",
+      "horizon": 2250
+    },
+    {
+      "task": "BreadSelection",
+      "task_index": 36,
+      "episode": 1,
+      "seed": 1808,
+      "official_horizon": 1950,
+      "case_id": "RCU-078",
+      "horizon": 1950
+    },
+    {
+      "task": "CategorizeCondiments",
+      "task_index": 37,
+      "episode": 1,
+      "seed": 1858,
+      "official_horizon": 1650,
+      "case_id": "RCU-079",
+      "horizon": 1650
+    },
+    {
+      "task": "CuttingToolSelection",
+      "task_index": 38,
+      "episode": 0,
+      "seed": 1907,
+      "official_horizon": 1200,
+      "case_id": "RCU-080",
+      "horizon": 1200
+    },
+    {
+      "task": "GarnishPancake",
+      "task_index": 39,
+      "episode": 9,
+      "seed": 1966,
+      "official_horizon": 2700,
+      "case_id": "RCU-081",
+      "horizon": 2700
+    },
+    {
+      "task": "GatherTableware",
+      "task_index": 40,
+      "episode": 0,
+      "seed": 2007,
+      "official_horizon": 2250,
+      "case_id": "RCU-082",
+      "horizon": 2250
+    },
+    {
+      "task": "HeatKebabSandwich",
+      "task_index": 41,
+      "episode": 0,
+      "seed": 2057,
+      "official_horizon": 2700,
+      "case_id": "RCU-083",
+      "horizon": 2700
+    },
+    {
+      "task": "MakeIceLemonade",
+      "task_index": 42,
+      "episode": 6,
+      "seed": 2113,
+      "official_horizon": 3000,
+      "case_id": "RCU-084",
+      "horizon": 3000
+    },
+    {
+      "task": "PanTransfer",
+      "task_index": 43,
+      "episode": 0,
+      "seed": 2157,
+      "official_horizon": 1800,
+      "case_id": "RCU-085",
+      "horizon": 1800
+    },
+    {
+      "task": "PortionHotDogs",
+      "task_index": 44,
+      "episode": 1,
+      "seed": 2208,
+      "official_horizon": 2250,
+      "case_id": "RCU-086",
+      "horizon": 2250
+    },
+    {
+      "task": "RecycleBottlesByType",
+      "task_index": 45,
+      "episode": 1,
+      "seed": 2258,
+      "official_horizon": 2850,
+      "case_id": "RCU-087",
+      "horizon": 2850
+    },
+    {
+      "task": "SeparateFreezerRack",
+      "task_index": 46,
+      "episode": 0,
+      "seed": 2307,
+      "official_horizon": 2400,
+      "case_id": "RCU-088",
+      "horizon": 2400
+    },
+    {
+      "task": "WashFruitColander",
+      "task_index": 48,
+      "episode": 6,
+      "seed": 2413,
+      "official_horizon": 3150,
+      "case_id": "RCU-089",
+      "horizon": 3150
+    },
+    {
+      "task": "WeighIngredients",
+      "task_index": 49,
+      "episode": 0,
+      "seed": 2457,
+      "official_horizon": 3000,
+      "case_id": "RCU-090",
+      "horizon": 3000
+    },
+    {
+      "task": "ArrangeBreadBasket",
+      "task_index": 34,
+      "episode": 15,
+      "seed": 1722,
+      "official_horizon": 4350,
+      "case_id": "RCU-091",
+      "horizon": 4350
+    },
+    {
+      "task": "ArrangeTea",
+      "task_index": 35,
+      "episode": 7,
+      "seed": 1764,
+      "official_horizon": 2250,
+      "case_id": "RCU-092",
+      "horizon": 2250
+    },
+    {
+      "task": "BreadSelection",
+      "task_index": 36,
+      "episode": 27,
+      "seed": 1834,
+      "official_horizon": 1950,
+      "case_id": "RCU-093",
+      "horizon": 1950
+    },
+    {
+      "task": "CategorizeCondiments",
+      "task_index": 37,
+      "episode": 2,
+      "seed": 1859,
+      "official_horizon": 1650,
+      "case_id": "RCU-094",
+      "horizon": 1650
+    },
+    {
+      "task": "CuttingToolSelection",
+      "task_index": 38,
+      "episode": 4,
+      "seed": 1911,
+      "official_horizon": 1200,
+      "case_id": "RCU-095",
+      "horizon": 1200
+    },
+    {
+      "task": "GarnishPancake",
+      "task_index": 39,
+      "episode": 13,
+      "seed": 1970,
+      "official_horizon": 2700,
+      "case_id": "RCU-096",
+      "horizon": 2700
+    },
+    {
+      "task": "GatherTableware",
+      "task_index": 40,
+      "episode": 1,
+      "seed": 2008,
+      "official_horizon": 2250,
+      "case_id": "RCU-097",
+      "horizon": 2250
+    },
+    {
+      "task": "HeatKebabSandwich",
+      "task_index": 41,
+      "episode": 1,
+      "seed": 2058,
+      "official_horizon": 2700,
+      "case_id": "RCU-098",
+      "horizon": 2700
+    },
+    {
+      "task": "MakeIceLemonade",
+      "task_index": 42,
+      "episode": 13,
+      "seed": 2120,
+      "official_horizon": 3000,
+      "case_id": "RCU-099",
+      "horizon": 3000
+    },
+    {
+      "task": "PanTransfer",
+      "task_index": 43,
+      "episode": 1,
+      "seed": 2158,
+      "official_horizon": 1800,
+      "case_id": "RCU-100",
+      "horizon": 1800
+    }
+  ]
+}

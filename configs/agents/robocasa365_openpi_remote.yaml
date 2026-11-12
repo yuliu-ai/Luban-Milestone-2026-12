@@ -1,0 +1,18 @@
+agent:
+  class_path: luban.agent_core.DefaultAgent
+
+planner:
+  class_path: luban.agent_core.TaskSkillPlanner
+
+skill_backend:
+  name: openpi_remote
+  init_args:
+    host: localhost
+    port: 8000
+    timeout_seconds: 120
+
+verifier:
+  class_path: luban.agent_core.SubtaskVerifier
+
+memory:
+  class_path: luban.agent_core.InMemoryMemory

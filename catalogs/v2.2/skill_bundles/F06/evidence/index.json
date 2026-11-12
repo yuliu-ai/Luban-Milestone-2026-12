@@ -1,0 +1,12 @@
+{
+  "skill_id": "F06",
+  "skill_version": "2.2.0",
+  "catalog_version": "2.2.0",
+  "maturity": "declared",
+  "executor_status": "backend_pending",
+  "verifier_status": "backend_pending",
+  "case_count": 6,
+  "examples_origin": "由契约生成并在构建时自检（正例必须通过、结构负例与语义负例必须被拒绝）",
+  "real_backend_evidence": [],
+  "note": "尚无任何真实执行证据。任何 candidate 版本必须先有 backend_bound 执行器与验证器，再按 promotion_gate 做配对实验。"
+}

@@ -1,0 +1,93 @@
+{
+  "benchmark": "RoboSynChallenge",
+  "evaluation_date": "2026-10-12",
+  "source_url": "https://github.com/choucaicai/OmniRoboAgent/blob/c9901442c396741fc3d30b73d7e6f058af09ca08/docs/robosynchallenge-results.md",
+  "source_branch": "feat/robosynchallenge",
+  "source_commit": "c9901442c396741fc3d30b73d7e6f058af09ca08",
+  "historical_base_commit": "78686193e3fa41231677e064a84d46c6b62cd807",
+  "protocol": {
+    "setting": "random",
+    "seeds": "unfiltered seeds 0–99 per task",
+    "reset": "warmup_get_obs_get_info_v2",
+    "tasks": 10,
+    "episodes_per_task": 100,
+    "environment": "EmbodiChain / DexSim",
+    "planner_verifier": "Qwen3.5-9B visual SubtaskSkillPlanner / SubtaskVerifier",
+    "policy": "public task-specific ACT checkpoints; no language conditioning or policy training",
+    "success_signal": "is_task_success() and not truncated"
+  },
+  "total": {
+    "episodes": 1000,
+    "successes": 412,
+    "failures": 588,
+    "success_rate_percent": 41.2
+  },
+  "per_task": [
+    {
+      "task": "click_bell",
+      "successes": 54,
+      "episodes": 100,
+      "success_rate_percent": 54
+    },
+    {
+      "task": "drawer_open_place",
+      "successes": 4,
+      "episodes": 100,
+      "success_rate_percent": 4
+    },
+    {
+      "task": "handle_basket",
+      "successes": 18,
+      "episodes": 100,
+      "success_rate_percent": 18
+    },
+    {
+      "task": "item_assembly",
+      "successes": 60,
+      "episodes": 100,
+      "success_rate_percent": 60
+    },
+    {
+      "task": "items_handover",
+      "successes": 4,
+      "episodes": 100,
+      "success_rate_percent": 4
+    },
+    {
+      "task": "manipulate_pipette",
+      "successes": 56,
+      "episodes": 100,
+      "success_rate_percent": 56
+    },
+    {
+      "task": "mixer_operating",
+      "successes": 66,
+      "episodes": 100,
+      "success_rate_percent": 66
+    },
+    {
+      "task": "sample_loading",
+      "successes": 1,
+      "episodes": 100,
+      "success_rate_percent": 1
+    },
+    {
+      "task": "table_rearrangement",
+      "successes": 98,
+      "episodes": 100,
+      "success_rate_percent": 98
+    },
+    {
+      "task": "water_pouring",
+      "successes": 51,
+      "episodes": 100,
+      "success_rate_percent": 51
+    }
+  ],
+  "scope_notes": [
+    "Framework evaluation with unfiltered seeds; official evaluator uses expert feasibility filtering, so this is not an exact reproduction of the paper protocol.",
+    "Historical GPU evaluation before the subsequent source integration; no 1000-episode GPU rerun on the new integration base.",
+    "Separate from the Isaac Sim fixed titration demo.",
+    "item_assembly encountered native cleanup SIGSEGV after saving its final episode; all 100 episode artifacts were audited. A later cache-only resume exited zero without rerunning rollouts; this does not establish a cleanup fix."
+  ]
+}

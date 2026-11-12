@@ -1,0 +1,190 @@
+{
+  "schema_version": "2.1.0",
+  "catalog_version": "2.2.0",
+  "title": "分层技能图谱（atomic 64 / composite 12 / task_template）",
+  "note": "本图只覆盖本仓库可核验的两层：atomic 由 atomic_skills.json 定义，composite 由 composites.json 定义（不计数）。task_template 层由上层任务编排服务维护，本文件不虚构其条目。composite 的 atomic_refs 为递归扫描其定义中出现的原子技能编号得到，已把已合并的旧编号映射到当前编号。",
+  "layers": [
+    {
+      "index": 0,
+      "layer": "atomic",
+      "counted": true,
+      "count": 64,
+      "source": "atomic_skills.json",
+      "definition": "有限时域、单一主要状态变化、可终止、可验证的单一技能契约。"
+    },
+    {
+      "index": 1,
+      "layer": "composite",
+      "counted": false,
+      "count": 12,
+      "source": "../composites.json",
+      "definition": "由原子技能与数据绑定组成的组合工作流；引用原子技能但不改变其契约。"
+    },
+    {
+      "index": 2,
+      "layer": "task_template",
+      "counted": false,
+      "count": null,
+      "source": "上层任务编排服务",
+      "definition": "任务级模板与恢复策略，不属于本目录，也不重复计数。"
+    }
+  ],
+  "composites": [
+    {
+      "id": "X01",
+      "name_zh": "平行夹爪抓取放置",
+      "category": "composite_workflow",
+      "atomic_refs": [
+        "G01",
+        "G03",
+        "I06",
+        "I08",
+        "I09",
+        "M04",
+        "P03"
+      ]
+    },
+    {
+      "id": "X02",
+      "name_zh": "灵巧手捏取放置",
+      "category": "composite_workflow",
+      "atomic_refs": [
+        "G04",
+        "G05",
+        "I06",
+        "I08",
+        "I09",
+        "M04",
+        "P03"
+      ]
+    },
+    {
+      "id": "X03",
+      "name_zh": "吸盘抓取放置",
+      "category": "composite_workflow",
+      "atomic_refs": [
+        "G07",
+        "G08",
+        "I06",
+        "I08",
+        "I09",
+        "M04",
+        "P03"
+      ]
+    },
+    {
+      "id": "X04",
+      "name_zh": "双物体堆叠",
+      "category": "composite_workflow",
+      "atomic_refs": [
+        "G01",
+        "I06",
+        "I08",
+        "I09",
+        "P03",
+        "P09"
+      ]
+    },
+    {
+      "id": "X05",
+      "name_zh": "直线关节容器开合",
+      "category": "composite_workflow",
+      "atomic_refs": [
+        "A01",
+        "G01",
+        "G03",
+        "M01",
+        "M04",
+        "P08"
+      ]
+    },
+    {
+      "id": "X06",
+      "name_zh": "旋转关节容器开合",
+      "category": "composite_workflow",
+      "atomic_refs": [
+        "A02",
+        "G01",
+        "G03",
+        "M01",
+        "M04",
+        "P08"
+      ]
+    },
+    {
+      "id": "X07",
+      "name_zh": "轴孔插装",
+      "category": "composite_workflow",
+      "atomic_refs": [
+        "G01",
+        "I09",
+        "I10",
+        "M01",
+        "P03",
+        "P09"
+      ]
+    },
+    {
+      "id": "X08",
+      "name_zh": "容器间定量倾倒",
+      "category": "composite_workflow",
+      "atomic_refs": [
+        "I06",
+        "I09",
+        "I12",
+        "P03",
+        "P09"
+      ]
+    },
+    {
+      "id": "X09",
+      "name_zh": "持工具切割",
+      "category": "composite_workflow",
+      "atomic_refs": [
+        "M01",
+        "M04",
+        "P03",
+        "P09"
+      ]
+    },
+    {
+      "id": "X10",
+      "name_zh": "舀取并转移",
+      "category": "composite_workflow",
+      "atomic_refs": [
+        "I06",
+        "I09",
+        "M04",
+        "P03",
+        "P09"
+      ]
+    },
+    {
+      "id": "X11",
+      "name_zh": "持工具擦拭区域",
+      "category": "composite_workflow",
+      "atomic_refs": [
+        "M01",
+        "M04",
+        "P03",
+        "P09",
+        "P11",
+        "T04"
+      ]
+    },
+    {
+      "id": "X12",
+      "name_zh": "嵌合盖抓取压合",
+      "category": "composite_workflow",
+      "atomic_refs": [
+        "G01",
+        "G03",
+        "I09",
+        "M01",
+        "M04",
+        "P03",
+        "P09"
+      ]
+    }
+  ]
+}

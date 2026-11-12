@@ -1,0 +1,42 @@
+# Real simulation and real XR-1 inference; deterministic task planner, no LLM.
+agent_config: ../agents/xr1_simple.yaml
+pipeline:
+  class_path: luban.pipelines.DirectPipeline
+  init_args:
+    action_execution_mode: receding_horizon
+    execute_steps: 16
+runtime:
+  class_path: luban.runtimes.SyncRuntime
+  init_args:
+    config:
+      max_environment_steps: 600
+      max_action_chunks: 38
+      max_pipeline_iterations: 40
+      max_invalid_actions: 2
+      max_retries: 1
+      timeout_seconds: 600
+      output_dir: runs/robocasa_simple
+      observability:
+        class_path: luban.observability.LocalEpisodeRecorder
+        init_args:
+          record_agent_trace: true
+          record_video: true
+          video_fps: 4
+          video_camera_keys:
+            - video.robot0_agentview_left
+            - video.robot0_agentview_right
+            - video.robot0_eye_in_hand
+environment:
+  class_path: luban.environments.benchmarks.robocasa.RoboCasaEnvironment
+  init_args:
+    enable_render: true
+    render_gpu_device_id: 0
+    camera_height: 256
+    camera_width: 256
+    action_range_policy: official_controller_clip
+task:
+  name: CloseBlenderLid
+  split: target
+  episode_index: 0
+  seed: 7
+  horizon: 600

@@ -1,0 +1,155 @@
+{
+  "invocation_id": "80a1d5ea-7360-41ac-8c55-6c1e13e71a7a",
+  "skill_ref": "P06@2.2.0",
+  "status": "failed",
+  "success": false,
+  "started_at": "2026-09-12T18:25:35.588Z",
+  "finished_at": "2026-09-12T18:25:39.131Z",
+  "duration_s": 3.543344546109438,
+  "outputs": {},
+  "observation": {
+    "environment_executed": false,
+    "outputs": {},
+    "post_state": {},
+    "signals": {
+      "requested_keys": [
+        "temperature",
+        "weight",
+        "brand"
+      ],
+      "warnings": [
+        "vqa mode: the model reports no calibrated confidence; entity confidence is 0.0 and means 'unavailable'",
+        "temperature: generation failed (OutOfMemoryError: CUDA out of memory. Tried to allocate 744.00 MiB. GPU 0 has a total capacity of 23.52 GiB of which 563.31 MiB is free. Process 22641 has 13.44 GiB memory in use. Including non-PyTorch memory, this process has 9.52 GiB memory in use. Of the allocated memory 9.05 GiB is allocated by PyTorch, and 31.51 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fra",
+        "weight: generation failed (OutOfMemoryError: CUDA out of memory. Tried to allocate 744.00 MiB. GPU 0 has a total capacity of 23.52 GiB of which 563.31 MiB is free. Process 22641 has 13.44 GiB memory in use. Including non-PyTorch memory, this process has 9.52 GiB memory in use. Of the allocated memory 9.05 GiB is allocated by PyTorch, and 31.51 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragment",
+        "brand: generation failed (OutOfMemoryError: CUDA out of memory. Tried to allocate 744.00 MiB. GPU 0 has a total capacity of 23.52 GiB of which 563.31 MiB is free. Process 22641 has 13.44 GiB memory in use. Including non-PyTorch memory, this process has 9.52 GiB memory in use. Of the allocated memory 9.05 GiB is allocated by PyTorch, and 31.51 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmenta"
+      ]
+    },
+    "trace": [],
+    "error_code": "CAPABILITY_UNAVAILABLE",
+    "error_message": "Molmo2 returned no answer for any requested attribute key; P06 cannot report attribute values.",
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "not_run",
+    "reason": "Molmo2 returned no answer for any requested attribute key; P06 cannot report attribute values.",
+    "verifier_key": "none",
+    "independent": false,
+    "criteria": {},
+    "metrics": {}
+  },
+  "events": [
+    {
+      "event_id": "c42902cf-c128-4056-be23-0b3e253b7d51",
+      "invocation_id": "80a1d5ea-7360-41ac-8c55-6c1e13e71a7a",
+      "occurred_at": "2026-09-12T18:25:35.588Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "P06",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "e9dbcf59-5efb-466e-907e-0ee8a9e9a0d9",
+      "invocation_id": "80a1d5ea-7360-41ac-8c55-6c1e13e71a7a",
+      "occurred_at": "2026-09-12T18:25:35.588Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "P06@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "c3354124-4da0-480c-9f3a-1bf22fb0e082",
+      "invocation_id": "80a1d5ea-7360-41ac-8c55-6c1e13e71a7a",
+      "occurred_at": "2026-09-12T18:25:35.588Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "P06@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "d242d7f1-fff8-4985-8095-d919f2c83a39",
+      "invocation_id": "80a1d5ea-7360-41ac-8c55-6c1e13e71a7a",
+      "occurred_at": "2026-09-12T18:25:35.588Z",
+      "event_type": "preflight_started",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "b61e6e4a-8970-4fb0-86e4-8395158dafea",
+      "invocation_id": "80a1d5ea-7360-41ac-8c55-6c1e13e71a7a",
+      "occurred_at": "2026-09-12T18:25:35.588Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "b22815cb-fe8b-46a5-95ef-9900ffee71e2",
+      "invocation_id": "80a1d5ea-7360-41ac-8c55-6c1e13e71a7a",
+      "occurred_at": "2026-09-12T18:25:35.590Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "de000b09-3ab0-480a-8721-3d9a6887f261",
+      "invocation_id": "80a1d5ea-7360-41ac-8c55-6c1e13e71a7a",
+      "occurred_at": "2026-09-12T18:25:35.590Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "backend_key": "classify_object_attributes"
+      }
+    },
+    {
+      "event_id": "9732ea4c-2ee0-4f84-9fc4-d223629ae653",
+      "invocation_id": "80a1d5ea-7360-41ac-8c55-6c1e13e71a7a",
+      "occurred_at": "2026-09-12T18:25:35.590Z",
+      "event_type": "command_prepared",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "backend_key": "classify_object_attributes",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "f051c198-cab2-4e16-9f53-cfbc0ea175a6",
+      "invocation_id": "80a1d5ea-7360-41ac-8c55-6c1e13e71a7a",
+      "occurred_at": "2026-09-12T18:25:35.590Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "environment_key": "molmo2_attribute"
+      }
+    },
+    {
+      "event_id": "25cd31d8-de1b-44f0-bcc2-048f34f23c31",
+      "invocation_id": "80a1d5ea-7360-41ac-8c55-6c1e13e71a7a",
+      "occurred_at": "2026-09-12T18:25:39.131Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "environment_key": "molmo2_attribute",
+        "environment_executed": false
+      }
+    },
+    {
+      "event_id": "37098235-8ffb-4e9c-aa49-dce08ddff0db",
+      "invocation_id": "80a1d5ea-7360-41ac-8c55-6c1e13e71a7a",
+      "occurred_at": "2026-09-12T18:25:39.131Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "status": "failed",
+        "error_code": "CAPABILITY_UNAVAILABLE"
+      }
+    }
+  ],
+  "error_code": "CAPABILITY_UNAVAILABLE",
+  "error_message": "Molmo2 returned no answer for any requested attribute key; P06 cannot report attribute values."
+}

@@ -1,0 +1,144 @@
+{
+  "started_at_s": 1789229796.5987005,
+  "binding_health": {
+    "healthy": true,
+    "base_policy": "xr1",
+    "mode": "bound_execution",
+    "catalog_paths": [
+      "<HISTORICAL_PROJECT_ROOT>/catalogs/v2.2/atomic_skills.json"
+    ],
+    "catalog_summary": {
+      "schema_version": "2.1.0",
+      "catalog_version": "2.2.0",
+      "contract_versions": 64,
+      "unique_skill_ids": 64,
+      "atomic_skill_ids": 64,
+      "kinds": {
+        "atomic_execution": 47,
+        "atomic_perception": 17
+      },
+      "categories": {
+        "aerial_navigation": 8,
+        "articulated_object": 6,
+        "contact_manipulation": 9,
+        "end_effector": 8,
+        "ground_navigation": 4,
+        "motion_control": 9,
+        "navigation_perception": 4,
+        "observation_payload": 2,
+        "perception": 12,
+        "tool_and_media": 2
+      },
+      "statuses": {
+        "specified": 64
+      },
+      "dependency_edges": 0,
+      "cycles": 0
+    },
+    "embodiment_profile": "mobile_manipulator",
+    "embodiment_compatible_atomic_skills": 50,
+    "declared_capabilities": [
+      "object_detector",
+      "rgb_camera"
+    ],
+    "xr1_bound_atomic_skills": 1,
+    "contract_only_atomic_skills": 63,
+    "route_audit": {
+      "configured_source_count": 3,
+      "configured_route_count": 3,
+      "configured_source_names": [
+        "F07",
+        "P01",
+        "T04"
+      ],
+      "missing_source_names": [],
+      "unexpected_source_names": []
+    }
+  },
+  "node_annotation": {
+    "id": "node-p01-detect",
+    "atomic_skill_id": "P01",
+    "task": "check whether the workspace object is visible",
+    "omni_atomic_skill_routes": [
+      {
+        "source_skill_name": "P01",
+        "target_ref": "P01@2.2.0",
+        "target_kind": "atomic_perception",
+        "order": 0,
+        "input_bindings": {
+          "image_ref": "$.params.image_ref",
+          "score_threshold": "$.params.score_threshold",
+          "frame_id": "$.params.frame_id",
+          "verification_profile_ref": "$.params.verification_profile_ref"
+        },
+        "note": "V2.2 自映射：P01 在 V2.2 中为 implemented/backend_bound，可进入 bound_execution。"
+      }
+    ],
+    "atomic_skill_binding_status": "xr1_bound"
+  },
+  "execution": {
+    "status": "unverified",
+    "verification_verdict": "passed",
+    "verification_independent": false,
+    "detection_count": 10,
+    "signals": {
+      "done": true,
+      "provider": "sam3",
+      "entity_count": 48,
+      "threshold_dropped": 38,
+      "latency_ms": 371.13185226917267,
+      "warnings": []
+    }
+  },
+  "rechecks": [
+    {
+      "source": "sam3@scale640",
+      "independent": false,
+      "matched": 9,
+      "compared": 10,
+      "agreement": 0.9,
+      "passed": false,
+      "notes": [
+        "跨尺度复检：同模型不同分辨率，用于发现不稳定框，不构成独立验证源。"
+      ]
+    },
+    {
+      "source": "molmo2",
+      "independent": true,
+      "matched": 3,
+      "compared": 10,
+      "point_matched": 3,
+      "point_compared": 3,
+      "agreement": 0.3,
+      "passed": true,
+      "notes": [],
+      "details": {
+        "secondary_count": 3,
+        "pairs": [
+          {
+            "primary_label": "counter",
+            "secondary_label": "counter",
+            "overlap": 1.0,
+            "secondary_kind": "point"
+          },
+          {
+            "primary_label": "counter",
+            "secondary_label": "faucet handle",
+            "overlap": 1.0,
+            "secondary_kind": "point"
+          },
+          {
+            "primary_label": "counter",
+            "secondary_label": "faucet handle",
+            "overlap": 1.0,
+            "secondary_kind": "point"
+          }
+        ],
+        "latency_ms": 6840.9697487950325,
+        "checked_at_s": 1789229804.3348408
+      }
+    }
+  ],
+  "independent_source_available": true,
+  "independent_source_passed": true
+}

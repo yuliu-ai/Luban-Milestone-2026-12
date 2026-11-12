@@ -1,0 +1,54 @@
+{
+  "skill_id": "P01",
+  "skill_version": "2.2.0",
+  "catalog_version": "2.2.0",
+  "maturity": "verified",
+  "executor_status": "implemented",
+  "verifier_status": "implemented",
+  "case_count": "见文件",
+  "examples_origin": "人工审阅样例（不会被构建覆盖）",
+  "real_backend_evidence": [
+    {
+      "kind": "single_frame_probe",
+      "provider": "sam3",
+      "checkpoint": "sam3.pt",
+      "device": "cuda",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (UUID GPU-REDACTED)",
+      "date": "2026-09-12",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/sam3_probe/p01_sam3_summary.json",
+        "catalogs/v2.2/evidence/sam3_probe/p01_sam3_result.json",
+        "catalogs/v2.2/evidence/sam3_probe/runtime_events.jsonl",
+        "catalogs/v2.2/evidence/sam3_probe/input_frame.png"
+      ],
+      "entities_returned": 28,
+      "detections": 7,
+      "latency_ms": 474.37121346592903,
+      "verification_verdict": "passed",
+      "terminal_status": "unverified",
+      "limitations": "单帧探针；执行期 verification.independent=false，独立复核由 cross_provider_recheck 条目承担。"
+    },
+    {
+      "kind": "cross_provider_recheck",
+      "provider": "molmo2",
+      "checkpoint": "molmo2-4b (bfloat16)",
+      "device": "cuda",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (UUID GPU-REDACTED)",
+      "date": "2026-09-12",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/sam3_probe/p01_node_binding.json",
+        "catalogs/v2.2/evidence/sam3_probe/node_runtime_events.jsonl"
+      ],
+      "independent": true,
+      "point_matched": 3,
+      "point_compared": 3,
+      "recall_matched": 3,
+      "recall_compared": 10,
+      "passed": true,
+      "limitations": "pointing 模型每次查询只给少量点，不覆盖全部 SAM3 检测框；recall 视角（matched/compared）如实保留。"
+    }
+  ],
+  "note": "真实后端证据见 real_backend_evidence；独立复核条目仅出现在有第二来源的技能上；再升版本需按 promotion_gate 做配对实验。"
+}

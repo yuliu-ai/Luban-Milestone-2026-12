@@ -1,0 +1,1411 @@
+{
+  "source_repository": "https://github.com/yuliu-ai/atomic-skill-evaluator",
+  "source_report": "validation/new-machine-20261028/report.md",
+  "evaluation_date": "2026-10-28",
+  "protocol": {
+    "source_commit": "3fa6814880d95c7dcec71435f00b7f2234cc8265",
+    "backend_sha256": "256d8842771ccfbcb3c201f9e929c0f941f905a769f8ad2267d99ea3416021e6",
+    "rounds": 3,
+    "trials_per_item_per_round": 50,
+    "workers": 8,
+    "seed_start": 43841001,
+    "round_seed_stride": 1000000,
+    "historical_results_reused": false,
+    "atomic_rate_strictly_greater_than": 0.9,
+    "composite_rate_at_least": 0.6,
+    "automatic_retries": 0,
+    "raw_evidence_losslessly_archived": true
+  },
+  "independent_count_audit": {
+    "rounds_checked": 3,
+    "unique_atomic_invocations": 9600,
+    "rounds": [
+      {
+        "round": 1,
+        "atomic_attempts": 3200,
+        "composite_attempts": 1250,
+        "atomic_passed": 3194,
+        "composite_passed": 1249,
+        "minimum_atomic_rate": 0.98,
+        "minimum_composite_rate": 0.98,
+        "all_thresholds_met": true,
+        "nonempty_unique_atomic_invocations": true,
+        "owned_services_stopped": true
+      },
+      {
+        "round": 2,
+        "atomic_attempts": 3200,
+        "composite_attempts": 1250,
+        "atomic_passed": 3197,
+        "composite_passed": 1250,
+        "minimum_atomic_rate": 0.98,
+        "minimum_composite_rate": 1.0,
+        "all_thresholds_met": true,
+        "nonempty_unique_atomic_invocations": true,
+        "owned_services_stopped": true
+      },
+      {
+        "round": 3,
+        "atomic_attempts": 3200,
+        "composite_attempts": 1250,
+        "atomic_passed": 3191,
+        "composite_passed": 1250,
+        "minimum_atomic_rate": 0.96,
+        "minimum_composite_rate": 1.0,
+        "all_thresholds_met": true,
+        "nonempty_unique_atomic_invocations": true,
+        "owned_services_stopped": true
+      }
+    ],
+    "formal_three_rounds_complete": true,
+    "all_thresholds_met": true,
+    "historical_results_reused": false
+  },
+  "summary": {
+    "skills": [
+      {
+        "id": "P01",
+        "name": "物体检测",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 149,
+        "rate": 0.9933333333333333,
+        "worst_round_rate": 0.98,
+        "round_rates": [
+          0.98,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "P02",
+        "name": "实例分割",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "P03",
+        "name": "物体六维位姿估计",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "P04",
+        "name": "场景深度估计",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 146,
+        "rate": 0.9733333333333334,
+        "worst_round_rate": 0.96,
+        "round_rates": [
+          0.98,
+          0.98,
+          0.96
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "P05",
+        "name": "有限时域目标跟踪",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "P06",
+        "name": "物体属性识别",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 148,
+        "rate": 0.9866666666666667,
+        "worst_round_rate": 0.98,
+        "round_rates": [
+          0.98,
+          1.0,
+          0.98
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "P07",
+        "name": "可操作性估计",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "P08",
+        "name": "可动关节估计",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "P09",
+        "name": "对象状态估计",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 148,
+        "rate": 0.9866666666666667,
+        "worst_round_rate": 0.96,
+        "round_rates": [
+          1.0,
+          1.0,
+          0.96
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "P10",
+        "name": "力与力矩读取",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "P11",
+        "name": "接触检测",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "P12",
+        "name": "机器人状态读取",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "M01",
+        "name": "末端参数化直线移动",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 149,
+        "rate": 0.9933333333333333,
+        "worst_round_rate": 0.98,
+        "round_rates": [
+          1.0,
+          1.0,
+          0.98
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "M02",
+        "name": "末端有限航点路径移动",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 147,
+        "rate": 0.98,
+        "worst_round_rate": 0.98,
+        "round_rates": [
+          0.98,
+          0.98,
+          0.98
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "M03",
+        "name": "末端原位旋转",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 149,
+        "rate": 0.9933333333333333,
+        "worst_round_rate": 0.98,
+        "round_rates": [
+          0.98,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "M04",
+        "name": "末端位姿移动",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 147,
+        "rate": 0.98,
+        "worst_round_rate": 0.98,
+        "round_rates": [
+          0.98,
+          0.98,
+          0.98
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "M05",
+        "name": "机械臂关节移动",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "M06",
+        "name": "末端定时保持",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "M08",
+        "name": "移动底盘直线移动",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "M09",
+        "name": "移动底盘原地旋转",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "M10",
+        "name": "机器人受控停止",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "M11",
+        "name": "双臂同步位姿移动",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "M12",
+        "name": "有限时域视觉伺服",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "G01",
+        "name": "平行夹爪定宽调节",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "G03",
+        "name": "平行夹爪力控抓取",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "G04",
+        "name": "灵巧手关节定位",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "G05",
+        "name": "灵巧手参数化抓取闭合",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "G09",
+        "name": "定时抓取力调节",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "G10",
+        "name": "末端执行器定时保持",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "G11",
+        "name": "平行夹爪零位标定",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "G12",
+        "name": "夹爪阶跃响应自检",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "I01",
+        "name": "物体直线推动",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "I02",
+        "name": "物体直线拉动",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "I04",
+        "name": "物体平面旋转",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "I06",
+        "name": "被持物体竖直移动",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "I08",
+        "name": "被持物体落座",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "I09",
+        "name": "被持物体位姿对准",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "I10",
+        "name": "被持物体直线插入",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "I11",
+        "name": "被持物体直线拔出",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "I12",
+        "name": "被持物体翻转",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "A01",
+        "name": "移动直线关节对象",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "A02",
+        "name": "转动旋转关节对象",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "A03",
+        "name": "旋转控制件",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "A04",
+        "name": "按压按钮",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "A05",
+        "name": "离散开关挡位调节",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "A07",
+        "name": "机械卡扣状态调节",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "T04",
+        "name": "工具单次擦拭行程",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "T08",
+        "name": "执行器定量分配",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "N01",
+        "name": "有限窗口机器人自主定位",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "N02",
+        "name": "局部占据空间快照生成",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "N03",
+        "name": "地面可通行区与空中净空区估计",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "N04",
+        "name": "候选着陆区几何观测",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "N05",
+        "name": "地面有限路径段跟随",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 149,
+        "rate": 0.9933333333333333,
+        "worst_round_rate": 0.98,
+        "round_rates": [
+          1.0,
+          1.0,
+          0.98
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "N06",
+        "name": "底盘局部对接位姿对准",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "F01",
+        "name": "多旋翼受限垂直起飞",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "F02",
+        "name": "指定区域受限垂直降落",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "F03",
+        "name": "有限时域位置悬停",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "F04",
+        "name": "单一局部航点飞行",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "F05",
+        "name": "三维有限轨迹段跟随",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "F06",
+        "name": "空中定点偏航调整",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "F07",
+        "name": "有限航段离地高度跟随",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "F08",
+        "name": "空中受控制动至保持",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "U01",
+        "name": "观测云台姿态调节",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "U02",
+        "name": "单次位姿关联图像采集",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      }
+    ],
+    "combinations": [
+      {
+        "id": "C01",
+        "name": "抓取后调力并保持",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C02",
+        "name": "抓取后直线拉动",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C03",
+        "name": "抓取、抬升、对准与落座",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C04",
+        "name": "抓取抬升后翻转",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C05",
+        "name": "抓取抬升、对准、插入与拔出",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C06",
+        "name": "云台调整后位姿关联采图",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C07",
+        "name": "自主定位、占据快照与可通行区估计",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C08",
+        "name": "底盘直线移动后受控停止",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C09",
+        "name": "夹爪标定、调宽与阶跃响应自检",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C10",
+        "name": "夹爪调宽后保持",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C11",
+        "name": "悬停、航点飞行、偏航与到达位置保持",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C12",
+        "name": "轨迹段飞行后偏航调整",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C13",
+        "name": "原模型检测后实例分割",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 149,
+        "rate": 0.9933333333333333,
+        "worst_round_rate": 0.98,
+        "round_rates": [
+          0.98,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C14",
+        "name": "抓取抬升后保持",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C15",
+        "name": "抓取抬升、调力与落座",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C16",
+        "name": "抓取抬升、翻转与姿态恢复",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C17",
+        "name": "抓取抬升、对准、调力与保持",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C18",
+        "name": "抓取拉动后抬升",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C19",
+        "name": "定位建图、区域估计、移动与停止",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C20",
+        "name": "局部对接后停止",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C21",
+        "name": "路径跟随后停止",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C22",
+        "name": "起飞后航点移动",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C23",
+        "name": "悬停、偏航后保持",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C24",
+        "name": "轨迹飞行、制动与保持",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      },
+      {
+        "id": "C25",
+        "name": "抓取抬升、调力与保持",
+        "attempted": 150,
+        "executed": 150,
+        "passed": 150,
+        "rate": 1.0,
+        "worst_round_rate": 1.0,
+        "round_rates": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "all_rounds_met_target": true
+      }
+    ],
+    "rounds_completed": 3,
+    "rounds_planned": 3,
+    "trials_per_item_per_round": 50,
+    "formal_sample_size": true,
+    "all_thresholds_met": true,
+    "historical_results_reused": false
+  }
+}

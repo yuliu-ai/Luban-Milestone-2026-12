@@ -1,0 +1,270 @@
+{
+  "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+  "skill_ref": "M01@2.2.0",
+  "status": "failed",
+  "success": false,
+  "started_at": "2026-09-13T07:34:18.136Z",
+  "finished_at": "2026-09-13T07:34:18.974Z",
+  "duration_s": 0.8380609303712845,
+  "outputs": {
+    "final_pose": [
+      0.27475428581237793,
+      -0.007562926504760981,
+      0.5919272303581238,
+      -0.9878259787592398,
+      -0.027764098223225037,
+      -0.1505189463106126,
+      0.027803549049428312
+    ],
+    "position_error_m": 0.3703505493717003,
+    "path_length_m": 0.10000000000000006,
+    "duration_s": 1.0,
+    "actual_distance_m": 0.02442261157442778,
+    "max_lateral_error_m": 0.001736717386641901
+  },
+  "observation": {
+    "environment_executed": true,
+    "outputs": {
+      "final_pose": [
+        0.27475428581237793,
+        -0.007562926504760981,
+        0.5919272303581238,
+        -0.9878259787592398,
+        -0.027764098223225037,
+        -0.1505189463106126,
+        0.027803549049428312
+      ],
+      "position_error_m": 0.3703505493717003,
+      "path_length_m": 0.10000000000000006,
+      "duration_s": 1.0,
+      "actual_distance_m": 0.02442261157442778,
+      "max_lateral_error_m": 0.001736717386641901
+    },
+    "post_state": {
+      "frame_id": "robot0_base",
+      "steps": 20
+    },
+    "signals": {
+      "done": true,
+      "environment_kind": "robocasa_ee_motion",
+      "frame_id": "robot0_base",
+      "start_pose": [
+        0.2504022717475891,
+        -0.006415195297449827,
+        0.5933853387832642,
+        -0.9882615124788904,
+        -0.029383690688053063,
+        -0.1472084747556128,
+        0.028380391727580667
+      ],
+      "target_position": [
+        0.6450970560312271,
+        -0.00907805934548378,
+        0.5937890410423279
+      ],
+      "target_orientation": null,
+      "orientation_mode": "hold",
+      "target_reached": false,
+      "steps": 20,
+      "step_budget": 20,
+      "step_budget_exhausted": true,
+      "measured_max_speed_mps": 0.10000000000000003,
+      "control_freq": 20.0
+    },
+    "trace": [
+      {
+        "stage": "robocasa_ee_linear",
+        "steps": 20
+      }
+    ],
+    "error_code": null,
+    "error_message": null,
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "failed",
+    "reason": "位置误差 0.3704m 超过容差 0.008m",
+    "verifier_key": "verify_ee_motion",
+    "independent": false,
+    "criteria": {
+      "evidence": {
+        "起始位姿": [
+          0.2504022717475891,
+          -0.006415195297449827,
+          0.5933853387832642,
+          -0.9882615124788904,
+          -0.029383690688053063,
+          -0.1472084747556128,
+          0.028380391727580667
+        ],
+        "目标位置": [
+          0.6450970560312271,
+          -0.00907805934548378,
+          0.5937890410423279
+        ],
+        "final_pose": [
+          0.27475428581237793,
+          -0.007562926504760981,
+          0.5919272303581238,
+          -0.9878259787592398,
+          -0.027764098223225037,
+          -0.1505189463106126,
+          0.027803549049428312
+        ],
+        "位置误差": 0.3703505493717003,
+        "最大横向误差": 0.001736717386641901,
+        "路径长度": 0.10000000000000006,
+        "时长": 1.0
+      }
+    },
+    "metrics": {
+      "position_error_m": 0.3703505493717003,
+      "max_lateral_error_m": 0.001736717386641901,
+      "steps": 20.0
+    }
+  },
+  "events": [
+    {
+      "event_id": "fb75b41e-8c8d-4833-a69b-03e40f30695e",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.136Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "M01",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "77365f32-ac05-4999-8b03-28aee9c7c039",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.136Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "M01@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "c7b0832b-2376-4886-b105-11137b17af13",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.136Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "M01@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "7ffc2453-1c22-4296-a619-e2c698a19c59",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.136Z",
+      "event_type": "preflight_started",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "f93984cf-9aaf-492f-800b-1eb9ca696e90",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.136Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "6f07b246-7182-4971-9b95-17a1e4d549e9",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.137Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "90a62bae-bbec-43f3-9f4e-878cc9ee18fe",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.137Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "backend_key": "move_ee_linear"
+      }
+    },
+    {
+      "event_id": "5260d91b-56c4-4b22-b22b-990c3dc90b4a",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.137Z",
+      "event_type": "command_prepared",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "backend_key": "move_ee_linear",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "6a4cd12b-963f-46e3-b65d-eb110cfa56fd",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.138Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "environment_key": "robocasa_ee_motion"
+      }
+    },
+    {
+      "event_id": "368a4bff-1bdc-4e43-b001-8a6837b14602",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.973Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "environment_key": "robocasa_ee_motion",
+        "environment_executed": true
+      }
+    },
+    {
+      "event_id": "7730e511-75c0-46e0-8171-7fca62c95498",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.974Z",
+      "event_type": "outputs_validated",
+      "skill_ref": "M01@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "1346223f-40d2-4a45-bb9d-5219765d0dac",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.974Z",
+      "event_type": "verification_started",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "verifier_key": "verify_move_ee_linear"
+      }
+    },
+    {
+      "event_id": "5a189d7d-a039-49a0-b3c3-a269555e143d",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.974Z",
+      "event_type": "verification_finished",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "verdict": "failed",
+        "verifier_key": "verify_ee_motion",
+        "independent": false
+      }
+    },
+    {
+      "event_id": "12af8b43-4c56-43a3-ae01-b38ce6022c43",
+      "invocation_id": "69dbdd84-825b-486a-a499-fdca11584f83",
+      "occurred_at": "2026-09-13T07:34:18.974Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "status": "failed"
+      }
+    }
+  ],
+  "error_code": "verification_failed",
+  "error_message": "位置误差 0.3704m 超过容差 0.008m"
+}

@@ -1,0 +1,46 @@
+{
+  "started_at_s": 1789306632.3278444,
+  "crop": "<HISTORICAL_PROJECT_ROOT>/runs/p06_probe/crop_cutting_board.png",
+  "profile": {
+    "version": "v1",
+    "execution": "real SkillRuntime P06 path (same as original probe)",
+    "candidate_values": {
+      "color": [
+        "white",
+        "brown",
+        "green",
+        "black"
+      ],
+      "cleanliness": [
+        "dirty",
+        "clean"
+      ],
+      "material": [
+        "wood",
+        "plastic",
+        "metal"
+      ]
+    },
+    "hsv_rules": "see module docstring (pre-registered before the run)",
+    "pass_rule": "P06 color output == HSV-derived color"
+  },
+  "p06_attributes": {
+    "color": "brown",
+    "cleanliness": "clean",
+    "material": "wood"
+  },
+  "p06_verdict": "passed",
+  "hsv_median": {
+    "h_deg": 16.9,
+    "s": 126.0,
+    "v": 127.0
+  },
+  "hsv_color": "brown",
+  "passed": true,
+  "independent": true,
+  "gpu": "NVIDIA GeForce RTX 4090, 15262 MiB, 24564 MiB",
+  "limitations": [
+    "颜色一致性核验只覆盖 color 属性；cleanliness/material 无第二来源，保持单源并如实记录。",
+    "候选集沿用原 MAIN_RUN（color 四值）；HSV 规则若落在候选集外也如实记录失配，不向候选集倾斜。"
+  ]
+}

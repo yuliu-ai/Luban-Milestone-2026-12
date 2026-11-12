@@ -1,0 +1,408 @@
+{
+  "name": "robocasa365-target50",
+  "description": "指标1.8 典型场景（RoboCasa365 厨房）50 个标准任务：RoboCasa365 官方 target50 任务集（18 atomic_seen + 16 composite_seen + 16 composite_unseen），每个任务固定一个 episode 与随机种子。被测系统与对照模型使用同一清单、同一种子、同一任务时长上限。",
+  "robocasa_version": "1.0.1",
+  "horizon_multiplier": 1.0,
+  "tasks": [
+    {
+      "task_id": "TASK-01",
+      "task": "CloseBlenderLid",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261201
+    },
+    {
+      "task_id": "TASK-02",
+      "task": "CloseFridge",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261202
+    },
+    {
+      "task_id": "TASK-03",
+      "task": "CloseToasterOvenDoor",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261203
+    },
+    {
+      "task_id": "TASK-04",
+      "task": "CoffeeSetupMug",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261204
+    },
+    {
+      "task_id": "TASK-05",
+      "task": "NavigateKitchen",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261205
+    },
+    {
+      "task_id": "TASK-06",
+      "task": "OpenCabinet",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261206
+    },
+    {
+      "task_id": "TASK-07",
+      "task": "OpenDrawer",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261207
+    },
+    {
+      "task_id": "TASK-08",
+      "task": "OpenStandMixerHead",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261208
+    },
+    {
+      "task_id": "TASK-09",
+      "task": "PickPlaceCounterToCabinet",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261209
+    },
+    {
+      "task_id": "TASK-10",
+      "task": "PickPlaceCounterToStove",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261210
+    },
+    {
+      "task_id": "TASK-11",
+      "task": "PickPlaceDrawerToCounter",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261211
+    },
+    {
+      "task_id": "TASK-12",
+      "task": "PickPlaceSinkToCounter",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261212
+    },
+    {
+      "task_id": "TASK-13",
+      "task": "PickPlaceToasterToCounter",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261213
+    },
+    {
+      "task_id": "TASK-14",
+      "task": "SlideDishwasherRack",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261214
+    },
+    {
+      "task_id": "TASK-15",
+      "task": "TurnOffStove",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261215
+    },
+    {
+      "task_id": "TASK-16",
+      "task": "TurnOnElectricKettle",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261216
+    },
+    {
+      "task_id": "TASK-17",
+      "task": "TurnOnMicrowave",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261217
+    },
+    {
+      "task_id": "TASK-18",
+      "task": "TurnOnSinkFaucet",
+      "category": "atomic_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261218
+    },
+    {
+      "task_id": "TASK-19",
+      "task": "DeliverStraw",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261219
+    },
+    {
+      "task_id": "TASK-20",
+      "task": "GetToastedBread",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261220
+    },
+    {
+      "task_id": "TASK-21",
+      "task": "KettleBoiling",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261221
+    },
+    {
+      "task_id": "TASK-22",
+      "task": "LoadDishwasher",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261222
+    },
+    {
+      "task_id": "TASK-23",
+      "task": "PackIdenticalLunches",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261223
+    },
+    {
+      "task_id": "TASK-24",
+      "task": "PreSoakPan",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261224
+    },
+    {
+      "task_id": "TASK-25",
+      "task": "PrepareCoffee",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261225
+    },
+    {
+      "task_id": "TASK-26",
+      "task": "RinseSinkBasin",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261226
+    },
+    {
+      "task_id": "TASK-27",
+      "task": "ScrubCuttingBoard",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261227
+    },
+    {
+      "task_id": "TASK-28",
+      "task": "SearingMeat",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261228
+    },
+    {
+      "task_id": "TASK-29",
+      "task": "SetUpCuttingStation",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261229
+    },
+    {
+      "task_id": "TASK-30",
+      "task": "StackBowlsCabinet",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261230
+    },
+    {
+      "task_id": "TASK-31",
+      "task": "SteamInMicrowave",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261231
+    },
+    {
+      "task_id": "TASK-32",
+      "task": "StirVegetables",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261232
+    },
+    {
+      "task_id": "TASK-33",
+      "task": "StoreLeftoversInBowl",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261233
+    },
+    {
+      "task_id": "TASK-34",
+      "task": "WashLettuce",
+      "category": "composite_seen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261234
+    },
+    {
+      "task_id": "TASK-35",
+      "task": "ArrangeBreadBasket",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261235
+    },
+    {
+      "task_id": "TASK-36",
+      "task": "ArrangeTea",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261236
+    },
+    {
+      "task_id": "TASK-37",
+      "task": "BreadSelection",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261237
+    },
+    {
+      "task_id": "TASK-38",
+      "task": "CategorizeCondiments",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261238
+    },
+    {
+      "task_id": "TASK-39",
+      "task": "CuttingToolSelection",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261239
+    },
+    {
+      "task_id": "TASK-40",
+      "task": "GarnishPancake",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261240
+    },
+    {
+      "task_id": "TASK-41",
+      "task": "GatherTableware",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261241
+    },
+    {
+      "task_id": "TASK-42",
+      "task": "HeatKebabSandwich",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261242
+    },
+    {
+      "task_id": "TASK-43",
+      "task": "MakeIceLemonade",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261243
+    },
+    {
+      "task_id": "TASK-44",
+      "task": "PanTransfer",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261244
+    },
+    {
+      "task_id": "TASK-45",
+      "task": "PortionHotDogs",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261245
+    },
+    {
+      "task_id": "TASK-46",
+      "task": "RecycleBottlesByType",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261246
+    },
+    {
+      "task_id": "TASK-47",
+      "task": "SeparateFreezerRack",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261247
+    },
+    {
+      "task_id": "TASK-48",
+      "task": "WaffleReheat",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261248
+    },
+    {
+      "task_id": "TASK-49",
+      "task": "WashFruitColander",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261249
+    },
+    {
+      "task_id": "TASK-50",
+      "task": "WeighIngredients",
+      "category": "composite_unseen",
+      "split": "target",
+      "episode": 0,
+      "seed": 20261250
+    }
+  ]
+}

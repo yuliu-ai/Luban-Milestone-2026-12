@@ -1,0 +1,111 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "luban"
+version = "0.1.0"
+description = "Luban: modular runtime and evaluation framework for embodied agents."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_NOTICES.md"]
+requires-python = ">=3.11,<3.12"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "httpx>=0.27,<1",
+    "anyio>=4.14.2,<5",
+    "numpy>=1.26,<3",
+    "Pillow>=10,<13",
+    "PyYAML>=6,<7",
+]
+
+[project.urls]
+Homepage = "https://github.com/Luban-Agents/Luban"
+Repository = "https://github.com/Luban-Agents/Luban"
+Issues = "https://github.com/Luban-Agents/Luban/issues"
+
+[project.optional-dependencies]
+chemistry_bench = [
+    "grpcio==1.83.0",
+    "protobuf==7.35.1",
+]
+openpi = [
+    "openpi-client @ https://github.com/robocasa-benchmark/openpi/archive/5a6beda9ff99da30b4e1b59320f6a32971d7c397.tar.gz#subdirectory=packages/openpi-client",
+]
+rldx-client = [
+    "msgpack>=1.0.5,<2",
+    "pyzmq>=26,<28",
+]
+xr1-client = [
+    "msgpack>=1.0.5,<2",
+    "pyzmq>=26,<28",
+]
+dashboard = [
+    "gradio>=6,<7",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.10,<2",
+    "numpy>=1.26,<3",
+    "pytest>=9.0.3,<10",
+    "ruff>=0.9,<1",
+    "types-PyYAML>=6,<7",
+]
+
+docs = ["mkdocs>=1.6,<2", "mkdocs-material>=9,<10"]
+
+# Only for complete CPU regression coverage: HDF5 replay and tensor storage.
+full-test = ["h5py>=3.16,<4", "torch==2.14.1"]
+
+[project.scripts]
+luban = "luban.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src", "benchmarks/chemistry-bench-proto/src"]
+
+[tool.setuptools.package-data]
+luban = ["py.typed"]
+"luban.environments.atomic" = ["*.xml"]
+omni_atomic_skills = ["py.typed"]
+"luban.environments.benchmarks.chemistry_bench" = ["*.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+# Report tables and Chinese report lines read better unwrapped.
+"scripts/milestone/*" = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["luban", "omni_atomic_skills"]
+mypy_path = "src"
+
+# Dashboard remains optional; only this external SDK may be absent in core CI.
+[[tool.mypy.overrides]]
+module = ["gradio"]
+ignore_missing_imports = true
+
+# Tensor regression checks do not need CUDA packages or a GPU.
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux' or sys_platform == 'win32'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true

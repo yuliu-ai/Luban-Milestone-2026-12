@@ -1,0 +1,24 @@
+# RoboCasa365 1.0.1 runtime, separate from native MuJoCo fixtures.
+numpy==2.2.5
+scipy==1.15.3
+numba==0.61.2
+mujoco==3.3.1
+gymnasium==0.29.1
+opencv-python==5.0.0.93
+lerobot==0.3.3
+torch==2.7.1
+pyzmq==27.2.0
+msgpack==1.2.2
+qpsolvers[quadprog]>=4.3.1
+pygame
+Pillow==11.3.0
+PyYAML==6.0.3
+pynput
+tqdm
+termcolor
+imageio
+h5py
+lxml
+hidapi
+tianshou==0.4.10
+httpx==0.28.1

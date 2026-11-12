@@ -1,0 +1,37 @@
+# Embed under a SelfEvolvingAgent config that already defines *api_backend and
+# *camera_keys. Child agents are proposal-only and do not execute XR-1 actions.
+subagent_scheduler:
+  class_path: luban.agent_core.SubAgentScheduler
+  init_args:
+    max_calls: 4
+    max_concurrent: 1
+    timeout_seconds: 30
+    min_failure_count: 2
+    subagents:
+      node_observation:
+        class_path: luban.agent_core.NodeObservationSubAgent
+        init_args:
+          # The Gemini 3.7 backend is shared with the main Planner in the
+          # self_evolving_xr1_atomic.yaml example.
+          backend: *api_backend
+          skill_definitions:
+            Close_Door: Close a door while preserving the rest of the scene.
+            Open_Door: Open a door enough to access its target region.
+            Close_Lid: Close a lid, cover, cap, or mixer head.
+            Open_Lid: Open a lid, cover, cap, or mixer head.
+            Insertion: Insert a held object or tool into a target fixture.
+            Navigation: Move the XR-1 mobile base to a task-relevant region.
+            Pick_Place: Pick, move, and place or release one object.
+            Press_Button: Press and release an appliance button.
+            Slide_Rack: Translate a rack, drawer, or drawer-like fixture.
+            Turn_Lever: Move a lever, handle, faucet control, or spout.
+            Twist_Knob: Rotate a knob or dial to a target setting.
+          camera_keys: *camera_keys
+          max_images: 3
+          max_tokens: 4096
+          temperature: 0
+          response_format_mode: json_object
+          require_current_camera_views: true
+# SelfEvolvingAgent calls this child when request_subagent=true or after the
+# configured repeated-failure threshold. Validated Experience Capsules are not
+# sent to NodeObservationSubAgent; they remain available to the main Planner.

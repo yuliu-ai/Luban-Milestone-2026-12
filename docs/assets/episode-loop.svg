@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="680" viewBox="0 0 960 680" role="img" aria-labelledby="title desc">
+<title id="title">Final Agent: closed-loop episode execution</title>
+<desc id="desc">A runtime manages lifecycle, budgets and traces. Its pipeline invokes a planner, skill backend, environment and verifier, reusing an active plan between checkpoints. Memory maintains facts and events; outputs include results, traces and optional video.</desc>
+<defs><marker id="arrow" markerUnits="userSpaceOnUse" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#176b70"/></marker></defs>
+<rect width="960" height="680" rx="20" fill="#f7f9fc"/>
+<g font-family="Arial, DejaVu Sans, sans-serif" fill="#183146">
+<text x="52" y="53" font-size="30" font-weight="700">From task to verified action</text>
+<rect x="20" y="85" width="920" height="575" rx="18" fill="#fff" stroke="#c6d3df" stroke-width="2"/>
+<text x="52" y="123" font-size="23" font-weight="700">Runtime</text>
+<text x="202" y="123" font-size="21" fill="#4b6277">episode lifecycle · budgets · timeout · trace</text>
+<g id="pipeline"><rect x="40" y="151" width="880" height="388" rx="14" fill="#edf6f6"/>
+<text x="60" y="176" font-size="18" font-weight="700" fill="#176b70">PIPELINE</text>
+<g id="planner"><rect x="60" y="184" width="350" height="128" rx="12" fill="#fff" stroke="#91b7bd"/><text x="80" y="220" font-size="26" font-weight="700">Planner</text><text x="80" y="256" font-size="22"><tspan x="80">Task + observation</tspan><tspan x="80" dy="29">→ skill / subtask</tspan></text></g>
+<g id="policy"><rect x="550" y="184" width="350" height="128" rx="12" fill="#fff" stroke="#91b7bd"/><text x="570" y="220" font-size="26" font-weight="700">SkillBackend</text><text x="570" y="256" font-size="22"><tspan x="570">Policy inference</tspan><tspan x="570" dy="29">→ action payload</tspan></text></g>
+<g id="environment"><rect x="550" y="384" width="350" height="128" rx="12" fill="#fff" stroke="#91b7bd"/><text x="570" y="420" font-size="26" font-weight="700">Environment</text><text x="570" y="456" font-size="22"><tspan x="570">Execute actions</tspan><tspan x="570" dy="29">→ observations / signal</tspan></text></g>
+<g id="verifier"><rect x="60" y="384" width="350" height="128" rx="12" fill="#fff" stroke="#91b7bd"/><text x="80" y="420" font-size="26" font-weight="700">Verifier</text><text x="80" y="456" font-size="22"><tspan x="80">Interpret feedback</tspan><tspan x="80" dy="29">→ structured decision</tspan></text></g>
+<g fill="none" stroke="#176b70" stroke-width="2.5" marker-end="url(#arrow)"><path d="M 410 248 H 548"/><path d="M 725 312 V 382"/><path d="M 550 448 H 412"/><path d="M 235 384 V 314"/></g>
+<text x="480" y="342" text-anchor="middle" font-size="21" font-weight="700" fill="#176b70">Pipeline decision</text>
+<text x="480" y="371" text-anchor="middle" font-size="20" fill="#176b70">continue · retry · replan · stop</text></g>
+<g id="memory"><rect x="40" y="557" width="350" height="82" rx="12" fill="#f0f3f9"/><text x="60" y="588" font-size="23" font-weight="700">Memory</text><text x="60" y="619" font-size="21"><tspan x="60">Facts, events and context</tspan></text></g>
+<g id="outputs"><rect x="408" y="557" width="512" height="82" rx="12" fill="#f8f4eb"/><text x="428" y="588" font-size="23" font-weight="700">Inspectable outputs</text><text x="428" y="619" font-size="20"><tspan x="428">result.json · trace.jsonl · optional video</tspan></text></g>
+</g></svg>

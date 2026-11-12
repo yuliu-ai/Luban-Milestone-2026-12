@@ -1,0 +1,214 @@
+{
+  "started_at_s": 1789237139.9304185,
+  "task": "robocasa/ScrubCuttingBoard",
+  "split": "pretrain",
+  "seed": 0,
+  "gpu": "NVIDIA GeForce RTX 4090, 20473 MiB, 24564 MiB",
+  "obs_key_count": 9,
+  "state_keys": [
+    "state.base_position",
+    "state.base_rotation",
+    "state.end_effector_position_relative",
+    "state.end_effector_rotation_relative",
+    "state.gripper_qpos"
+  ],
+  "video_keys": [
+    "video.robot0_agentview_left",
+    "video.robot0_agentview_right",
+    "video.robot0_eye_in_hand"
+  ],
+  "frame_ref": "<HISTORICAL_PROJECT_ROOT>/runs/p12_probe/input_frame_agentview_left.png",
+  "raw_observation_summary": {
+    "state.gripper_qpos": {
+      "shape": [
+        2
+      ],
+      "dtype": "float32",
+      "sample": [
+        0.02141893096268177,
+        -0.021339721977710724
+      ]
+    },
+    "state.base_position": {
+      "shape": [
+        3
+      ],
+      "dtype": "float32",
+      "sample": [
+        3.535615921020508,
+        -0.8405263423919678,
+        0.7000000476837158
+      ]
+    },
+    "state.base_rotation": {
+      "shape": [
+        4
+      ],
+      "dtype": "float32",
+      "sample": [
+        0.0,
+        0.0,
+        0.7071067094802856,
+        0.7071067690849304
+      ]
+    },
+    "state.end_effector_position_relative": {
+      "shape": [
+        3
+      ],
+      "dtype": "float32",
+      "sample": [
+        0.2450970560312271,
+        -0.009078058414161205,
+        0.5937890410423279
+      ]
+    },
+    "state.end_effector_rotation_relative": {
+      "shape": [
+        4
+      ],
+      "dtype": "float32",
+      "sample": [
+        -0.9883264899253845,
+        -0.029058143496513367,
+        -0.14686059951782227,
+        0.028256045654416084
+      ]
+    },
+    "video.robot0_agentview_left": {
+      "shape": [
+        256,
+        256,
+        3
+      ],
+      "dtype": "uint8",
+      "sample": [
+        181.0,
+        181.0,
+        181.0,
+        181.0,
+        181.0,
+        181.0,
+        181.0,
+        181.0,
+        181.0,
+        181.0,
+        181.0,
+        181.0
+      ]
+    },
+    "video.robot0_agentview_right": {
+      "shape": [
+        256,
+        256,
+        3
+      ],
+      "dtype": "uint8",
+      "sample": [
+        170.0,
+        170.0,
+        170.0,
+        170.0,
+        170.0,
+        170.0,
+        170.0,
+        170.0,
+        170.0,
+        170.0,
+        170.0,
+        170.0
+      ]
+    },
+    "video.robot0_eye_in_hand": {
+      "shape": [
+        256,
+        256,
+        3
+      ],
+      "dtype": "uint8",
+      "sample": [
+        144.0,
+        130.0,
+        113.0,
+        144.0,
+        130.0,
+        113.0,
+        144.0,
+        130.0,
+        113.0,
+        144.0,
+        130.0,
+        113.0
+      ]
+    },
+    "annotation.human.task_description": "'Pick up the sponge from the counter and clean the cutting board by briefly scru"
+  },
+  "controls": {
+    "unsupported_fields": {
+      "status": "failed",
+      "error_code": "CAPABILITY_UNAVAILABLE"
+    },
+    "wrong_frame": {
+      "status": "failed",
+      "error_code": "FRAME_UNRESOLVED"
+    },
+    "missing_state_keys": {
+      "status": "failed",
+      "error_code": "SENSOR_STALE"
+    }
+  },
+  "positive": {
+    "status": "unverified",
+    "verification_verdict": "passed",
+    "verification_reason": "请求字段可用且样本年龄不超过上限",
+    "verification_independent": false,
+    "elapsed_s": 0.003846164792776108,
+    "outputs": {
+      "robot_id": "robot0",
+      "captured_at_s": 1789237140.060548,
+      "frame_id": "robot0_base",
+      "ee_pose": [
+        0.2450970560312271,
+        -0.009078058414161205,
+        0.5937890410423279,
+        -0.9883264899253845,
+        -0.029058143496513367,
+        -0.14686059951782227,
+        0.028256045654416084
+      ],
+      "base_pose": [
+        3.535615921020508,
+        -0.8405263423919678,
+        0.7000000476837158,
+        0.0,
+        0.0,
+        0.7071067094802856,
+        0.7071067690849304
+      ],
+      "gripper_state": {
+        "qpos": [
+          0.02141893096268177,
+          -0.021339721977710724
+        ],
+        "source_key": "state.gripper_qpos"
+      }
+    },
+    "signals": {
+      "done": true,
+      "environment_kind": "robocasa_state",
+      "frame_id": "robot0_base",
+      "target_frame": "robot0_base",
+      "state_keys": [
+        "state.base_position",
+        "state.base_rotation",
+        "state.end_effector_position_relative",
+        "state.end_effector_rotation_relative",
+        "state.gripper_qpos"
+      ],
+      "sync_error_ms": 0.0,
+      "timestamp_source": "environment_read_clock",
+      "max_age_ms": 60000
+    }
+  },
+  "finished_at_s": 1789237140.0724835
+}

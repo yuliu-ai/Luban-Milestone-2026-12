@@ -1,0 +1,30 @@
+{
+  "task": "StirVegetables",
+  "seed": 664,
+  "base_policy": "XR-1",
+  "horizon": 6000,
+  "control": {
+    "success": false,
+    "environment_steps": 6000,
+    "video": "../demos/evo_stir_control.mp4",
+    "playback_rate": 3
+  },
+  "treatment": {
+    "success": true,
+    "environment_steps": 1018,
+    "video": "../demos/evo_stir_treatment.mp4",
+    "playback_rate": 1
+  },
+  "nodes": [
+    "place_avocado_in_pot",
+    "place_broccoli_in_pot",
+    "stir_vegetables_in_pot"
+  ],
+  "experience_input": {
+    "planner_step": 49,
+    "node_id": "place_broccoli_in_pot",
+    "control_validated_experiences": 0,
+    "treatment_validated_experiences": 4
+  },
+  "interpretation": "Paired episode evidence for experience-conditioned planning, not an isolated causal ablation of a single node."
+}

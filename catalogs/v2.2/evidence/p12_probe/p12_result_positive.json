@@ -1,0 +1,312 @@
+{
+  "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+  "skill_ref": "P12@2.2.0",
+  "status": "unverified",
+  "success": false,
+  "started_at": "2026-09-12T18:19:00.057Z",
+  "finished_at": "2026-09-12T18:19:00.061Z",
+  "duration_s": 0.003831472247838974,
+  "outputs": {
+    "robot_id": "robot0",
+    "captured_at_s": 1789237140.060548,
+    "frame_id": "robot0_base",
+    "ee_pose": [
+      0.2450970560312271,
+      -0.009078058414161205,
+      0.5937890410423279,
+      -0.9883264899253845,
+      -0.029058143496513367,
+      -0.14686059951782227,
+      0.028256045654416084
+    ],
+    "base_pose": [
+      3.535615921020508,
+      -0.8405263423919678,
+      0.7000000476837158,
+      0.0,
+      0.0,
+      0.7071067094802856,
+      0.7071067690849304
+    ],
+    "gripper_state": {
+      "qpos": [
+        0.02141893096268177,
+        -0.021339721977710724
+      ],
+      "source_key": "state.gripper_qpos"
+    }
+  },
+  "observation": {
+    "environment_executed": true,
+    "outputs": {
+      "robot_id": "robot0",
+      "captured_at_s": 1789237140.060548,
+      "frame_id": "robot0_base",
+      "ee_pose": [
+        0.2450970560312271,
+        -0.009078058414161205,
+        0.5937890410423279,
+        -0.9883264899253845,
+        -0.029058143496513367,
+        -0.14686059951782227,
+        0.028256045654416084
+      ],
+      "base_pose": [
+        3.535615921020508,
+        -0.8405263423919678,
+        0.7000000476837158,
+        0.0,
+        0.0,
+        0.7071067094802856,
+        0.7071067690849304
+      ],
+      "gripper_state": {
+        "qpos": [
+          0.02141893096268177,
+          -0.021339721977710724
+        ],
+        "source_key": "state.gripper_qpos"
+      }
+    },
+    "post_state": {
+      "robot_id": "robot0",
+      "frame_id": "robot0_base"
+    },
+    "signals": {
+      "done": true,
+      "environment_kind": "robocasa_state",
+      "frame_id": "robot0_base",
+      "target_frame": "robot0_base",
+      "state_keys": [
+        "state.base_position",
+        "state.base_rotation",
+        "state.end_effector_position_relative",
+        "state.end_effector_rotation_relative",
+        "state.gripper_qpos"
+      ],
+      "sync_error_ms": 0.0,
+      "timestamp_source": "environment_read_clock",
+      "max_age_ms": 60000
+    },
+    "trace": [
+      {
+        "stage": "read_robot_state",
+        "fields": [
+          "ee_pose",
+          "base_pose",
+          "gripper_state"
+        ],
+        "state_keys": [
+          "state.base_position",
+          "state.base_rotation",
+          "state.end_effector_position_relative",
+          "state.end_effector_rotation_relative",
+          "state.gripper_qpos"
+        ]
+      }
+    ],
+    "error_code": null,
+    "error_message": null,
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "passed",
+    "reason": "请求字段可用且样本年龄不超过上限",
+    "verifier_key": "verify_read_robot_state",
+    "independent": false,
+    "criteria": {
+      "evidence": {
+        "控制器状态": {
+          "ee_pose": [
+            0.2450970560312271,
+            -0.009078058414161205,
+            0.5937890410423279,
+            -0.9883264899253845,
+            -0.029058143496513367,
+            -0.14686059951782227,
+            0.028256045654416084
+          ],
+          "base_pose": [
+            3.535615921020508,
+            -0.8405263423919678,
+            0.7000000476837158,
+            0.0,
+            0.0,
+            0.7071067094802856,
+            0.7071067690849304
+          ],
+          "gripper_state": {
+            "qpos": [
+              0.02141893096268177,
+              -0.021339721977710724
+            ],
+            "source_key": "state.gripper_qpos"
+          }
+        },
+        "时间戳": 1789237140.060548,
+        "坐标变换": {
+          "frame_id": "robot0_base",
+          "target_frame": "robot0_base"
+        },
+        "同步误差": 0.0
+      },
+      "timestamp_source": "environment_read_clock",
+      "state_keys": [
+        "state.base_position",
+        "state.base_rotation",
+        "state.end_effector_position_relative",
+        "state.end_effector_rotation_relative",
+        "state.gripper_qpos"
+      ]
+    },
+    "metrics": {
+      "field_count": 3.0,
+      "age_ms": 0.5245208740234375,
+      "max_age_ms": 60000.0
+    }
+  },
+  "events": [
+    {
+      "event_id": "3542d9f6-b97e-4b85-b4d3-eb1070818046",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.057Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "P12",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "28dad3da-123c-4606-bedf-1af2309e4ea9",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.057Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "P12@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "06ef3320-2834-4239-baf4-d1c0521d6771",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.058Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "P12@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "6795b43f-db45-4dd2-a86c-f7267a9441d2",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.058Z",
+      "event_type": "preflight_started",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "31d0eca5-c5aa-433d-ad02-b88e64312980",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.058Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "0a3cb239-dd1f-49ea-bba9-46b0089c0021",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.060Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "016279d2-de6c-416c-b516-c126186c320d",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.060Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "backend_key": "read_robot_state"
+      }
+    },
+    {
+      "event_id": "035fcc35-8e07-48c6-aefc-02d6e5787337",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.060Z",
+      "event_type": "command_prepared",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "backend_key": "read_robot_state",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "863570a1-dcf6-41c9-8c8c-d93ede4b7c6b",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.060Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "environment_key": "robocasa_state"
+      }
+    },
+    {
+      "event_id": "71e04ccf-5638-49f4-9ea0-ffb0c3162ccb",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.060Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "environment_key": "robocasa_state",
+        "environment_executed": true
+      }
+    },
+    {
+      "event_id": "ed2b94cf-dac5-437d-bd55-bf45aba1d65f",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.060Z",
+      "event_type": "outputs_validated",
+      "skill_ref": "P12@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "b4e6e5b3-bdf8-440c-8451-368fdfc42fe5",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.061Z",
+      "event_type": "verification_started",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "verifier_key": "verify_read_robot_state"
+      }
+    },
+    {
+      "event_id": "3ca76c88-55d6-4782-ae0e-8dfd32dd80aa",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.061Z",
+      "event_type": "verification_finished",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "verdict": "passed",
+        "verifier_key": "verify_read_robot_state",
+        "independent": false
+      }
+    },
+    {
+      "event_id": "f6ea48fa-f438-42c6-8480-6c2aafc63d32",
+      "invocation_id": "f54a4ba3-b992-49d4-ace7-8b06e4d73c0e",
+      "occurred_at": "2026-09-12T18:19:00.061Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "status": "unverified"
+      }
+    }
+  ],
+  "error_code": "verification_inconclusive",
+  "error_message": "请求字段可用且样本年龄不超过上限"
+}

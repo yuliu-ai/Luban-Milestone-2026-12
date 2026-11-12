@@ -1,0 +1,104 @@
+{
+  "skill": "M03",
+  "runtime_status": "unverified",
+  "runtime_verdict": "passed",
+  "runtime_outputs": {
+    "final_pose": [
+      0.27109846472740173,
+      0.005061072763055563,
+      0.6081674695014954,
+      -0.9748797518350505,
+      -0.16138022319651674,
+      -0.15157403773304032,
+      0.024314689148237187
+    ],
+    "orientation_error_rad": 0.048091814287005326,
+    "position_drift_m": 0.002513121112591587,
+    "duration_s": 2.0500000000000003
+  },
+  "runtime_inputs": {
+    "target_orientation": [
+      -0.9711005129402686,
+      -0.18449908057032774,
+      -0.1486286808537928,
+      0.028868638061267535
+    ],
+    "frame_id": "robot0_base",
+    "angular_speed_radps": 0.4,
+    "orientation_tolerance_rad": 0.05,
+    "position_hold_tolerance_m": 0.01,
+    "verification_profile_ref": "profile://motion/rotate-v1"
+  },
+  "projected_ee_pixel": [
+    169.78,
+    111.85
+  ],
+  "fragment_before": {
+    "bbox_xyxy": [
+      155.28024291992188,
+      71.0108413696289,
+      207.17257690429688,
+      108.50720977783203
+    ],
+    "area_px2": 1945.7740726396441,
+    "centroid": [
+      181.22640991210938,
+      89.75902557373047
+    ],
+    "containing_fragment_count": 8,
+    "containing_fragment_areas_px2": [
+      1945.8,
+      2104.6,
+      2427.5,
+      4042.7,
+      5409.5,
+      16079.2,
+      22184.3,
+      22497.3
+    ]
+  },
+  "fragment_after": {
+    "bbox_xyxy": [
+      152.94732666015625,
+      68.47894287109375,
+      212.61172485351562,
+      121.121337890625
+    ],
+    "area_px2": 3140.876818297431,
+    "centroid": [
+      182.77952575683594,
+      94.80014038085938
+    ],
+    "containing_fragment_count": 7,
+    "containing_fragment_areas_px2": [
+      3140.9,
+      3196.6,
+      4641.9,
+      5678.2,
+      15851.3,
+      21838.0,
+      22130.8
+    ]
+  },
+  "sam3_before": {
+    "query": "white robot arm",
+    "entities": 11,
+    "attempts": [
+      {
+        "query": "white robot arm",
+        "entities": 11
+      }
+    ]
+  },
+  "sam3_after": {
+    "query": "white robot arm",
+    "entities": 10,
+    "attempts": [
+      {
+        "query": "white robot arm",
+        "entities": 10
+      }
+    ]
+  },
+  "passed": true
+}

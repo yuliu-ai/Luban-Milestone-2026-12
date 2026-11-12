@@ -1,0 +1,13 @@
+{
+  "validated_at": "2026-09-12T19:51:17+08:00",
+  "catalog": "atomic_skills.json",
+  "catalog_version": "2.1.0-draft.1",
+  "catalog_sha256": "49b744d2c173087c04f3cb72c8136f2ef1512142e664999a483c2e070be7dd49",
+  "source_v1_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+  "checks_total": 7236,
+  "checks_passed": 7236,
+  "checks_failed": 0,
+  "placeholder_descriptions": 0,
+  "scope": "仅静态结构校验：不执行机器人后端，不验证语义谓词，不构成任何技能已实现的证据。",
+  "failures": []
+}

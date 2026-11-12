@@ -1,0 +1,37 @@
+{
+  "name": "vlabench-book-pilot",
+  "tasks": [
+    {
+      "task_id": "select_book:000",
+      "task": "select_book",
+      "episode": 0,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:001",
+      "task": "select_book",
+      "episode": 1,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:002",
+      "task": "select_book",
+      "episode": 2,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:003",
+      "task": "select_book",
+      "episode": 3,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    }
+  ]
+}

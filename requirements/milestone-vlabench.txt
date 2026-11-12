@@ -1,0 +1,21 @@
+# Evaluation only. Model inference runs in separate environments.
+numpy==1.26.4
+mujoco==3.2.2
+dm_control==1.0.22
+opencv-python==4.11.0.86
+gym==0.26.2
+gymnasium==0.29.1
+open3d==0.18.0
+scipy==1.14.0
+h5py==3.11.0
+mediapy==1.2.0
+imageio==2.38.1
+tqdm==4.70.1
+colorlog==6.12.0
+colorama==0.4.6
+ipdb==0.13.13
+matplotlib==3.11.2
+rtree==1.2.0
+openai==3.49.0
+httpx==0.28.1
+PyYAML==6.0.3

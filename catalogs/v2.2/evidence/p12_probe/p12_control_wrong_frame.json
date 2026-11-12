@@ -1,0 +1,146 @@
+{
+  "invocation_id": "568f1600-711b-47a9-afda-631b4dbeb6b1",
+  "skill_ref": "P12@2.2.0",
+  "status": "failed",
+  "success": false,
+  "started_at": "2026-09-12T18:19:00.066Z",
+  "finished_at": "2026-09-12T18:19:00.069Z",
+  "duration_s": 0.00254734605550766,
+  "outputs": {},
+  "observation": {
+    "environment_executed": false,
+    "outputs": {},
+    "post_state": {},
+    "signals": {
+      "frame_id": "robot0_base",
+      "target_frame": "world"
+    },
+    "trace": [],
+    "error_code": "FRAME_UNRESOLVED",
+    "error_message": "target_frame='world' 不可解析：本后端只提供 'robot0_base' 坐标系（RoboCasa365 的 state.* 全部表达在机器人基座下）",
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "not_run",
+    "reason": "target_frame='world' 不可解析：本后端只提供 'robot0_base' 坐标系（RoboCasa365 的 state.* 全部表达在机器人基座下）",
+    "verifier_key": "none",
+    "independent": false,
+    "criteria": {},
+    "metrics": {}
+  },
+  "events": [
+    {
+      "event_id": "133b66d1-d3f0-4892-98d0-7c5177810bdb",
+      "invocation_id": "568f1600-711b-47a9-afda-631b4dbeb6b1",
+      "occurred_at": "2026-09-12T18:19:00.066Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "P12",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "f456f5d4-95b3-4df8-8b85-9f302563d798",
+      "invocation_id": "568f1600-711b-47a9-afda-631b4dbeb6b1",
+      "occurred_at": "2026-09-12T18:19:00.066Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "P12@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "6cffc6bc-6463-44b3-bfee-9b04b1079b7d",
+      "invocation_id": "568f1600-711b-47a9-afda-631b4dbeb6b1",
+      "occurred_at": "2026-09-12T18:19:00.066Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "P12@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "cee03c1e-9fc8-4103-b88f-d4916a570fac",
+      "invocation_id": "568f1600-711b-47a9-afda-631b4dbeb6b1",
+      "occurred_at": "2026-09-12T18:19:00.066Z",
+      "event_type": "preflight_started",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "ec298e09-7c09-4a8a-b7ab-ce334229da9f",
+      "invocation_id": "568f1600-711b-47a9-afda-631b4dbeb6b1",
+      "occurred_at": "2026-09-12T18:19:00.066Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "ce54fe0b-060b-4d17-b83f-9e3d344b686d",
+      "invocation_id": "568f1600-711b-47a9-afda-631b4dbeb6b1",
+      "occurred_at": "2026-09-12T18:19:00.068Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "d92999c7-946f-4be1-9409-3b52e5eb5d37",
+      "invocation_id": "568f1600-711b-47a9-afda-631b4dbeb6b1",
+      "occurred_at": "2026-09-12T18:19:00.068Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "backend_key": "read_robot_state"
+      }
+    },
+    {
+      "event_id": "5ada14fb-2335-41c3-9de2-bc4254a44d9d",
+      "invocation_id": "568f1600-711b-47a9-afda-631b4dbeb6b1",
+      "occurred_at": "2026-09-12T18:19:00.068Z",
+      "event_type": "command_prepared",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "backend_key": "read_robot_state",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "ade21aaa-4d09-4eac-8fe0-5e2732ef4e5c",
+      "invocation_id": "568f1600-711b-47a9-afda-631b4dbeb6b1",
+      "occurred_at": "2026-09-12T18:19:00.068Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "environment_key": "robocasa_state"
+      }
+    },
+    {
+      "event_id": "c4e4a9a8-b508-4978-9690-d461ae12df04",
+      "invocation_id": "568f1600-711b-47a9-afda-631b4dbeb6b1",
+      "occurred_at": "2026-09-12T18:19:00.069Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "environment_key": "robocasa_state",
+        "environment_executed": false
+      }
+    },
+    {
+      "event_id": "16d7a948-a06c-4b73-9016-a56c5e231a8f",
+      "invocation_id": "568f1600-711b-47a9-afda-631b4dbeb6b1",
+      "occurred_at": "2026-09-12T18:19:00.069Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "status": "failed",
+        "error_code": "FRAME_UNRESOLVED"
+      }
+    }
+  ],
+  "error_code": "FRAME_UNRESOLVED",
+  "error_message": "target_frame='world' 不可解析：本后端只提供 'robot0_base' 坐标系（RoboCasa365 的 state.* 全部表达在机器人基座下）"
+}

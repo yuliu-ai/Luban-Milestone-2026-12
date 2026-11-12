@@ -1,0 +1,87 @@
+{
+  "started_at_s": 1789237539.1323347,
+  "frame": "<HISTORICAL_PROJECT_ROOT>/runs/p12_probe/input_frame_agentview_left.png",
+  "bbox": [
+    69.0,
+    119.0,
+    166.0,
+    212.0
+  ],
+  "crop_ref": "<HISTORICAL_PROJECT_ROOT>/runs/p06_probe/crop_cutting_board.png",
+  "camera_slot": "video.robot0_eye_in_hand",
+  "provider": "molmo2",
+  "model": "molmo2-4b (bfloat16)",
+  "gpu": "NVIDIA GeForce RTX 4090, 23518 MiB, 24564 MiB",
+  "client_requests": 2,
+  "client_failures": 0,
+  "runs": {
+    "answerable": {
+      "status": "failed",
+      "verification_verdict": "not_run",
+      "verification_reason": "Molmo2 returned no answer for any requested attribute key; P06 cannot report attribute values.",
+      "attribute_keys": [
+        "color",
+        "cleanliness",
+        "material"
+      ],
+      "candidate_values": {
+        "color": [
+          "white",
+          "brown",
+          "green",
+          "black"
+        ],
+        "cleanliness": [
+          "dirty",
+          "clean"
+        ],
+        "material": [
+          "wood",
+          "plastic",
+          "metal"
+        ]
+      },
+      "attributes": null,
+      "confidence_by_attribute": null,
+      "raw_answers": null,
+      "unknown_keys": null,
+      "answered_keys": null,
+      "confidence_source": null,
+      "latency_ms": null,
+      "elapsed_s": 3.70469631254673
+    },
+    "hard": {
+      "status": "failed",
+      "verification_verdict": "not_run",
+      "verification_reason": "Molmo2 returned no answer for any requested attribute key; P06 cannot report attribute values.",
+      "attribute_keys": [
+        "temperature",
+        "weight",
+        "brand"
+      ],
+      "candidate_values": {
+        "temperature": [
+          "hot",
+          "cold"
+        ],
+        "weight": [
+          "light",
+          "heavy"
+        ]
+      },
+      "attributes": null,
+      "confidence_by_attribute": null,
+      "raw_answers": null,
+      "unknown_keys": null,
+      "answered_keys": null,
+      "confidence_source": null,
+      "latency_ms": null,
+      "elapsed_s": 3.543365329504013
+    }
+  },
+  "limitations": [
+    "感知协议 visual-perception-v1 的 frames 只接受三路相机名；P06 的裁剪图借用 video.robot0_eye_in_hand 槽位承载。",
+    "confidence_by_attribute 是候选集匹配度（在集内 1.0 / 否则 0.0），不是校准概率；原始回答逐字保留在 signals.raw_answers。",
+    "无候选集的属性键保留 raw answer 且置信度恒为 0.0，不可当作可核验判断。"
+  ]
+}

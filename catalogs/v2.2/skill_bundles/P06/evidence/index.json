@@ -1,0 +1,77 @@
+{
+  "skill_id": "P06",
+  "skill_version": "2.2.0",
+  "catalog_version": "2.2.0",
+  "maturity": "verified",
+  "executor_status": "implemented",
+  "verifier_status": "implemented",
+  "case_count": 7,
+  "examples_origin": "由契约生成并在构建时自检（正例必须通过、结构负例与语义负例必须被拒绝）",
+  "real_backend_evidence": [
+    {
+      "kind": "vqa_probe",
+      "provider": "molmo2",
+      "checkpoint": "molmo2-4b (bfloat16)",
+      "device": "cuda",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/p06_probe/p06_summary.json",
+        "catalogs/v2.2/evidence/p06_probe/p06_result_answerable.json",
+        "catalogs/v2.2/evidence/p06_probe/p06_result_hard.json",
+        "catalogs/v2.2/evidence/p06_probe/runtime_events.jsonl",
+        "catalogs/v2.2/evidence/p06_probe/crop_cutting_board.png"
+      ],
+      "runs": {
+        "answerable": {
+          "attributes": {
+            "color": "brown",
+            "cleanliness": "clean",
+            "material": "wood"
+          },
+          "in_candidate_set": "3/3",
+          "latency_ms": 4892.793491482735
+        },
+        "hard": {
+          "attributes": {
+            "temperature": "cold",
+            "weight": "light",
+            "brand": "unknown brand"
+          },
+          "note": "temperature/weight 是图像答不出的属性，模型仍自信作答且恰在候选集内；brand 未声明候选集 → raw answer 保留、置信度 0.0",
+          "latency_ms": 2822.84901663661
+        }
+      },
+      "verification_verdict": "passed (answerable) / passed (hard)",
+      "terminal_status": "unverified",
+      "limitations": "裁剪图借用 video.robot0_eye_in_hand 槽位承载（visual-perception-v1 的 frames 只接受三路相机名，已知协议限制）；confidence_by_attribute 是候选集匹配度（在集内 1.0 / 否则 0.0），不是校准概率；VLM 对答不出的属性也可能给出恰在候选集内的答案（本次 temperature=cold、weight=light 即为实例），该风险只能靠候选集设计与人工复核缓解；首次尝试因 Molmo2 与 XR-1 同卡 OOM 失败，过程记录见 evidence/p06_probe_oom_20260913/。"
+    },
+    {
+      "kind": "pixel_statistic_crosscheck",
+      "provider": "hsv_pixel_statistics（确定性像素统计，无模型）",
+      "device": "cpu（读回已落盘裁剪图；主路径推理仍为 Molmo2/cuda）",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/p06_color_crosscheck/p06_color_crosscheck.json",
+        "catalogs/v2.2/evidence/p06_color_crosscheck/p06_color_run.json",
+        "catalogs/v2.2/evidence/p06_color_crosscheck/p06_color_molmo2_response.json",
+        "catalogs/v2.2/evidence/p06_color_crosscheck/runtime_events.jsonl"
+      ],
+      "independent": true,
+      "criterion": "P06 color 输出 == HSV 像素统计判定（规则预注册于探针 docstring，判定落候选集外也如实记失配）",
+      "p06_color": "brown",
+      "hsv_median": {
+        "h_deg": 16.9,
+        "s": 126.0,
+        "v": 127.0
+      },
+      "hsv_color": "brown",
+      "passed": true,
+      "limitations": "颜色一致性核验只覆盖 color 属性；cleanliness/material 无第二来源，保持单源并如实记录；候选集沿用原 MAIN_RUN（color 四值），HSV 规则若落在候选集外也如实记录失配，不向候选集倾斜。"
+    }
+  ],
+  "note": "真实后端证据见 real_backend_evidence；独立复核条目仅出现在有第二来源的技能上；再升版本需按 promotion_gate 做配对实验。"
+}

@@ -1,0 +1,79 @@
+{
+  "skill_id": "P12",
+  "skill_version": "2.2.0",
+  "catalog_version": "2.2.0",
+  "maturity": "verified",
+  "executor_status": "implemented",
+  "verifier_status": "implemented",
+  "case_count": 6,
+  "examples_origin": "由契约生成并在构建时自检（正例必须通过、结构负例与语义负例必须被拒绝）",
+  "real_backend_evidence": [
+    {
+      "kind": "simulator_state_probe",
+      "provider": "robocasa365 (gym.make robocasa/ScrubCuttingBoard, split=pretrain, seed=0)",
+      "checkpoint": "n/a（本体状态读取，无模型）",
+      "device": "cuda（EGL 渲染）",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/p12_probe/p12_probe_summary.json",
+        "catalogs/v2.2/evidence/p12_probe/p12_result_positive.json",
+        "catalogs/v2.2/evidence/p12_probe/runtime_events.jsonl",
+        "catalogs/v2.2/evidence/p12_probe/input_frame_agentview_left.png"
+      ],
+      "fields_read": [
+        "ee_pose",
+        "base_pose",
+        "gripper_state"
+      ],
+      "state_keys_used": [
+        "state.base_position",
+        "state.base_rotation",
+        "state.end_effector_position_relative",
+        "state.end_effector_rotation_relative",
+        "state.gripper_qpos"
+      ],
+      "verification_verdict": "passed",
+      "terminal_status": "unverified",
+      "fail_closed_controls": {
+        "unsupported_fields": "CAPABILITY_UNAVAILABLE",
+        "wrong_frame": "FRAME_UNRESOLVED",
+        "missing_state_keys": "SENSOR_STALE"
+      },
+      "limitations": "单步快照探针，未在完整 episode 内逐步调用；captured_at_s 来自读取时钟（RoboCasa365 观测无传感器时间戳，已如实标注 timestamp_source）；joint_position/joint_velocity/joint_effort/飞控等 12 个契约字段观测不提供，一律 CAPABILITY_UNAVAILABLE，不做近似替代。"
+    },
+    {
+      "kind": "vision_endpoint_crosscheck",
+      "provider": "sam3 (scripts/study/probe_p12_m_vision_crosscheck.py, profile v3)",
+      "checkpoint": "sam3.pt",
+      "device": "cuda",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/vision_crosscheck/vision_crosscheck_summary.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/p12_frame_start.png",
+        "catalogs/v2.2/evidence/vision_crosscheck/p12_frame_after_M01.png",
+        "catalogs/v2.2/evidence/vision_crosscheck/p12_frame_after_M03.png",
+        "catalogs/v2.2/evidence/vision_crosscheck/p12_frame_after_M02.png",
+        "catalogs/v2.2/evidence/vision_crosscheck/p12_frame_final.png",
+        "catalogs/v2.2/evidence/vision_crosscheck/runtime_events.jsonl"
+      ],
+      "independent": true,
+      "method": "双通道核验：① 用 robosuite mobile_robot.base_to_eef_pos 的精确公式从 sim 重算 state.end_effector_position_relative，与状态读取对比（容差 1e-3m）；② EE 世界坐标经 MuJoCo 相机模型投影，要求 SAM3 在投影像素 ±15px 内给出腕部尺度（≤8000px^2）检测片段",
+      "samples": 5,
+      "max_state_vs_sim_gap_m": 2.2e-08,
+      "wrist_fragment_areas_px2": [
+        351.9,
+        1945.8,
+        3140.9,
+        2372.8,
+        2330.4
+      ],
+      "passed": true,
+      "limitations": "采样点位于单次探针会话内（跨 4 次技能执行的前后）；joint_* 契约字段缺失是上游观测的 fail-closed 边界，非本技能缺口。"
+    }
+  ],
+  "note": "真实后端证据见 real_backend_evidence；独立复核条目仅出现在有第二来源的技能上；再升版本需按 promotion_gate 做配对实验。"
+}

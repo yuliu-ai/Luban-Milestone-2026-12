@@ -1,0 +1,87 @@
+agent_config: ../agents/self_evolving_xr1_atomic.yaml
+
+pipeline:
+  class_path: luban.pipelines.AtomicSpatialSkillExecutionPipeline
+  init_args:
+    perception_clients: []
+    perception_required: false
+    spatial_memory_enabled: true
+    allow_privileged_object_state: false
+    atomic_recovery_enabled: false
+    require_action_summary: false
+    record_deferred_verification: false
+    config:
+      action_execution_mode: full
+      planner_check_interval_chunks: 8
+      planner_replan_only: true
+      max_chunks_per_skill: 96
+      replan_on_chunk_budget: true
+      max_attempts_per_execution: 10
+      max_uncertain_verifications: 8
+      replan_on_uncertain_exhaustion: true
+      replan_task_graph_on_uncertain_exhaustion: true
+      task_graph_revision_after_uncertain_replans: 3
+      high_level_replan_limit: null
+      world_model_mode: disabled
+      recovery_enabled: false
+      node_selective_recovery_enabled: true
+
+runtime:
+  class_path: luban.runtimes.SyncRuntime
+  init_args:
+    config:
+      max_environment_steps: 3600
+      max_action_chunks: 256
+      max_pipeline_iterations: 512
+      max_invalid_actions: 10
+      max_retries: 2
+      timeout_seconds: 14400
+      trace_compression: none
+      output_dir: runs/self_evolving_xr1_atomic_single_episode_gemini37_compatible2/traces
+      observability:
+        class_path: luban.observability.LocalEpisodeRecorder
+        init_args:
+          record_agent_trace: true
+          record_video: false
+          video_camera_keys:
+            - video.robot0_agentview_left
+            - video.robot0_agentview_right
+            - video.robot0_eye_in_hand
+          video_fps: 4
+
+environment:
+  class_path: luban.environments.benchmarks.robocasa.RoboCasaEnvironment
+  init_args:
+    robocasa_root: benchmarks/RoboCasa  # Or your compatible RoboCasa installation.
+    enable_render: true
+    render_gpu_device_id: 0
+    camera_height: 256
+    camera_width: 256
+    available_skills:
+      - Close_Door
+      - Open_Door
+      - Close_Lid
+      - Open_Lid
+      - Insertion
+      - Navigation
+      - Pick_Place
+      - Press_Button
+      - Slide_Rack
+      - Turn_Lever
+      - Twist_Knob
+
+benchmark:
+  class_path: luban.evals.benchmarks.robocasa.RoboCasa365Evaluator
+  init_args:
+    task_set: target50
+    split: target
+    task_names: [ScrubCuttingBoard]
+    max_tasks: 1
+    episodes_per_task: 1
+    episode_indices: [11]
+    seed: 7
+    seed_episode_stride: 50
+    horizon_multiplier: 3.0
+    resume: false
+    defer_api_errors: false
+    output_dir: runs/self_evolving_xr1_atomic_single_episode_gemini37_compatible2

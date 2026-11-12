@@ -1,0 +1,64 @@
+{
+  "skill_id": "M02",
+  "skill_version": "2.2.0",
+  "catalog_version": "2.2.0",
+  "maturity": "verified",
+  "executor_status": "implemented",
+  "verifier_status": "implemented",
+  "case_count": 6,
+  "examples_origin": "由契约生成并在构建时自检（正例必须通过、结构负例与语义负例必须被拒绝）",
+  "real_backend_evidence": [
+    {
+      "kind": "simulator_motion_probe",
+      "provider": "robocasa365 (gym.make robocasa/ScrubCuttingBoard, split=pretrain, seed=0)",
+      "checkpoint": "n/a（闭环脚本控制，无模型）",
+      "device": "cuda（EGL 渲染）",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/motion_probe/motion_probe_summary.json",
+        "catalogs/v2.2/evidence/motion_probe/motion_result_M02_waypoints.json",
+        "catalogs/v2.2/evidence/motion_probe/runtime_events.jsonl"
+      ],
+      "steps": 86,
+      "per_waypoint_steps": [
+        44,
+        32
+      ],
+      "reached_waypoints": 2,
+      "measured_max_speed_mps": 0.1,
+      "verification_verdict": "passed",
+      "terminal_status": "unverified",
+      "limitations": "两航点短程探针；stop_at_each 的停稳判据是 5 步零增量后仍在容差内；未覆盖长航点序列与绕障场景。"
+    },
+    {
+      "kind": "vision_endpoint_crosscheck",
+      "provider": "sam3 (scripts/study/probe_p12_m_vision_crosscheck.py, profile v3)",
+      "checkpoint": "sam3.pt",
+      "device": "cuda",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/vision_crosscheck/vision_crosscheck_summary.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/M02_waypoint_out_vision_crosscheck.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/M02_waypoint_back_vision_crosscheck.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/motion_result_M02_waypoint_out.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/motion_result_M02_waypoint_back.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/M02_waypoint_out_after.png",
+        "catalogs/v2.2/evidence/vision_crosscheck/M02_waypoint_back_after.png",
+        "catalogs/v2.2/evidence/vision_crosscheck/runtime_events.jsonl"
+      ],
+      "independent": true,
+      "method": "航点目标经 base site 位姿变换到世界系后投影到 robot0_agentview_left，要求 SAM3 在目标像素 ±15px 内给出腕部尺度（≤8000px^2）检测片段；为使每段都有独立前后帧判定，按契约（waypoints minItems=1）拆成去/回两次单航点调用",
+      "endpoint_fragment_area_px2": [
+        2050.3,
+        2372.8
+      ],
+      "passed": true,
+      "limitations": "两次单航点调用与原始两航点探针的口径差异已在证据中记录；未覆盖长航点序列与绕障场景。"
+    }
+  ],
+  "note": "真实后端证据见 real_backend_evidence；独立复核条目仅出现在有第二来源的技能上；再升版本需按 promotion_gate 做配对实验。"
+}

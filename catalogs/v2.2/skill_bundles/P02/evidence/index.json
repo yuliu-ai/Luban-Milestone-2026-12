@@ -1,0 +1,82 @@
+{
+  "skill_id": "P02",
+  "skill_version": "2.2.0",
+  "catalog_version": "2.2.0",
+  "maturity": "verified",
+  "executor_status": "implemented",
+  "verifier_status": "implemented",
+  "case_count": 6,
+  "examples_origin": "由契约生成并在构建时自检（正例必须通过、结构负例与语义负例必须被拒绝）",
+  "real_backend_evidence": [
+    {
+      "kind": "single_frame_probe",
+      "provider": "sam3",
+      "checkpoint": "sam3.pt",
+      "device": "cuda",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/p02_probe/p02_summary.json",
+        "catalogs/v2.2/evidence/p02_probe/p02_result.json",
+        "catalogs/v2.2/evidence/p02_probe/p02_sam3_detect_response.json",
+        "catalogs/v2.2/evidence/p02_probe/runtime_events.jsonl"
+      ],
+      "entities_returned": 21,
+      "detections_input": 5,
+      "instances_matched": 5,
+      "unmatched": 0,
+      "entities_without_mask": 0,
+      "latency_ms": 268.8008248806,
+      "verification_verdict": "passed",
+      "terminal_status": "unverified",
+      "limitations": "单帧探针；掩码由服务端 --mask-out-dir 落盘（file:// PNG）后由验证器重新打开核验（前景>0、同尺寸），无逐像素语义核验；实体与输入检测按 bbox IoU≥0.5 回配；mask_ref 记录采集时的 runs/ 绝对路径，掩码 PNG 副本随 evidence/p02_probe/masks/ 交付。"
+    },
+    {
+      "kind": "cross_provider_recheck",
+      "provider": "molmo2",
+      "checkpoint": "molmo2-4b (bfloat16)",
+      "device": "cuda",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/p02_recheck/p02_mask_recheck.json",
+        "catalogs/v2.2/evidence/p02_recheck/p02_recheck_sam3_response.json",
+        "catalogs/v2.2/evidence/p02_recheck/p02_recheck_molmo2_response.json",
+        "catalogs/v2.2/evidence/p02_recheck_run1/p02_mask_recheck.json"
+      ],
+      "independent": true,
+      "criterion": "每个 Molmo2 point 落入同类 SAM3 掩码前景（比 P01 落框更严格）",
+      "box_matched": 5,
+      "box_compared": 5,
+      "foreground_matched": 3,
+      "foreground_compared": 5,
+      "passed": false,
+      "limitations": "两次独立采样逐点一致（Molmo2 pointing 对该 query 确定性）：5/5 点落入 SAM3 bbox（P01 级判据通过），但仅 3/5 落入掩码前景——两个 miss 点 (98,95)/(103,95) 与命中点 (93,95) 相邻，处于多实例 knife 掩码的间隙/边界外，且不属于任何同类掩码前景；按纪律当时保持 backend_bound，后以修正判例的 v2 复核（同类掩码并集 + 预注册 1px 下采样混叠容差）升 verified，v1 判例与证据原样保留。"
+    },
+    {
+      "kind": "cross_provider_recheck",
+      "provider": "molmo2",
+      "checkpoint": "molmo2-4b (bfloat16)",
+      "device": "cuda",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/p02_recheck_v2/p02_mask_recheck_v2.json",
+        "catalogs/v2.2/evidence/p02_recheck_v2/p02_recheck_v2_sam3_response.json",
+        "catalogs/v2.2/evidence/p02_recheck_v2/p02_recheck_v2_molmo2_response.json"
+      ],
+      "independent": true,
+      "criterion": "每个 Molmo2 point 落入同类 SAM3 掩码并集前景（预注册 1px 下采样混叠容差；原始 0px 口径 3/5 并排如实记录）",
+      "point_compared": 5,
+      "point_matched_1px_tolerance": 5,
+      "point_matched_raw_zero_tolerance": 3,
+      "raw_zero_tolerance_passed": false,
+      "passed": true,
+      "limitations": "Molmo2 pointing 每次查询返回少量点，不覆盖全部 SAM3 掩码（recall 视角如实记录）；掩码由 SAM3 --mask-out-dir 落盘，复核只判定前景命中，不做语义核对；v1 判例缺陷（只匹配第一个包含点的同类框）已修正为同类掩码并集，v1 证据保留于 evidence/p02_recheck*/。"
+    }
+  ],
+  "note": "真实后端证据见 real_backend_evidence；独立复核条目仅出现在有第二来源的技能上；再升版本需按 promotion_gate 做配对实验。"
+}

@@ -1,0 +1,541 @@
+import json
+from pathlib import Path
+from typing import Any
+
+from luban.agent_core import (
+    DefaultAgent,
+    InMemoryMemory,
+    Planner,
+    TieredMemory,
+    Verifier,
+)
+from luban.backends.skills import LanguageSkillBackend
+from luban.backends.world_models import WorldModelBackend
+from luban.environments import Environment
+from luban.observability import EpisodeRecorder, LocalEpisodeRecorder
+from luban.pipelines import DirectPipeline, Pipeline
+from luban.runtimes import SyncRuntime
+
+
+class FakePlanner(Planner):
+    def __init__(self, skill: str = "find a Mug") -> None:
+        self.skill = skill
+
+    def plan(self, inputs: dict[str, Any]) -> dict[str, Any]:
+        return {"skill": self.skill, "received": inputs}
+
+
+class FakeVerifier(Verifier):
+    def verify(self, inputs: dict[str, Any]) -> dict[str, Any]:
+        result = inputs["environment_result"]
+        return {
+            "task_success": result["task_success"],
+            "task_progress": result["task_progress"],
+            "last_action_success": result["last_action_success"],
+            "environment_done": result["done"],
+            "env_feedback": result.get("env_feedback", ""),
+        }
+
+
+class FakeEnvironment(Environment):
+    def __init__(self, outcomes: list[dict[str, Any]]) -> None:
+        self.outcomes = outcomes
+        self.calls = 0
+        self.closed = False
+        self.execute_steps: list[int | None] = []
+
+    def reset(self, task: Any) -> dict[str, Any]:
+        return {"frame": 0, "available_skills": ["find a Mug"]}
+
+    def execute(self, action: Any, execute_steps: int | None = None) -> dict[str, Any]:
+        outcome = self.outcomes[min(self.calls, len(self.outcomes) - 1)]
+        self.execute_steps.append(execute_steps)
+        self.calls += 1
+        return {
+            "observation": {
+                "frame": self.calls,
+                "available_skills": ["find a Mug"],
+            },
+            "env_feedback": "feedback",
+            **outcome,
+        }
+
+    def close(self) -> None:
+        self.closed = True
+
+
+def make_agent(skill: str = "find a Mug") -> DefaultAgent:
+    return DefaultAgent(
+        planner=FakePlanner(skill),
+        verifier=FakeVerifier(),
+        memory=InMemoryMemory(),
+        skill_backend=LanguageSkillBackend(),
+    )
+
+
+class UnhealthyWorldModel(WorldModelBackend):
+    def predict_transition(self, inputs: dict[str, Any]) -> dict[str, Any]:
+        raise AssertionError("disabled world model must not predict")
+
+    def healthcheck(self) -> dict[str, Any]:
+        return {"healthy": False, "backend": type(self).__name__}
+
+
+class FailingResetWorldModel(WorldModelBackend):
+    def predict_transition(self, inputs: dict[str, Any]) -> dict[str, Any]:
+        raise AssertionError("disabled world model must not predict")
+
+    def reset(self, session_id: str) -> None:
+        raise RuntimeError("provider payload api_key=should-never-appear")
+
+
+def test_runtime_success_writes_trace(tmp_path: Path) -> None:
+    environment = FakeEnvironment(
+        [
+            {
+                "task_success": True,
+                "task_progress": 1.0,
+                "last_action_success": True,
+                "done": True,
+            }
+        ]
+    )
+    runtime = SyncRuntime(output_dir=tmp_path)
+
+    result = runtime.run(
+        make_agent(), DirectPipeline(), environment, {"instruction": "find mug"}
+    )
+
+    assert result["success"] is True
+    assert result["termination_reason"] == "task_success"
+    assert result["last_output"]["event_type"] == "task_success"
+    assert result["steps"] == 1
+    assert environment.closed is True
+    trace = Path(result["trace_path"])
+    assert trace.exists()
+    assert [json.loads(line)["event"] for line in trace.read_text().splitlines()] == [
+        "episode_start",
+        "step",
+        "episode_end",
+    ]
+
+
+def test_pipeline_work_finishes_before_agent_lifecycle_and_resource_close(tmp_path):
+    order = []
+    agent = make_agent()
+    agent.end_episode = lambda context: order.append("agent_end")
+    agent.close = lambda: order.append("agent_close")
+    environment = FakeEnvironment(
+        [
+            {
+                "task_success": True,
+                "task_progress": 1.0,
+                "last_action_success": True,
+                "done": True,
+            }
+        ]
+    )
+    environment.close = lambda: order.append("environment_close")
+    pipeline = DirectPipeline()
+    pipeline.close = lambda: order.append("pipeline_close")
+    result = SyncRuntime(output_dir=tmp_path).run(
+        agent, pipeline, environment, {"instruction": "find mug"}
+    )
+    assert result["success"]
+    assert order == ["pipeline_close", "agent_end", "environment_close", "agent_close"]
+
+
+def test_diagnostic_world_model_unhealthy_status_does_not_stop_runtime(
+    tmp_path: Path,
+) -> None:
+    agent = make_agent()
+    agent.world_model = UnhealthyWorldModel()
+    environment = FakeEnvironment(
+        [
+            {
+                "task_success": True,
+                "task_progress": 1.0,
+                "last_action_success": True,
+                "done": True,
+            }
+        ]
+    )
+
+    result = SyncRuntime(output_dir=tmp_path).run(
+        agent, DirectPipeline(), environment, "task"
+    )
+
+    assert result["success"] is True
+    assert result["termination_reason"] == "task_success"
+
+
+def test_diagnostic_world_model_reset_failure_is_non_fatal_and_secret_safe(
+    tmp_path: Path,
+) -> None:
+    agent = make_agent()
+    agent.world_model = FailingResetWorldModel()
+    environment = FakeEnvironment(
+        [
+            {
+                "task_success": True,
+                "task_progress": 1.0,
+                "last_action_success": True,
+                "done": True,
+            }
+        ]
+    )
+
+    result = SyncRuntime(output_dir=tmp_path).run(
+        agent, DirectPipeline(), environment, "task"
+    )
+
+    assert result["success"] is True
+    assert result["termination_reason"] == "task_success"
+    assert "api_key=should-never-appear" not in repr(result)
+    assert "api_key=should-never-appear" not in Path(result["trace_path"]).read_text(
+        encoding="utf-8"
+    )
+
+
+def test_runtime_writes_agent_trace_and_manifest(tmp_path: Path) -> None:
+    environment = FakeEnvironment(
+        [
+            {
+                "task_success": True,
+                "task_progress": 1.0,
+                "last_action_success": True,
+                "done": True,
+            }
+        ]
+    )
+    runtime = SyncRuntime(
+        output_dir=tmp_path,
+        observability=LocalEpisodeRecorder(record_video=False),
+    )
+
+    result = runtime.run(
+        make_agent(),
+        DirectPipeline(),
+        environment,
+        "find mug",
+        session_id="recorded",
+    )
+
+    agent_trace = Path(result["agent_trace_path"])
+    manifest = Path(result["artifact_manifest_path"])
+    assert result["success"] is True
+    assert result["video_path"] is None
+    assert [
+        json.loads(line)["event"] for line in agent_trace.read_text().splitlines()
+    ] == ["episode_start", "agent_step", "episode_end"]
+    assert json.loads(manifest.read_text(encoding="utf-8"))["artifacts"] == {
+        "result": "result.json",
+        "trace": "trace.jsonl",
+        "agent_trace": "agent_trace.jsonl",
+        "video": None,
+        "artifacts_dir": None,
+    }
+
+
+class FailingRecorder(EpisodeRecorder):
+    def start(self, session_dir: Path, session_id: str, task: Any) -> None:
+        raise RuntimeError("recorder unavailable")
+
+    def record_observation(
+        self,
+        observation: Any,
+        *,
+        step: int,
+        labels: list[str] | None = None,
+    ) -> None:
+        raise AssertionError("inactive recorder must not receive observations")
+
+    def record_step(self, step: int, output: dict[str, Any], observation: Any) -> None:
+        raise AssertionError("inactive recorder must not receive steps")
+
+    def record_exception(self, step: int, error: Exception) -> None:
+        raise AssertionError("inactive recorder must not receive exceptions")
+
+    def finish(self, result: dict[str, Any]) -> dict[str, Any]:
+        raise AssertionError("inactive recorder must not finish")
+
+
+def test_observability_failure_does_not_change_episode_result(tmp_path: Path) -> None:
+    environment = FakeEnvironment(
+        [
+            {
+                "task_success": True,
+                "task_progress": 1.0,
+                "last_action_success": True,
+                "done": True,
+            }
+        ]
+    )
+
+    result = SyncRuntime(
+        output_dir=tmp_path,
+        observability=FailingRecorder(),
+    ).run(make_agent(), DirectPipeline(), environment, "find mug")
+
+    assert result["success"] is True
+    assert result["termination_reason"] == "task_success"
+    assert result["observability_errors"] == [
+        "start: RuntimeError: recorder unavailable"
+    ]
+
+
+def test_runtime_provides_memory_artifact_directory(tmp_path: Path) -> None:
+    environment = FakeEnvironment(
+        [
+            {
+                "task_success": True,
+                "task_progress": 1.0,
+                "last_action_success": True,
+                "done": True,
+            }
+        ]
+    )
+    agent = DefaultAgent(
+        planner=FakePlanner(),
+        verifier=FakeVerifier(),
+        memory=TieredMemory(
+            camera_keys=[],
+            save_key_event_artifacts=True,
+        ),
+        skill_backend=LanguageSkillBackend(),
+    )
+
+    SyncRuntime(output_dir=tmp_path).run(
+        agent,
+        DirectPipeline(),
+        environment,
+        {"instruction": "find mug"},
+        session_id="session",
+    )
+
+    key_event_path = tmp_path / "session" / "artifacts" / "key_events" / "events.jsonl"
+    assert json.loads(key_event_path.read_text(encoding="utf-8"))["event_type"] == (
+        "task_success"
+    )
+
+
+def test_runtime_replans_after_failed_action(tmp_path: Path) -> None:
+    environment = FakeEnvironment(
+        [
+            {
+                "task_success": False,
+                "task_progress": 0.0,
+                "last_action_success": False,
+                "done": False,
+            },
+            {
+                "task_success": True,
+                "task_progress": 1.0,
+                "last_action_success": True,
+                "done": True,
+            },
+        ]
+    )
+
+    result = SyncRuntime(output_dir=tmp_path).run(
+        make_agent(), DirectPipeline(), environment, "find mug"
+    )
+
+    assert result["success"] is True
+    assert result["steps"] == 2
+    assert result["invalid_actions"] == 1
+    assert result["replans"] == 1
+
+
+def test_runtime_stops_at_step_limit(tmp_path: Path) -> None:
+    environment = FakeEnvironment(
+        [
+            {
+                "task_success": False,
+                "task_progress": 0.5,
+                "last_action_success": True,
+                "done": False,
+            }
+        ]
+    )
+
+    result = SyncRuntime(max_steps=2, output_dir=tmp_path).run(
+        make_agent(), DirectPipeline(), environment, "find mug"
+    )
+
+    assert result["termination_reason"] == "step_limit"
+    assert result["steps"] == 2
+
+
+def test_runtime_stops_at_retry_limit(tmp_path: Path) -> None:
+    environment = FakeEnvironment(
+        [
+            {
+                "task_success": False,
+                "task_progress": 0.0,
+                "last_action_success": False,
+                "done": False,
+            }
+        ]
+    )
+
+    result = SyncRuntime(max_retries=2, output_dir=tmp_path).run(
+        make_agent(), DirectPipeline(), environment, "find mug"
+    )
+
+    assert result["termination_reason"] == "retry_limit"
+    assert result["steps"] == 2
+
+
+def test_receding_horizon_passes_execute_steps(tmp_path: Path) -> None:
+    environment = FakeEnvironment(
+        [
+            {
+                "task_success": True,
+                "task_progress": 1.0,
+                "last_action_success": True,
+                "done": True,
+            }
+        ]
+    )
+
+    SyncRuntime(output_dir=tmp_path).run(
+        make_agent(),
+        DirectPipeline(action_execution_mode="receding_horizon", execute_steps=4),
+        environment,
+        "task",
+    )
+
+    assert environment.execute_steps == [4]
+
+
+def test_invalid_planner_output_is_verified_and_retried(tmp_path: Path) -> None:
+    environment = FakeEnvironment([])
+
+    result = SyncRuntime(max_retries=1, output_dir=tmp_path).run(
+        make_agent("not available"), DirectPipeline(), environment, "find mug"
+    )
+
+    assert result["termination_reason"] == "retry_limit"
+    assert result["invalid_actions"] == 1
+    assert environment.calls == 0
+
+
+class CustomTerminalPipeline(Pipeline):
+    def step(
+        self, agent: Any, environment: Any, state: dict[str, Any]
+    ) -> dict[str, Any]:
+        return {"custom_terminal": True, "success": True}
+
+    def is_terminal(self, output: dict[str, Any], state: dict[str, Any]) -> bool:
+        return bool(output["custom_terminal"])
+
+
+def test_runtime_uses_pipeline_terminal_semantics(tmp_path: Path) -> None:
+    environment = FakeEnvironment([])
+
+    result = SyncRuntime(output_dir=tmp_path).run(
+        make_agent(), CustomTerminalPipeline(), environment, "task"
+    )
+
+    assert result["termination_reason"] == "pipeline_terminal"
+    assert result["success"] is True
+
+
+class FailingEnvironment(FakeEnvironment):
+    def execute(self, action: Any, execute_steps: int | None = None) -> dict[str, Any]:
+        raise RuntimeError("environment failed")
+
+
+def test_runtime_records_exception_termination(tmp_path: Path) -> None:
+    result = SyncRuntime(output_dir=tmp_path).run(
+        make_agent(), DirectPipeline(), FailingEnvironment([]), "task"
+    )
+
+    assert result["termination_reason"] == "exception"
+    assert result["error_type"] == "RuntimeError"
+    assert result["error"] == "environment failed"
+
+
+def test_runtime_resets_agent_memory_for_each_session(tmp_path: Path) -> None:
+    agent = make_agent()
+    environment = FakeEnvironment(
+        [
+            {
+                "task_success": True,
+                "task_progress": 1.0,
+                "last_action_success": True,
+                "done": True,
+            }
+        ]
+    )
+    runtime = SyncRuntime(output_dir=tmp_path)
+
+    runtime.run(
+        agent,
+        DirectPipeline(),
+        environment,
+        "task",
+        session_id="first",
+        close_resources=False,
+    )
+    assert len(agent.memory.events) == 1
+
+    runtime.run(
+        agent,
+        DirectPipeline(),
+        environment,
+        "task",
+        session_id="second",
+        close_resources=False,
+    )
+
+    assert len(agent.memory.events) == 1
+    agent.close()
+
+
+def test_direct_pipeline_passes_explicit_memory_context() -> None:
+    class ContextMemory(InMemoryMemory):
+        def recall(self, query: dict[str, Any]) -> dict[str, Any]:
+            return {
+                "working_frames": [],
+                "recent_events": [],
+                "summary": f"memory for {query['phase']}",
+            }
+
+    class RecordingVerifier(FakeVerifier):
+        def verify(self, inputs: dict[str, Any]) -> dict[str, Any]:
+            self.inputs = inputs
+            return super().verify(inputs)
+
+    verifier = RecordingVerifier()
+    agent = DefaultAgent(
+        planner=FakePlanner(),
+        verifier=verifier,
+        memory=ContextMemory(),
+        skill_backend=LanguageSkillBackend(),
+    )
+    environment = FakeEnvironment(
+        [
+            {
+                "task_success": False,
+                "task_progress": 0.5,
+                "last_action_success": True,
+                "done": False,
+            }
+        ]
+    )
+    state = {
+        "task": "find mug",
+        "observation": environment.reset("find mug"),
+        "step": 0,
+        "session_id": "session",
+        "history": [],
+    }
+
+    output = DirectPipeline().step(agent, environment, state)
+
+    assert output["planner_output"]["received"]["memory_context"]["summary"] == (
+        "memory for plan"
+    )
+    assert verifier.inputs["memory_context"]["summary"] == "memory for verify"

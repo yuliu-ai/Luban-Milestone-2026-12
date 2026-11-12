@@ -1,0 +1,127 @@
+{
+  "skill": "M02",
+  "runtime_status": "unverified",
+  "runtime_verdict": "passed",
+  "runtime_outputs": {
+    "final_pose": [
+      0.2712379992008209,
+      0.004146316088736057,
+      0.6084023714065552,
+      -0.9821929323431509,
+      -0.11159959421643377,
+      -0.1500886825848716,
+      0.017775308318776408
+    ],
+    "reached_waypoints": 1,
+    "duration_s": 1.25
+  },
+  "runtime_inputs": {
+    "waypoints": [
+      [
+        0.2674035918712616,
+        0.005692837052047253,
+        0.6101325750350952,
+        -0.9821950348662897,
+        -0.11121614292968979,
+        -0.15037397719746365,
+        0.017650779520115924
+      ]
+    ],
+    "frame_id": "robot0_base",
+    "speed_mps": 0.1,
+    "waypoint_tolerance_m": 0.008,
+    "stop_at_each": true,
+    "verification_profile_ref": "profile://motion/waypoints-v1"
+  },
+  "world_ee_before": [
+    2.993074051072014,
+    -0.556790875288724,
+    1.3081695907036386
+  ],
+  "world_ee_after": [
+    2.9939602979673863,
+    -0.5566515565301211,
+    1.308404454341458
+  ],
+  "sam3_before": {
+    "query": "white robot arm",
+    "entities": 10,
+    "attempts": [
+      {
+        "query": "white robot arm",
+        "entities": 10
+      }
+    ]
+  },
+  "sam3_after": {
+    "query": "white robot arm",
+    "entities": 13,
+    "attempts": [
+      {
+        "query": "white robot arm",
+        "entities": 13
+      }
+    ]
+  },
+  "fragment_before": {
+    "bbox_xyxy": [
+      152.94732666015625,
+      68.47894287109375,
+      212.61172485351562,
+      121.121337890625
+    ],
+    "area_px2": 3140.876818297431,
+    "centroid": [
+      182.77952575683594,
+      94.80014038085938
+    ],
+    "containing_fragment_count": 7,
+    "containing_fragment_areas_px2": [
+      3140.9,
+      3196.6,
+      4641.9,
+      5678.2,
+      15851.3,
+      21838.0,
+      22130.8
+    ]
+  },
+  "legs": [
+    {
+      "leg": 0,
+      "target_pixel_uv": [
+        170.01,
+        111.86
+      ],
+      "wrist_fragment": {
+        "bbox_xyxy": [
+          157.064697265625,
+          67.46272277832031,
+          210.66268920898438,
+          105.71638488769531
+        ],
+        "area_px2": 2050.319473542273,
+        "centroid": [
+          183.8636932373047,
+          86.58955383300781
+        ],
+        "containing_fragment_count": 11,
+        "containing_fragment_areas_px2": [
+          2050.3,
+          2279.0,
+          2349.1,
+          2384.1,
+          3967.0,
+          4676.7,
+          5242.4,
+          15627.1,
+          15853.4,
+          21872.5,
+          22327.8
+        ]
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}

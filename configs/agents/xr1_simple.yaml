@@ -1,0 +1,18 @@
+agent:
+  class_path: luban.agent_core.DefaultAgent
+planner:
+  class_path: luban.agent_core.TaskSkillPlanner
+verifier:
+  class_path: luban.agent_core.EnvironmentVerifier
+memory:
+  class_path: luban.agent_core.InMemoryMemory
+skill_backend:
+  name: xr1_remote
+  init_args:
+    host: "${XR1_HOST:-127.0.0.1}"
+    port: 18400
+    timeout_seconds: 60
+    observation_history: 4
+    observation_interval: 2
+    instruction_mode: planner_subtask
+    expected_policy_seed_mode: episode_step

@@ -1,0 +1,516 @@
+{
+  "name": "fixed32-new-compositions30",
+  "scope": "Internal new combinations and scene parameters, using only fixed table 9-13 skills.",
+  "tasks": [
+    {
+      "id": "UC-A01",
+      "domain": "arm",
+      "family": "place_release",
+      "seed": 2026111200,
+      "goal": "抓住桌面工件，抬升39毫米，移到相对初始位置X增加19毫米、Y变化-3毫米的目标上方，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 0.925,
+      "object_friction": 0.981,
+      "lift_m": 0.039,
+      "align_delta_m": [
+        0.019,
+        -0.003,
+        0.043
+      ],
+      "force_n": 6.79,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        -0.104,
+        0.091
+      ]
+    },
+    {
+      "id": "UC-A02",
+      "domain": "arm",
+      "family": "force_before_lift",
+      "seed": 2026111201,
+      "goal": "抓住桌面工件，先将夹持力调到6.34牛，再抬升37毫米，移到相对初始位置X增加22毫米、Y变化-2毫米的目标上方，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 0.992,
+      "object_friction": 0.862,
+      "lift_m": 0.037,
+      "align_delta_m": [
+        0.022,
+        -0.002,
+        0.040999999999999995
+      ],
+      "force_n": 6.34,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        0.035,
+        -0.09
+      ]
+    },
+    {
+      "id": "UC-A03",
+      "domain": "arm",
+      "family": "force_after_align",
+      "seed": 2026111202,
+      "goal": "抓住桌面工件，抬升39毫米，移到相对初始位置X增加18毫米、Y变化-13毫米的目标上方，对准后将夹持力调到6.44牛，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 0.877,
+      "object_friction": 1.006,
+      "lift_m": 0.039,
+      "align_delta_m": [
+        0.018,
+        -0.013,
+        0.043
+      ],
+      "force_n": 6.44,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        0.025,
+        0.072
+      ]
+    },
+    {
+      "id": "UC-A04",
+      "domain": "arm",
+      "family": "open_then_place",
+      "seed": 2026111203,
+      "goal": "先把夹爪开口扩大到78毫米，然后抓住桌面工件，抬升50毫米，移到相对初始位置X增加21毫米、Y变化-4毫米的目标上方，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 1.132,
+      "object_friction": 0.805,
+      "lift_m": 0.05,
+      "align_delta_m": [
+        0.021,
+        -0.004,
+        0.054000000000000006
+      ],
+      "force_n": 6.87,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        0.101,
+        0.067
+      ]
+    },
+    {
+      "id": "UC-A05",
+      "domain": "arm",
+      "family": "force_after_lift",
+      "seed": 2026111204,
+      "goal": "抓住桌面工件，抬升46毫米，抬升后将夹持力调到6.53牛，然后移到相对初始位置X增加16毫米、Y变化10毫米的目标上方，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 0.939,
+      "object_friction": 0.816,
+      "lift_m": 0.046,
+      "align_delta_m": [
+        0.016,
+        0.01,
+        0.05
+      ],
+      "force_n": 6.53,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        -0.09,
+        0.058
+      ]
+    },
+    {
+      "id": "UC-A06",
+      "domain": "arm",
+      "family": "place_release",
+      "seed": 2026111205,
+      "goal": "抓住桌面工件，抬升48毫米，移到相对初始位置X增加20毫米、Y变化4毫米的目标上方，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 0.87,
+      "object_friction": 0.998,
+      "lift_m": 0.048,
+      "align_delta_m": [
+        0.02,
+        0.004,
+        0.052000000000000005
+      ],
+      "force_n": 6.34,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        0.041,
+        0.074
+      ]
+    },
+    {
+      "id": "UC-A07",
+      "domain": "arm",
+      "family": "force_before_lift",
+      "seed": 2026111206,
+      "goal": "抓住桌面工件，先将夹持力调到6.53牛，再抬升45毫米，移到相对初始位置X增加22毫米、Y变化-5毫米的目标上方，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 0.919,
+      "object_friction": 0.866,
+      "lift_m": 0.045,
+      "align_delta_m": [
+        0.022,
+        -0.005,
+        0.049
+      ],
+      "force_n": 6.53,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        -0.106,
+        0.077
+      ]
+    },
+    {
+      "id": "UC-A08",
+      "domain": "arm",
+      "family": "force_after_align",
+      "seed": 2026111207,
+      "goal": "抓住桌面工件，抬升50毫米，移到相对初始位置X增加14毫米、Y变化11毫米的目标上方，对准后将夹持力调到6.3牛，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 1.011,
+      "object_friction": 0.982,
+      "lift_m": 0.05,
+      "align_delta_m": [
+        0.014,
+        0.011,
+        0.054000000000000006
+      ],
+      "force_n": 6.3,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        -0.096,
+        0.042
+      ]
+    },
+    {
+      "id": "UC-A09",
+      "domain": "arm",
+      "family": "open_then_place",
+      "seed": 2026111208,
+      "goal": "先把夹爪开口扩大到78毫米，然后抓住桌面工件，抬升43毫米，移到相对初始位置X增加24毫米、Y变化-13毫米的目标上方，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 0.893,
+      "object_friction": 1.039,
+      "lift_m": 0.043,
+      "align_delta_m": [
+        0.024,
+        -0.013,
+        0.047
+      ],
+      "force_n": 6.76,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        0.069,
+        -0.088
+      ]
+    },
+    {
+      "id": "UC-A10",
+      "domain": "arm",
+      "family": "force_after_lift",
+      "seed": 2026111209,
+      "goal": "抓住桌面工件，抬升46毫米，抬升后将夹持力调到6.58牛，然后移到相对初始位置X增加19毫米、Y变化-2毫米的目标上方，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 0.921,
+      "object_friction": 1.003,
+      "lift_m": 0.046,
+      "align_delta_m": [
+        0.019,
+        -0.002,
+        0.05
+      ],
+      "force_n": 6.58,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        -0.047,
+        -0.014
+      ]
+    },
+    {
+      "id": "UC-A11",
+      "domain": "arm",
+      "family": "place_release",
+      "seed": 2026111210,
+      "goal": "抓住桌面工件，抬升43毫米，移到相对初始位置X增加14毫米、Y变化1毫米的目标上方，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 0.873,
+      "object_friction": 1.002,
+      "lift_m": 0.043,
+      "align_delta_m": [
+        0.014,
+        0.001,
+        0.047
+      ],
+      "force_n": 6.77,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        0.106,
+        0.046
+      ]
+    },
+    {
+      "id": "UC-A12",
+      "domain": "arm",
+      "family": "force_before_lift",
+      "seed": 2026111211,
+      "goal": "抓住桌面工件，先将夹持力调到6.56牛，再抬升50毫米，移到相对初始位置X增加15毫米、Y变化7毫米的目标上方，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 0.893,
+      "object_friction": 0.81,
+      "lift_m": 0.05,
+      "align_delta_m": [
+        0.015,
+        0.007,
+        0.054000000000000006
+      ],
+      "force_n": 6.56,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        -0.028,
+        -0.025
+      ]
+    },
+    {
+      "id": "UC-A13",
+      "domain": "arm",
+      "family": "force_after_align",
+      "seed": 2026111212,
+      "goal": "抓住桌面工件，抬升39毫米，移到相对初始位置X增加23毫米、Y变化13毫米的目标上方，对准后将夹持力调到6.62牛，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 1.104,
+      "object_friction": 1.068,
+      "lift_m": 0.039,
+      "align_delta_m": [
+        0.023,
+        0.013,
+        0.043
+      ],
+      "force_n": 6.62,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        -0.016,
+        0.039
+      ]
+    },
+    {
+      "id": "UC-A14",
+      "domain": "arm",
+      "family": "open_then_place",
+      "seed": 2026111213,
+      "goal": "先把夹爪开口扩大到78毫米，然后抓住桌面工件，抬升44毫米，移到相对初始位置X增加23毫米、Y变化-2毫米的目标上方，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 0.953,
+      "object_friction": 0.995,
+      "lift_m": 0.044,
+      "align_delta_m": [
+        0.023,
+        -0.002,
+        0.048
+      ],
+      "force_n": 6.66,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        -0.01,
+        -0.064
+      ]
+    },
+    {
+      "id": "UC-A15",
+      "domain": "arm",
+      "family": "force_after_lift",
+      "seed": 2026111214,
+      "goal": "抓住桌面工件，抬升43毫米，抬升后将夹持力调到6.88牛，然后移到相对初始位置X增加13毫米、Y变化4毫米的目标上方，再将工件落座到桌面，最后张开夹爪释放工件。",
+      "mass_scale": 0.994,
+      "object_friction": 1.004,
+      "lift_m": 0.043,
+      "align_delta_m": [
+        0.013,
+        0.004,
+        0.047
+      ],
+      "force_n": 6.88,
+      "position_tolerance_m": 0.008,
+      "layout_shift_xy_m": [
+        0.007,
+        0.087
+      ]
+    },
+    {
+      "id": "UC-G01",
+      "domain": "ground",
+      "seed": 2026111300,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动76毫米，再向前移动87毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.076,
+        0.087
+      ],
+      "friction": 0.929,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G02",
+      "domain": "ground",
+      "seed": 2026111301,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动91毫米，再向前移动95毫米，再向前移动129毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.091,
+        0.095,
+        0.129
+      ],
+      "friction": 1.007,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G03",
+      "domain": "ground",
+      "seed": 2026111302,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动93毫米，再向前移动126毫米，再向前移动106毫米，再向前移动125毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.093,
+        0.126,
+        0.106,
+        0.125
+      ],
+      "friction": 0.993,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G04",
+      "domain": "ground",
+      "seed": 2026111303,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动104毫米，再向前移动115毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.104,
+        0.115
+      ],
+      "friction": 0.898,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G05",
+      "domain": "ground",
+      "seed": 2026111304,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动108毫米，再向前移动112毫米，再向前移动102毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.108,
+        0.112,
+        0.102
+      ],
+      "friction": 0.961,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G06",
+      "domain": "ground",
+      "seed": 2026111305,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动100毫米，再向前移动115毫米，再向前移动98毫米，再向前移动117毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.1,
+        0.115,
+        0.098,
+        0.117
+      ],
+      "friction": 1.142,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G07",
+      "domain": "ground",
+      "seed": 2026111306,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动92毫米，再向前移动126毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.092,
+        0.126
+      ],
+      "friction": 1.051,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G08",
+      "domain": "ground",
+      "seed": 2026111307,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动103毫米，再向前移动120毫米，再向前移动92毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.103,
+        0.12,
+        0.092
+      ],
+      "friction": 0.899,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G09",
+      "domain": "ground",
+      "seed": 2026111308,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动112毫米，再向前移动78毫米，再向前移动112毫米，再向前移动124毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.112,
+        0.078,
+        0.112,
+        0.124
+      ],
+      "friction": 0.93,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G10",
+      "domain": "ground",
+      "seed": 2026111309,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动118毫米，再向前移动88毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.118,
+        0.088
+      ],
+      "friction": 1.064,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G11",
+      "domain": "ground",
+      "seed": 2026111310,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动107毫米，再向前移动99毫米，再向前移动86毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.107,
+        0.099,
+        0.086
+      ],
+      "friction": 0.92,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G12",
+      "domain": "ground",
+      "seed": 2026111311,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动123毫米，再向前移动98毫米，再向前移动100毫米，再向前移动102毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.123,
+        0.098,
+        0.1,
+        0.102
+      ],
+      "friction": 0.868,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G13",
+      "domain": "ground",
+      "seed": 2026111312,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动128毫米，再向前移动82毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.128,
+        0.082
+      ],
+      "friction": 0.992,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G14",
+      "domain": "ground",
+      "seed": 2026111313,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动75毫米，再向前移动123毫米，再向前移动84毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.075,
+        0.123,
+        0.084
+      ],
+      "friction": 1.076,
+      "position_tolerance_m": 0.02
+    },
+    {
+      "id": "UC-G15",
+      "domain": "ground",
+      "seed": 2026111314,
+      "goal": "按次序分别完成以下直线移动，每段单独到位：向前移动76毫米，再向前移动111毫米，再向前移动99毫米，再向前移动115毫米。所有路段完成后执行受控停止，保持底盘静止。",
+      "distances_m": [
+        0.076,
+        0.111,
+        0.099,
+        0.115
+      ],
+      "friction": 0.875,
+      "position_tolerance_m": 0.02
+    }
+  ]
+}

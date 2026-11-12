@@ -1,0 +1,81 @@
+{
+  "source_document": "六通具身智能体报告_提交版(1).docx",
+  "updated": "2026-10-21",
+  "local_scene": {
+    "tables": [
+      17,
+      18
+    ],
+    "points": 685513,
+    "walls": 6,
+    "doors": 1,
+    "windows": 1,
+    "objects": 8,
+    "inference_seconds": 3.368,
+    "total_seconds": 6.418,
+    "queries": [
+      {
+        "pair": [
+          "dressing_table",
+          "stool"
+        ],
+        "distance_m": 0.202
+      },
+      {
+        "pair": [
+          "wardrobe",
+          "nightstand"
+        ],
+        "distance_m": 0.746
+      }
+    ]
+  },
+  "memory_replay": {
+    "tables": [
+      19,
+      20
+    ],
+    "groups": 5,
+    "recall_per_group": 10000,
+    "mean_ms": 0.1496,
+    "std_ms": 0.0003,
+    "resets": 1000,
+    "backend_calls": 1,
+    "context_bytes": 2009
+  },
+  "published_spatiallm": {
+    "tables": [
+      15,
+      16
+    ],
+    "provenance": "Published model benchmarks quoted in the report, not framework reruns",
+    "structured3d_f1_iou_050": {
+      "RoomFormer": 81.4,
+      "SceneScript": 89.2,
+      "SpatialLM": 93.5
+    },
+    "scannet_f1_iou_050": {
+      "V-DETR": 56.8,
+      "SceneScript": 36.8,
+      "SpatialLM": 52.6
+    }
+  },
+  "navigation": {
+    "table": "12-4",
+    "platform": "Uniubi quadruped",
+    "episodes_per_setting": 40,
+    "native": {
+      "wait_seconds": 7.32,
+      "pauses": 6.75,
+      "episode_seconds": 41.98,
+      "end_2m_success": 15
+    },
+    "streaming": {
+      "wait_seconds": 1.63,
+      "pauses": 0.8,
+      "episode_seconds": 36.71,
+      "end_2m_success": 16
+    },
+    "endpoint_interpretation": "No statistically significant endpoint accuracy improvement reported."
+  }
+}

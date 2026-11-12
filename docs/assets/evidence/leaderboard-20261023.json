@@ -1,0 +1,150 @@
+{
+  "source": "Luban具身智能体报告_提交版.docx",
+  "tables": [
+    7,
+    11,
+    12
+  ],
+  "metrics": {
+    "robocasa": [
+      [
+        "DP",
+        15.7,
+        0.2,
+        1.3
+      ],
+      [
+        "π0",
+        34.6,
+        6.1,
+        1.1
+      ],
+      [
+        "π0.5",
+        39.6,
+        7.1,
+        1.2
+      ],
+      [
+        "GR00T-N1.6",
+        51.1,
+        9.4,
+        1.7
+      ],
+      [
+        "XR-1",
+        80.2,
+        57.1,
+        32.1
+      ],
+      [
+        "Luban / XR-1 (w/o evolution)",
+        82.1,
+        65.0,
+        null
+      ],
+      [
+        "Luban / XR-1",
+        85.5,
+        68.6,
+        null
+      ]
+    ],
+    "robotwin": [
+      [
+        "π0.5",
+        "multi",
+        70.7,
+        46.0
+      ],
+      [
+        "Luban / Qwen + π0.5",
+        "multi",
+        61.58,
+        null
+      ],
+      [
+        "DP3",
+        "single",
+        55.24,
+        4.96
+      ],
+      [
+        "π0",
+        "single",
+        46.42,
+        16.34
+      ],
+      [
+        "RDT-1B",
+        "single",
+        34.5,
+        13.72
+      ],
+      [
+        "ACT",
+        "single",
+        29.74,
+        1.74
+      ],
+      [
+        "DP",
+        "single",
+        28.04,
+        0.64
+      ]
+    ],
+    "libero": [
+      [
+        "DP",
+        78.3,
+        92.5,
+        68.3,
+        50.5,
+        72.4
+      ],
+      [
+        "OpenVLA",
+        84.7,
+        88.4,
+        79.2,
+        53.7,
+        76.5
+      ],
+      [
+        "π0",
+        96.8,
+        98.8,
+        95.8,
+        85.2,
+        94.2
+      ],
+      [
+        "OpenVLA-OFT (without Agent)",
+        97.6,
+        97.4,
+        98.4,
+        93.4,
+        96.7
+      ],
+      [
+        "Luban / OpenVLA-OFT",
+        99.4,
+        99.2,
+        99.4,
+        97.6,
+        98.9
+      ]
+    ]
+  },
+  "libero_denominator": "2000 original episode IDs; historical execution budget retained in results guide",
+  "robosyn": {
+    "successes": 412,
+    "episodes": 1000
+  },
+  "paired_experience": {
+    "pairs": 470,
+    "control_successes": 278,
+    "treatment_successes": 294
+  }
+}

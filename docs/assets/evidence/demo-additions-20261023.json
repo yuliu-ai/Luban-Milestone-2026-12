@@ -1,0 +1,43 @@
+{
+  "navigation": {
+    "source": "EvolvingNav_M20_Indoor_Outdoor_CN_EN_Original_20261021",
+    "kind": "physical_robot_trajectory_visualization",
+    "confirmed_by_user": "2026-10-23",
+    "duration_seconds": {
+      "indoor": 60.84,
+      "outdoor": 64.92
+    },
+    "languages": [
+      "zh",
+      "en"
+    ],
+    "export": "960px H.264, complete duration and original playback speed"
+  },
+  "atomic_images": {
+    "source": "最终ppt.pptx",
+    "slide": 16,
+    "ids": [
+      "M05",
+      "G03",
+      "G04",
+      "A02",
+      "T04",
+      "M08",
+      "F01",
+      "P01"
+    ]
+  },
+  "robotwin": {
+    "kind": "simulation",
+    "tasks": [
+      "handover_mic",
+      "stack_blocks_three"
+    ],
+    "source": "robotwin_success_10_20261009"
+  },
+  "chemistry": {
+    "kind": "scripted_simulation",
+    "simulator": "Isaac Sim",
+    "duration_seconds": 20.8
+  }
+}

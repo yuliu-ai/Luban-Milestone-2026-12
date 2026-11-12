@@ -1,0 +1,75 @@
+agent:
+  class_path: luban.agent_core.DefaultAgent
+  init_args:
+    high_skill_write_mode: propose
+    max_validated_experiences: 4
+    experience_capsule_store:
+      class_path: luban.agent_core.ExperienceCapsuleStore
+      init_args:
+        path: ~/.local/share/luban/self_evolution/capsules.jsonl
+        min_positive_validations: 2
+    experience_context:
+      code_version: codex/self-evolution-atomic-skills@c97c3d5+working-tree
+      config_version: self-evolution-atomic-api-deepseek-flash-v1
+      base_policy: xiaomi-robotics-1-robocasa365
+      responsible_module: planner
+
+task_decomposer:
+  class_path: luban.agent_core.TaskDecomposer
+  init_args:
+    backend: &api_backend
+      class_path: luban.backends.llm.OpenAICompatibleLLMBackend
+      init_args:
+        base_url: "${LLM_BASE_URL:-http://127.0.0.1:8000/v1}"
+        model: "${LLM_MODEL:-replace-with-your-model-id}"
+        timeout_seconds: 600
+        max_retries: 2
+        omit_temperature: false
+    camera_keys: &camera_keys
+      - video.robot0_agentview_left
+      - video.robot0_agentview_right
+      - video.robot0_eye_in_hand
+    max_images: 3
+    max_nodes: 8
+    max_tokens: 8192
+    temperature: 0
+    response_format_mode: json_object
+    task_atomic_skill_catalog:
+      class_path: luban.agent_core.RoboCasaAtomicSkillCatalog
+
+planner:
+  class_path: luban.agent_core.LanguageSkillPlanner
+  init_args:
+    backend: *api_backend
+    max_tokens: 8192
+    temperature: 0
+
+verifier:
+  class_path: luban.agent_core.EnvironmentVerifier
+
+memory:
+  class_path: luban.agent_core.LongMemory
+  init_args:
+    recent_event_limit: 16
+    failed_event_limit: 6
+    key_event_limit: 24
+    summary_max_chars: 4096
+    summary_async: false
+
+skill_backend:
+  class_path: luban.backends.skills.LanguageSkillBackend
+
+skill_manager:
+  class_path: luban.agent_core.SkillManager
+  init_args:
+    root: ~/.local/share/luban/self_evolution/high_skills
+
+high_skill_reasoner:
+  class_path: luban.agent_core.HighSkillReasoner
+  init_args:
+    backend: *api_backend
+    max_selected_skills: 3
+    max_update_images: 6
+    camera_keys: *camera_keys
+    max_tokens: 8192
+    temperature: 0

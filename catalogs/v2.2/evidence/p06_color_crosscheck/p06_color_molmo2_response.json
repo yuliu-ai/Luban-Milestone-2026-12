@@ -1,0 +1,36 @@
+{
+  "schema_version": "visual-perception-v1",
+  "provider": "molmo2",
+  "request_id": "p06-color-crosscheck-1789306403:molmo2:0:request:1",
+  "frame_index": 0,
+  "timestamp": 1789306405.352314,
+  "entities": [
+    {
+      "track_id": "video.robot0_agentview_left/0/cutting board/1",
+      "label": "cutting board",
+      "confidence": 1.0,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": null,
+      "point_xy": [
+        48.112,
+        47.802
+      ],
+      "mask_ref": null,
+      "attributes": {
+        "model_family": "molmo2",
+        "prompt_mode": "pointing",
+        "raw_frame_id": 1
+      },
+      "provenance": {
+        "source_provider": "molmo2",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    }
+  ],
+  "relations": [],
+  "latency_ms": 1949.118111282587,
+  "warnings": []
+}

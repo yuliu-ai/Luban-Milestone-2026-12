@@ -1,0 +1,56 @@
+{
+  "skill_id": "M04",
+  "skill_version": "2.2.0",
+  "catalog_version": "2.2.0",
+  "maturity": "verified",
+  "executor_status": "implemented",
+  "verifier_status": "implemented",
+  "case_count": 6,
+  "examples_origin": "由契约生成并在构建时自检（正例必须通过、结构负例与语义负例必须被拒绝）",
+  "real_backend_evidence": [
+    {
+      "kind": "simulator_motion_probe",
+      "provider": "robocasa365 (gym.make robocasa/ScrubCuttingBoard, split=pretrain, seed=0)",
+      "checkpoint": "n/a（闭环脚本控制，无模型）",
+      "device": "cuda（EGL 渲染）",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/motion_probe/motion_probe_summary.json",
+        "catalogs/v2.2/evidence/motion_probe/motion_result_M04_pose.json",
+        "catalogs/v2.2/evidence/motion_probe/runtime_events.jsonl"
+      ],
+      "steps": 63,
+      "duration_s": 3.15,
+      "position_error_m": 0.00622443798,
+      "orientation_error_rad": 0.0475,
+      "verification_verdict": "passed",
+      "terminal_status": "unverified",
+      "limitations": "单段探针（小幅位姿调整）；速度上限按指令侧闭环裁剪实现，实测峰值已记录在证据。"
+    },
+    {
+      "kind": "vision_endpoint_crosscheck",
+      "provider": "sam3 (scripts/study/probe_p12_m_vision_crosscheck.py, profile v3)",
+      "checkpoint": "sam3.pt",
+      "device": "cuda",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/vision_crosscheck/vision_crosscheck_summary.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/M04_pose_vision_crosscheck.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/motion_result_M04_pose.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/M04_pose_before.png",
+        "catalogs/v2.2/evidence/vision_crosscheck/M04_pose_after.png",
+        "catalogs/v2.2/evidence/vision_crosscheck/runtime_events.jsonl"
+      ],
+      "independent": true,
+      "method": "sim 状态与视觉无共享代码路径：目标位姿的位置部分经 base site 位姿变换到世界系并投影，要求 SAM3 在目标像素 ±15px 内给出腕部尺度（≤8000px^2）检测片段",
+      "endpoint_fragment_area_px2": 2330.4,
+      "passed": true,
+      "limitations": "端点覆盖核验；姿态部分不做视觉判定，由 sim 状态与契约验证器判定。"
+    }
+  ],
+  "note": "真实后端证据见 real_backend_evidence；独立复核条目仅出现在有第二来源的技能上；再升版本需按 promotion_gate 做配对实验。"
+}

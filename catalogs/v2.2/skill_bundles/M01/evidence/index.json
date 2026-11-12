@@ -1,0 +1,63 @@
+{
+  "skill_id": "M01",
+  "skill_version": "2.2.0",
+  "catalog_version": "2.2.0",
+  "maturity": "verified",
+  "executor_status": "implemented",
+  "verifier_status": "implemented",
+  "case_count": 7,
+  "examples_origin": "由契约生成并在构建时自检（正例必须通过、结构负例与语义负例必须被拒绝）",
+  "real_backend_evidence": [
+    {
+      "kind": "simulator_motion_probe",
+      "provider": "robocasa365 (gym.make robocasa/ScrubCuttingBoard, split=pretrain, seed=0)",
+      "checkpoint": "n/a（闭环脚本控制，无模型）",
+      "device": "cuda（EGL 渲染）",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/motion_probe/motion_probe_summary.json",
+        "catalogs/v2.2/evidence/motion_probe/motion_result_M01_absolute.json",
+        "catalogs/v2.2/evidence/motion_probe/motion_control_wrong_frame.json",
+        "catalogs/v2.2/evidence/motion_probe/motion_control_budget_exhausted.json",
+        "catalogs/v2.2/evidence/motion_probe/runtime_events.jsonl"
+      ],
+      "steps": 20,
+      "duration_s": 1.0,
+      "position_error_m": 0.0076202977,
+      "max_lateral_error_m": 0.0011,
+      "measured_max_speed_mps": 0.1,
+      "verification_verdict": "passed",
+      "terminal_status": "unverified",
+      "fail_closed_controls": {
+        "wrong_frame": "FRAME_UNRESOLVED",
+        "budget_exhausted": "verifier failed，报告实测残差 0.39m"
+      },
+      "limitations": "单段探针（3cm 侧移），未覆盖长距离/绕障场景；控制器是逐帧 delta 闭环，指令路径长度（0.1m）大于实际位移（0.0241m）体现真实跟踪滞后，收敛判定以实测观测误差为准；动作语义（OSC_POSE delta，±0.05m/步）来自控制器配置，已在代码与证据中显式标注。"
+    },
+    {
+      "kind": "vision_endpoint_crosscheck",
+      "provider": "sam3 (scripts/study/probe_p12_m_vision_crosscheck.py, profile v3)",
+      "checkpoint": "sam3.pt",
+      "device": "cuda",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/vision_crosscheck/vision_crosscheck_summary.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/M01_linear_vision_crosscheck.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/motion_result_M01_linear.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/M01_linear_before.png",
+        "catalogs/v2.2/evidence/vision_crosscheck/M01_linear_after.png",
+        "catalogs/v2.2/evidence/vision_crosscheck/runtime_events.jsonl"
+      ],
+      "independent": true,
+      "method": "sim 状态与视觉无共享代码路径：把指令目标经 base site 位姿变换到世界系，再用 MuJoCo 相机模型（fovy 60°，focal 221.7px）投影到 robot0_agentview_left 像素，要求 SAM3 在该像素 ±15px 内给出腕部尺度（≤8000px^2，标定依据见探针 PROFILE）检测片段",
+      "endpoint_fragment_area_px2": 1945.8,
+      "passed": true,
+      "limitations": "端点覆盖核验而非轨迹跟踪：v1/v2 尝试表明 SAM3 手臂片段在 ~6px 位移尺度上不是稳定跟踪目标（v1/v2 证据保留于 runs/，不入库）；姿态部分不做视觉判定，由 sim 状态与契约验证器判定。"
+    }
+  ],
+  "note": "真实后端证据见 real_backend_evidence；独立复核条目仅出现在有第二来源的技能上；再升版本需按 promotion_gate 做配对实验。"
+}

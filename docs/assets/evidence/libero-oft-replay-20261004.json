@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-04",
+  "source": "User-supplied full evaluation and failed-episode replay results",
+  "benchmark": "LIBERO",
+  "model": "OpenVLA-OFT",
+  "weights": [
+    "openvla-7b-oft-finetuned-libero-spatial",
+    "openvla-7b-oft-finetuned-libero-object",
+    "openvla-7b-oft-finetuned-libero-goal",
+    "openvla-7b-oft-finetuned-libero-10"
+  ],
+  "initial_protocol": {
+    "tasks": 40,
+    "episodes_per_task": 50,
+    "episodes": 2000,
+    "seed": 7,
+    "gpu_workers": 5,
+    "failure_videos_saved": true
+  },
+  "experience_analysis": {
+    "failure_modes": 9,
+    "experience_capsules": 7
+  },
+  "suites": [
+    {
+      "suite": "libero_goal",
+      "episodes": 500,
+      "initial_successes": 492,
+      "initial_failures": 8,
+      "replay_successes": 5,
+      "replay_failures": 3,
+      "replay_success_rate_percent": 62.5,
+      "cumulative_successes": 497,
+      "cumulative_failures": 3,
+      "cumulative_success_rate_percent": 99.4
+    },
+    {
+      "suite": "libero_spatial",
+      "episodes": 500,
+      "initial_successes": 488,
+      "initial_failures": 12,
+      "replay_successes": 9,
+      "replay_failures": 3,
+      "replay_success_rate_percent": 75.0,
+      "cumulative_successes": 497,
+      "cumulative_failures": 3,
+      "cumulative_success_rate_percent": 99.4
+    },
+    {
+      "suite": "libero_object",
+      "episodes": 500,
+      "initial_successes": 487,
+      "initial_failures": 13,
+      "replay_successes": 9,
+      "replay_failures": 4,
+      "replay_success_rate_percent": 69.2,
+      "cumulative_successes": 496,
+      "cumulative_failures": 4,
+      "cumulative_success_rate_percent": 99.2
+    },
+    {
+      "suite": "libero_10",
+      "episodes": 500,
+      "initial_successes": 467,
+      "initial_failures": 33,
+      "replay_successes": 21,
+      "replay_failures": 12,
+      "replay_success_rate_percent": 63.6,
+      "cumulative_successes": 488,
+      "cumulative_failures": 12,
+      "cumulative_success_rate_percent": 97.6
+    }
+  ],
+  "totals": {
+    "initial_successes": 1934,
+    "initial_failures": 66,
+    "initial_success_rate_percent": 96.7,
+    "replayed_episodes": 66,
+    "replay_successes": 44,
+    "replay_failures": 22,
+    "replay_success_rate_percent": 66.66666666666667,
+    "cumulative_successes": 1978,
+    "cumulative_failures": 22,
+    "cumulative_success_rate_percent": 98.9
+  },
+  "aggregation": "Cumulative completion over the original 2000 episodes = initial successes + successes from replay of the original failures.",
+  "suite_replay_counts_source": "Integer counts uniquely derived from initial failure counts and user-supplied rounded per-suite replay rates; sum matches the supplied 44 successes.",
+  "initial_evaluation_dates": "2026-09-23 to 2026-09-24"
+}

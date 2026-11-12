@@ -1,0 +1,98 @@
+{
+  "started_at_s": 1789306186.286005,
+  "frame": "<HISTORICAL_PROJECT_ROOT>/runs/p12_probe/input_frame_agentview_left.png",
+  "provider_executor": "sam3",
+  "provider_recheck": "molmo2",
+  "profile": {
+    "version": "v2",
+    "queries": [
+      "cutting board",
+      "knife"
+    ],
+    "matching": "same-class SAM3 mask union foreground",
+    "tolerance_px": 1.0,
+    "tolerance_rationale": "masks stored at 256x256; 1 px is the downsampling aliasing scale",
+    "pass_rule": "every compared point within tolerance; raw zero-tolerance judgment recorded verbatim"
+  },
+  "sam3_entities": 19,
+  "sam3_entities_with_mask": 19,
+  "molmo2_points": 5,
+  "total_compared": 5,
+  "total_matched_1px_tolerance": 5,
+  "total_matched_raw_zero_tolerance": 3,
+  "raw_zero_tolerance_passed": false,
+  "passed": true,
+  "independent": true,
+  "per_class": {
+    "cutting board": {
+      "compared": 1,
+      "matched_with_1px_tolerance": 1,
+      "matched_raw_zero_tolerance": 1,
+      "points": [
+        {
+          "label": "cutting board",
+          "point_xy": [
+            113.408,
+            165.376
+          ],
+          "distance_to_same_class_foreground_px": 0.0,
+          "matched_with_1px_tolerance": true,
+          "matched_raw_zero_tolerance": true
+        }
+      ]
+    },
+    "knife": {
+      "compared": 4,
+      "matched_with_1px_tolerance": 4,
+      "matched_raw_zero_tolerance": 2,
+      "points": [
+        {
+          "label": "knife",
+          "point_xy": [
+            88.576,
+            94.208
+          ],
+          "distance_to_same_class_foreground_px": 0.0,
+          "matched_with_1px_tolerance": true,
+          "matched_raw_zero_tolerance": true
+        },
+        {
+          "label": "knife",
+          "point_xy": [
+            93.44,
+            95.488
+          ],
+          "distance_to_same_class_foreground_px": 0.0,
+          "matched_with_1px_tolerance": true,
+          "matched_raw_zero_tolerance": true
+        },
+        {
+          "label": "knife",
+          "point_xy": [
+            98.048,
+            95.488
+          ],
+          "distance_to_same_class_foreground_px": 1.0,
+          "matched_with_1px_tolerance": true,
+          "matched_raw_zero_tolerance": false
+        },
+        {
+          "label": "knife",
+          "point_xy": [
+            102.656,
+            95.488
+          ],
+          "distance_to_same_class_foreground_px": 1.0,
+          "matched_with_1px_tolerance": true,
+          "matched_raw_zero_tolerance": false
+        }
+      ]
+    }
+  },
+  "gpu": "NVIDIA GeForce RTX 4090, 15262 MiB, 24564 MiB",
+  "limitations": [
+    "Molmo2 pointing 每次查询返回少量点，不覆盖全部 SAM3 掩码（recall 视角如实记录）。",
+    "掩码由 SAM3 --mask-out-dir 落盘；复核只判定前景命中，不做语义核对。",
+    "v1 判例缺陷（只匹配第一个包含点的同类框）已在本版修正为同类掩码并集；v1 证据保留于 catalogs/v2.2/evidence/p02_recheck*/。"
+  ]
+}

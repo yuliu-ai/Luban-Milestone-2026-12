@@ -1,0 +1,15 @@
+# Separate model process. Python 3.10, CUDA 12.1 wheels.
+--extra-index-url https://download.pytorch.org/whl/cu121
+torch==2.2.0
+torchvision==0.17.0
+transformers==4.40.1
+accelerate==1.15.0
+numpy==1.26.4
+einops==0.8.2
+safetensors==0.8.0
+huggingface-hub==0.36.2
+timm==0.9.10
+tokenizers==0.19.1
+sentencepiece==0.1.99
+protobuf==3.20.3
+Pillow==11.3.0

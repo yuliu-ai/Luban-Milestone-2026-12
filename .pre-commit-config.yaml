@@ -1,0 +1,21 @@
+# 本地开发钩子:提交前自动跑 ruff lint + format(只作用于 src/tests/scripts,
+# 不碰 SpatialLM/RobotWorkspace 等第三方目录)。
+# 启用:pre-commit install;跳过一次:git commit --no-verify
+#
+# 说明:使用 repo: local + venv 内的 ruff,离线可用(本机无法访问 GitHub)。
+# 若日后网络可达,可换官方钩子仓库:
+#   - repo: https://github.com/astral-sh/ruff-pre-commit
+#     rev: v0.9.6
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: ruff check
+        entry: .venv/bin/python -m ruff check --fix
+        language: system
+        files: ^(src|tests|scripts)/.*\.py$
+      - id: ruff-format
+        name: ruff format
+        entry: .venv/bin/python -m ruff format
+        language: system
+        files: ^(src|tests|scripts)/.*\.py$

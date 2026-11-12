@@ -1,0 +1,69 @@
+{
+  "source_document": "六通具身智能体报告_提交版(1)(1).docx",
+  "source_sha256": "43c45358bdd60257b88670b7798cbda3d5e42e455facb4abca4ed2f3374db195",
+  "source_kind": "user-supplied technical report",
+  "tables": [
+    {
+      "label": "Table 8",
+      "section": "4.2.2",
+      "rows": [
+        "指标 | 样本/单位 | 结果 | 解释",
+        "结构化计划可解析率 | 250回合 | 99.20% | 输出可解析为结构化计划",
+        "子任务数量完全匹配率 | 250回合 | 80.40% | 预测段数等于参考段数",
+        "技能完全匹配率 | 785对齐槽位 | 88.28% | 按子任务序号对齐",
+        "子任务指令 token-F1 | 785对齐槽位 | 81.53% | 小写字母数字 token 多重集 F1",
+        "成功条件 token-F1 | 785对齐槽位 | 81.13% | 衡量预测成功条件与参考文本的词元重合程度。",
+        "逐子任务预算完全匹配率 | 785对齐槽位 | 79.87% | 预测动作预算等于参考值",
+        "整条预算序列完全匹配率 | 250回合 | 74.00% | 段数及每段预算均一致",
+        "逐子任务预算 MAE | 动作块 | 0.222 | 已成对子任务的平均绝对误差",
+        "总预算 MAE | 248可解析计划 | 0.726 | 每条计划总动作块数的平均绝对误差",
+        "整条计划逐字段完全一致 | 250回合 | 33.60% | 全部字段与参考标注完全一致时计为匹配。"
+      ]
+    },
+    {
+      "label": "Table 9",
+      "section": "4.2.3",
+      "rows": [
+        "对照组结局 | 经验组成功 | 经验组失败 | 合计",
+        "成功 | 212 | 66 | 278",
+        "失败 | 82 | 110 | 192",
+        "合计 | 294 | 176 | 470"
+      ]
+    },
+    {
+      "label": "Table 10",
+      "section": "4.2.4",
+      "rows": [
+        "数据集 | 无六通（回合） | 有六通（回合） | 无六通（%） | 有六通（%） | 差值",
+        "Goal | 492/500 | 497/500 | 98.4 | 99.4 | ＋1.0",
+        "Spatial | 488/500 | 497/500 | 97.6 | 99.4 | ＋1.8",
+        "Object | 487/500 | 496/500 | 97.4 | 99.2 | ＋1.8",
+        "LIBERO-10 | 467/500 | 488/500 | 93.4 | 97.6 | ＋4.2",
+        "合计 | 1934/2000 | 1978/2000 | 96.7 | 98.9 | ＋2.2"
+      ]
+    },
+    {
+      "label": "Table 12-4",
+      "section": "4.4.5",
+      "rows": [
+        "方法 | 平均等待(s)↓ | 等待占比(%)↓ | 停顿次数↓ | 单轮耗时(s)↓ | 回合时间(s)↓ | End@2m",
+        "StreamVLN原生部署 | 7.32 | 17.4 | 6.75 | 5.52 | 41.98 | 15/40",
+        "StreamVLN加流式执行 | 1.63 | 4.4 | 0.80 | 2.48 | 36.71 | 16/40",
+        "NaVIDA原生部署 | 10.64 | 30.5 | 9.25 | 3.58 | 34.90 | 12/40",
+        "NaVIDA加流式执行 | 2.89 | 10.3 | 1.20 | 1.54 | 28.06 | 12/40"
+      ]
+    }
+  ],
+  "libero_execution_budget_note": "The existing repository audit records 2,000 original IDs per condition and 2,000 versus 2,066 executions. This definition is retained.",
+  "rerun_in_this_update": false,
+  "recovery_comparison": {
+    "source_section": "4.3",
+    "initial_failures": 172,
+    "closed_loop_recovered": 76,
+    "experience_injected_recovered": 69,
+    "closed_loop_rate_percent": 44.19,
+    "experience_injected_rate_percent": 40.12,
+    "only_experience_succeeds": 19,
+    "only_closed_loop_succeeds": 26
+  }
+}

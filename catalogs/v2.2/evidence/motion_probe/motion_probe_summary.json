@@ -1,0 +1,228 @@
+{
+  "started_at_s": 1789284849.3652575,
+  "task": "robocasa/ScrubCuttingBoard",
+  "split": "pretrain",
+  "seed": 0,
+  "gpu": "NVIDIA GeForce RTX 4090, 20653 MiB, 24564 MiB",
+  "control_freq_hz": 20.0,
+  "start_ee_position": [
+    0.2450970560312271,
+    -0.00907805934548378,
+    0.5937890410423279
+  ],
+  "start_ee_quaternion": [
+    -0.9883264899253845,
+    -0.029058128595352173,
+    -0.14686058461666107,
+    0.028256043791770935
+  ],
+  "runs": {
+    "M01_absolute": {
+      "status": "unverified",
+      "verification_verdict": "passed",
+      "verification_reason": "末端到达目标位置且横向误差与速度上限满足契约",
+      "outputs": {
+        "final_pose": [
+          0.2680453956127167,
+          -0.0018254840979352593,
+          0.5928975939750671,
+          -0.9877869192897986,
+          -0.031157300829225444,
+          -0.15010804397049393,
+          0.02781725759952634
+        ],
+        "position_error_m": 0.007620297586190321,
+        "path_length_m": 0.10000000000000005,
+        "duration_s": 1.0,
+        "actual_distance_m": 0.02408362130458046,
+        "max_lateral_error_m": 0.001144812602408458
+      },
+      "signals": {
+        "done": true,
+        "environment_kind": "robocasa_ee_motion",
+        "frame_id": "robot0_base",
+        "start_pose": [
+          0.2450970560312271,
+          -0.00907805934548378,
+          0.5937890410423279,
+          -0.9883264598553522,
+          -0.029058127711252765,
+          -0.14686058014839823,
+          0.028256042932075117
+        ],
+        "target_position": [
+          0.27509705603122714,
+          0.0009219406545162203,
+          0.5937890410423279
+        ],
+        "target_orientation": null,
+        "orientation_mode": "hold",
+        "target_reached": true,
+        "steps": 20,
+        "step_budget": 400,
+        "step_budget_exhausted": false,
+        "measured_max_speed_mps": 0.10000000000000003,
+        "control_freq": 20.0
+      },
+      "elapsed_s": 1.0001762360334396
+    },
+    "M03_rotate": {
+      "status": "unverified",
+      "verification_verdict": "passed",
+      "verification_reason": "末端原地旋转到目标姿态且位置漂移满足契约",
+      "outputs": {
+        "final_pose": [
+          0.26859068870544434,
+          0.00027902028523385525,
+          0.5910587310791016,
+          -0.9800048892897494,
+          -0.12870874772895932,
+          -0.1458373639968855,
+          0.04190391972917688
+        ],
+        "orientation_error_rad": 0.0484548690018156,
+        "position_drift_m": 0.0028474023259654436,
+        "duration_s": 2.0500000000000003
+      },
+      "signals": {
+        "done": true,
+        "environment_kind": "robocasa_ee_motion",
+        "frame_id": "robot0_base",
+        "start_pose": [
+          0.2680453956127167,
+          -0.0018254840979352593,
+          0.5928975939750671,
+          -0.9877869192897986,
+          -0.031157300829225444,
+          -0.15010804397049393,
+          0.02781725759952634
+        ],
+        "target_orientation": [
+          -0.9769923936044274,
+          -0.15205074440918892,
+          -0.14219191041210863,
+          0.046345383557138124
+        ],
+        "target_reached": true,
+        "steps": 41,
+        "step_budget": 400,
+        "step_budget_exhausted": false,
+        "measured_max_angular_speed_radps": 0.40000000000000013,
+        "control_freq": 20.0
+      },
+      "elapsed_s": 1.5916037820279598
+    },
+    "M04_pose": {
+      "status": "unverified",
+      "verification_verdict": "passed",
+      "verification_reason": "末端到达目标位姿（位置与姿态容差均满足）",
+      "outputs": {
+        "final_pose": [
+          0.23080186545848846,
+          -0.01735493540763855,
+          0.5853725075721741,
+          -0.9886460974858186,
+          0.02181799857788232,
+          -0.14716168746171057,
+          0.021125969978648292
+        ],
+        "position_error_m": 0.006166147335061684,
+        "orientation_error_rad": 0.0473086871776262,
+        "duration_s": 3.1500000000000004
+      },
+      "signals": {
+        "done": true,
+        "environment_kind": "robocasa_ee_motion",
+        "frame_id": "robot0_base",
+        "start_pose": [
+          0.26859068870544434,
+          0.00027902028523385525,
+          0.5910587310791016,
+          -0.9800048892897494,
+          -0.12870874772895932,
+          -0.1458373639968855,
+          0.04190391972917688
+        ],
+        "target_pose": [
+          0.22509705603122712,
+          -0.019078059345483782,
+          0.5837890410423279,
+          -0.9877254114154789,
+          0.04507857229792954,
+          -0.14856494537104079,
+          0.017172389775539185
+        ],
+        "target_reached": true,
+        "steps": 63,
+        "step_budget": 400,
+        "step_budget_exhausted": false,
+        "measured_max_speed_mps": 0.10000000000000003,
+        "measured_max_angular_speed_radps": 0.40000000000000013,
+        "control_freq": 20.0
+      },
+      "elapsed_s": 2.516368195414543
+    },
+    "M02_waypoints": {
+      "status": "unverified",
+      "verification_verdict": "passed",
+      "verification_reason": "全部航点依次到达并停稳",
+      "outputs": {
+        "final_pose": [
+          0.2504022717475891,
+          -0.006415195297449827,
+          0.5933853387832642,
+          -0.9882615124788904,
+          -0.029383690688053063,
+          -0.1472084747556128,
+          0.028380391727580667
+        ],
+        "reached_waypoints": 2,
+        "duration_s": 4.3
+      },
+      "signals": {
+        "done": true,
+        "environment_kind": "robocasa_ee_motion",
+        "frame_id": "robot0_base",
+        "start_pose": [
+          0.23080186545848846,
+          -0.01735493540763855,
+          0.5853725075721741,
+          -0.9886460974858186,
+          0.02181799857788232,
+          -0.14716168746171057,
+          0.021125969978648292
+        ],
+        "waypoint_count": 2,
+        "reached_indexes": [
+          0,
+          1
+        ],
+        "per_waypoint_steps": [
+          44,
+          32
+        ],
+        "steps": 86,
+        "step_budget": 400,
+        "step_budget_exhausted": false,
+        "measured_max_speed_mps": 0.10000000000000003,
+        "control_freq": 20.0
+      },
+      "elapsed_s": 3.5692113041877747
+    }
+  },
+  "controls": {
+    "wrong_frame": {
+      "status": "failed",
+      "verdict": "not_run",
+      "position_error_m": null,
+      "error_code": "FRAME_UNRESOLVED"
+    },
+    "budget_exhausted": {
+      "status": "failed",
+      "verdict": "failed",
+      "position_error_m": 0.3703505493717003,
+      "error_code": null
+    }
+  },
+  "finished_at_s": 1789284858.9749289
+}

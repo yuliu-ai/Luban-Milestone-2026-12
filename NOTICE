@@ -1,0 +1,10 @@
+Luban
+
+Derived from the OmniRoboAgent working tree based on commit
+bc37672c7baa68c50effdb464ee56e2746bd9dae, including its uncommitted fixes.
+Upstream project reference: https://github.com/choucaicai/OmniRoboAgent
+
+The existing Apache License 2.0 and file-level notices are retained.
+This preparation does not claim new ownership of upstream or third-party code.
+Changed files and scope are recorded in impl_docs/changes/.
+External libraries, model weights and simulator assets retain their own terms.

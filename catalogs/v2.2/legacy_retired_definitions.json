@@ -1,0 +1,4541 @@
+{
+  "schema_version": "2.1.0",
+  "catalog_version": "2.1.0-draft.1",
+  "title": "移出主目录的原始技能定义（不加载、不计数）",
+  "note": "本文件保留 16 个旧编号的原始定义，供迁移与重新启用时参考。外层明确不加载、不计入当前 64 项目录；条目内部的历史 countable 字段不代表当前计数。归档定义未经改写——重新启用前必须重新审核其契约（例如 I05 的 edge_points 几何表达）。",
+  "retired_count": 16,
+  "retired_ids": [
+    "M07",
+    "G02",
+    "G06",
+    "I03",
+    "I05",
+    "I07",
+    "A06",
+    "A08",
+    "A09",
+    "A10",
+    "T01",
+    "T02",
+    "T03",
+    "T05",
+    "T06",
+    "T07"
+  ],
+  "merged_alias_ids": [
+    "A06",
+    "A08",
+    "G02",
+    "G06",
+    "I07",
+    "M07"
+  ],
+  "optional_extension_ids": [
+    "A09",
+    "A10",
+    "I03",
+    "I05",
+    "T01",
+    "T02",
+    "T03",
+    "T05",
+    "T06",
+    "T07"
+  ],
+  "skills": [
+    {
+      "id": "M07",
+      "name": "retreat_ee_linear",
+      "name_zh": "末端直线撤离",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "motion_control",
+      "subcategory": "arm_cartesian",
+      "description": "沿给定方向把末端撤离有限距离。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "direction": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "direction"
+          },
+          "distance_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "distance_m"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          },
+          "speed_mps": {
+            "type": "number",
+            "minimum": 0,
+            "description": "speed_mps"
+          },
+          "position_tolerance_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "position_tolerance_m"
+          }
+        },
+        "required": [
+          "direction",
+          "distance_m",
+          "frame_id",
+          "speed_mps",
+          "position_tolerance_m"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "final_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "final_pose"
+          },
+          "actual_distance_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "actual_distance_m"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "final_pose",
+          "actual_distance_m",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_control",
+        "robot_state_provider",
+        "collision_monitor"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "方向非零且撤离线段可达"
+      ],
+      "postconditions": [
+        "末端沿一条直线远离起点"
+      ],
+      "invariants": [
+        "不得把撤离扩展为恢复规划且始终满足安全限制",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "投影撤离距离在容差内且横向偏差合格",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 12,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "投影撤离距离在容差内且横向偏差合格",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "COLLISION_RISK",
+          "meaning": "碰撞风险超限",
+          "retryable": false
+        },
+        {
+          "code": "LIMIT_VIOLATION",
+          "meaning": "运动或设备限位超限",
+          "retryable": false
+        },
+        {
+          "code": "CONTROL_DIVERGED",
+          "meaning": "闭环误差不收敛",
+          "retryable": true
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm"
+        ],
+        "shared": [
+          "robot_state",
+          "collision_monitor"
+        ],
+        "estimated_duration_s": 10,
+        "control_rate_hz": 50
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "speed_mps",
+          "controller_gains"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "arm_cartesian"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "gap_addition_23",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "merged_alias"
+        }
+      },
+      "executor": {
+        "adapter_key": "retreat_ee_linear",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 12,
+        "config": {
+          "adapter_kind": "motion_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_retreat_ee_linear",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "投影撤离距离在容差内且横向偏差合格",
+          "required_evidence": [
+            "起末位姿",
+            "方向",
+            "实际轨迹",
+            "安全记录"
+          ]
+        }
+      }
+    },
+    {
+      "id": "G02",
+      "name": "close_parallel_gripper_width",
+      "name_zh": "平行夹爪定宽闭合",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "end_effector",
+      "subcategory": "parallel_gripper",
+      "description": "把平行夹爪闭合到目标宽度，不声明已经抓住对象。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "width_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "width_m"
+          },
+          "speed_mps": {
+            "type": "number",
+            "minimum": 0,
+            "description": "speed_mps"
+          },
+          "width_tolerance_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "width_tolerance_m"
+          },
+          "force_limit_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "force_limit_n"
+          }
+        },
+        "required": [
+          "width_m",
+          "speed_mps",
+          "width_tolerance_m",
+          "force_limit_n"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "final_width_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "final_width_m"
+          },
+          "peak_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "peak_force_n"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "final_width_m",
+          "peak_force_n",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "parallel_gripper_control",
+        "robot_state_provider"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "夹爪已使能且目标宽度在行程内"
+      ],
+      "postconditions": [
+        "夹爪开口宽度转移到较小目标值"
+      ],
+      "invariants": [
+        "夹持力不得超限且堵转不得等同成功",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "宽度误差达标且力未超限",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 8,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "宽度误差达标且力未超限",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "LIMIT_VIOLATION",
+          "meaning": "运动或设备限位超限",
+          "retryable": false
+        },
+        {
+          "code": "FORCE_LIMIT",
+          "meaning": "力或力矩超过限制",
+          "retryable": false
+        },
+        {
+          "code": "GRIPPER_STALLED",
+          "meaning": "末端执行器堵转",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "end_effector"
+        ],
+        "shared": [
+          "robot_state"
+        ],
+        "estimated_duration_s": 5,
+        "control_rate_hz": 50
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "dual_arm",
+        "mobile_manipulator"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "speed_mps",
+          "position_gain"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "parallel_gripper"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "normalized_base_41",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "merged_alias"
+        }
+      },
+      "executor": {
+        "adapter_key": "close_parallel_gripper_width",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 8,
+        "config": {
+          "adapter_kind": "end_effector_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_close_parallel_gripper_width",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "宽度误差达标且力未超限",
+          "required_evidence": [
+            "目标与实际宽度",
+            "夹持力轨迹"
+          ]
+        }
+      }
+    },
+    {
+      "id": "G06",
+      "name": "close_power_grasp",
+      "name_zh": "包络抓取闭合",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "end_effector",
+      "subcategory": "dexterous_hand",
+      "description": "在已对准目标后执行多指包络闭合并建立附着。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "object_id": {
+            "type": "string",
+            "description": "object_id"
+          },
+          "grasp_synergy": {
+            "type": "string",
+            "description": "grasp_synergy"
+          },
+          "target_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "target_force_n"
+          },
+          "force_tolerance_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "force_tolerance_n"
+          },
+          "closure_scale": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "closure_scale"
+          }
+        },
+        "required": [
+          "object_id",
+          "grasp_synergy",
+          "target_force_n",
+          "force_tolerance_n",
+          "closure_scale"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "attachment_id": {
+            "type": "string",
+            "description": "attachment_id"
+          },
+          "contact_fingers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "contact_fingers"
+          },
+          "final_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "final_force_n"
+          },
+          "slip_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "slip_score"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "attachment_id",
+          "contact_fingers",
+          "final_force_n",
+          "slip_score",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "dexterous_hand_force_control",
+        "tactile_sensor",
+        "attachment_estimator"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "手掌已对准目标且手型已注册"
+      ],
+      "postconditions": [
+        "对象与手掌及多指建立抓取附着"
+      ],
+      "invariants": [
+        "不得移动机械臂完成接近且总力不得超限",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "附着有效、接触指数量达标且无持续滑移",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 15,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "附着有效、接触指数量达标且无持续滑移",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "CONTACT_NOT_FOUND",
+          "meaning": "未建立预期接触",
+          "retryable": true
+        },
+        {
+          "code": "FORCE_LIMIT",
+          "meaning": "力或力矩超过限制",
+          "retryable": false
+        },
+        {
+          "code": "GRASP_NOT_ESTABLISHED",
+          "meaning": "未建立可验证抓取",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_SLIP",
+          "meaning": "对象滑移",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "end_effector"
+        ],
+        "shared": [
+          "robot_state"
+        ],
+        "estimated_duration_s": 5,
+        "control_rate_hz": 50
+      },
+      "supported_embodiments": [
+        "single_arm_dexterous_hand",
+        "dual_arm"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "target_force_n",
+          "closure_scale",
+          "synergy_offsets"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "dexterous_hand"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "normalized_base_41",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "merged_alias"
+        }
+      },
+      "executor": {
+        "adapter_key": "close_power_grasp",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 15,
+        "config": {
+          "adapter_kind": "end_effector_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_close_power_grasp",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "附着有效、接触指数量达标且无持续滑移",
+          "required_evidence": [
+            "多指触觉",
+            "手型轨迹",
+            "附着估计",
+            "滑移分数"
+          ]
+        }
+      }
+    },
+    {
+      "id": "I03",
+      "name": "slide_object_planar",
+      "name_zh": "物体平面滑移",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "contact_manipulation",
+      "subcategory": "planar",
+      "description": "使对象在支撑平面内滑移到目标二维位置。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "object_id": {
+            "type": "string",
+            "description": "object_id"
+          },
+          "target_xy": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "target_xy"
+          },
+          "surface_frame": {
+            "type": "string",
+            "description": "surface_frame"
+          },
+          "speed_mps": {
+            "type": "number",
+            "minimum": 0,
+            "description": "speed_mps"
+          },
+          "position_tolerance_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "position_tolerance_m"
+          },
+          "force_limit_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "force_limit_n"
+          }
+        },
+        "required": [
+          "object_id",
+          "target_xy",
+          "surface_frame",
+          "speed_mps",
+          "position_tolerance_m",
+          "force_limit_n"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "final_object_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "final_object_pose"
+          },
+          "xy_error_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "xy_error_m"
+          },
+          "max_lift_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "max_lift_m"
+          },
+          "peak_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "peak_force_n"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "final_object_pose",
+          "xy_error_m",
+          "max_lift_m",
+          "peak_force_n",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_control",
+        "force_torque_sensor",
+        "object_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "对象受支撑面约束且目标点有效"
+      ],
+      "postconditions": [
+        "对象平面位置转移到目标二维位置"
+      ],
+      "invariants": [
+        "不得离开支撑面且力与旋转漂移受限",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "二维误差、离面高度和峰值力均达标",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 25,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "二维误差、离面高度和峰值力均达标",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "CONTACT_NOT_FOUND",
+          "meaning": "未建立预期接触",
+          "retryable": true
+        },
+        {
+          "code": "CONTACT_LOST",
+          "meaning": "执行中失去接触",
+          "retryable": true
+        },
+        {
+          "code": "FORCE_LIMIT",
+          "meaning": "力或力矩超过限制",
+          "retryable": false
+        },
+        {
+          "code": "CONTROL_DIVERGED",
+          "meaning": "闭环误差不收敛",
+          "retryable": true
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm",
+          "end_effector"
+        ],
+        "shared": [
+          "force_torque_sensor",
+          "robot_state"
+        ],
+        "estimated_duration_s": 12,
+        "control_rate_hz": 100
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "speed_mps",
+          "normal_force_n",
+          "friction_compensation"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "planar"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "normalized_base_41",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "optional_extension"
+        }
+      },
+      "executor": {
+        "adapter_key": "slide_object_planar",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 25,
+        "config": {
+          "adapter_kind": "contact_policy_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_slide_object_planar",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "二维误差、离面高度和峰值力均达标",
+          "required_evidence": [
+            "支撑面模型",
+            "对象轨迹",
+            "接触力轨迹"
+          ]
+        }
+      }
+    },
+    {
+      "id": "I05",
+      "name": "pivot_object_edge",
+      "name_zh": "物体绕边翻起",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "contact_manipulation",
+      "subcategory": "spatial",
+      "description": "使对象绕指定支撑边转动到目标倾角。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "object_id": {
+            "type": "string",
+            "description": "object_id"
+          },
+          "edge_points": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 7,
+              "maxItems": 7
+            },
+            "minItems": 1,
+            "description": "edge_points"
+          },
+          "target_tilt_rad": {
+            "type": "number",
+            "minimum": 0,
+            "description": "target_tilt_rad"
+          },
+          "angle_tolerance_rad": {
+            "type": "number",
+            "minimum": 0,
+            "description": "angle_tolerance_rad"
+          },
+          "force_limit_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "force_limit_n"
+          }
+        },
+        "required": [
+          "object_id",
+          "edge_points",
+          "target_tilt_rad",
+          "angle_tolerance_rad",
+          "force_limit_n"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "final_object_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "final_object_pose"
+          },
+          "tilt_error_rad": {
+            "type": "number",
+            "minimum": 0,
+            "description": "tilt_error_rad"
+          },
+          "edge_slip_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "edge_slip_m"
+          },
+          "peak_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "peak_force_n"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "final_object_pose",
+          "tilt_error_rad",
+          "edge_slip_m",
+          "peak_force_n",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_control",
+        "force_torque_sensor",
+        "object_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "对象有稳定支撑边且目标姿态无碰撞"
+      ],
+      "postconditions": [
+        "对象绕指定支撑边改变到目标倾角"
+      ],
+      "invariants": [
+        "支撑边滑移和接触力不得超限",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "倾角误差、支撑边滑移和力均合格",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 30,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "倾角误差、支撑边滑移和力均合格",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "CONTACT_NOT_FOUND",
+          "meaning": "未建立预期接触",
+          "retryable": true
+        },
+        {
+          "code": "CONTACT_LOST",
+          "meaning": "执行中失去接触",
+          "retryable": true
+        },
+        {
+          "code": "FORCE_LIMIT",
+          "meaning": "力或力矩超过限制",
+          "retryable": false
+        },
+        {
+          "code": "COLLISION_RISK",
+          "meaning": "碰撞风险超限",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm",
+          "end_effector"
+        ],
+        "shared": [
+          "force_torque_sensor",
+          "robot_state"
+        ],
+        "estimated_duration_s": 12,
+        "control_rate_hz": 100
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "angular_speed_rps",
+          "normal_force_n",
+          "edge_constraint_gain"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "spatial"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "gap_addition_23",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "optional_extension"
+        }
+      },
+      "executor": {
+        "adapter_key": "pivot_object_edge",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 30,
+        "config": {
+          "adapter_kind": "contact_policy_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_pivot_object_edge",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "倾角误差、支撑边滑移和力均合格",
+          "required_evidence": [
+            "对象轨迹",
+            "支撑边模型",
+            "接触力"
+          ]
+        }
+      }
+    },
+    {
+      "id": "I07",
+      "name": "lower_held_object",
+      "name_zh": "降低被持物体",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "contact_manipulation",
+      "subcategory": "transport",
+      "description": "保持已有附着，将对象沿重力方向降低有限高度。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "attachment_id": {
+            "type": "string",
+            "description": "attachment_id"
+          },
+          "object_id": {
+            "type": "string",
+            "description": "object_id"
+          },
+          "height_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "height_m"
+          },
+          "speed_mps": {
+            "type": "number",
+            "minimum": 0,
+            "description": "speed_mps"
+          },
+          "height_tolerance_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "height_tolerance_m"
+          },
+          "stop_on_contact": {
+            "type": "boolean",
+            "description": "stop_on_contact"
+          },
+          "force_limit_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "force_limit_n"
+          }
+        },
+        "required": [
+          "attachment_id",
+          "object_id",
+          "height_m",
+          "speed_mps",
+          "height_tolerance_m",
+          "stop_on_contact",
+          "force_limit_n"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "final_object_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "final_object_pose"
+          },
+          "actual_height_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "actual_height_m"
+          },
+          "support_contact": {
+            "type": "boolean",
+            "description": "support_contact"
+          },
+          "attachment_preserved": {
+            "type": "boolean",
+            "description": "attachment_preserved"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "final_object_pose",
+          "actual_height_m",
+          "support_contact",
+          "attachment_preserved",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_control",
+        "attachment_estimator",
+        "force_torque_sensor",
+        "object_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "附着有效且下方路径可达"
+      ],
+      "postconditions": [
+        "被持对象高度降低指定值或直到支撑接触"
+      ],
+      "invariants": [
+        "附着保持且意外碰撞或载荷超限时停止",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "降低量达标或按请求在有效支撑接触时停止",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 25,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "降低量达标或按请求在有效支撑接触时停止",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_NOT_HELD",
+          "meaning": "对象未被稳定持有",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_SLIP",
+          "meaning": "对象滑移",
+          "retryable": false
+        },
+        {
+          "code": "FORCE_LIMIT",
+          "meaning": "力或力矩超过限制",
+          "retryable": false
+        },
+        {
+          "code": "COLLISION_RISK",
+          "meaning": "碰撞风险超限",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm",
+          "end_effector"
+        ],
+        "shared": [
+          "force_torque_sensor",
+          "robot_state"
+        ],
+        "estimated_duration_s": 12,
+        "control_rate_hz": 100
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "speed_mps",
+          "contact_threshold_n"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "transport"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "gap_addition_23",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "merged_alias"
+        }
+      },
+      "executor": {
+        "adapter_key": "lower_held_object",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 25,
+        "config": {
+          "adapter_kind": "contact_policy_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_lower_held_object",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "降低量达标或按请求在有效支撑接触时停止",
+          "required_evidence": [
+            "对象起末位姿",
+            "接触记录",
+            "附着状态"
+          ]
+        }
+      }
+    },
+    {
+      "id": "A06",
+      "name": "slide_switch",
+      "name_zh": "滑动开关",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "articulated_object",
+      "subcategory": "control",
+      "description": "沿注册直线轴把滑动开关移动到目标挡位。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "object_id": {
+            "type": "string",
+            "description": "object_id"
+          },
+          "target_detent": {
+            "type": "string",
+            "description": "target_detent"
+          },
+          "speed_mps": {
+            "type": "number",
+            "minimum": 0,
+            "description": "speed_mps"
+          },
+          "force_limit_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "force_limit_n"
+          }
+        },
+        "required": [
+          "object_id",
+          "target_detent",
+          "speed_mps",
+          "force_limit_n"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "final_detent": {
+            "type": "string",
+            "description": "final_detent"
+          },
+          "actual_travel_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "actual_travel_m"
+          },
+          "peak_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "peak_force_n"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "final_detent",
+          "actual_travel_m",
+          "peak_force_n",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_force_control",
+        "control_state_observer",
+        "force_torque_sensor"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "滑动轴和挡位已注册且目标合法"
+      ],
+      "postconditions": [
+        "滑动开关离散状态转移到目标挡位"
+      ],
+      "invariants": [
+        "轴外运动与作用力不得超限",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "最终挡位等于目标挡位且行程合法",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 15,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "最终挡位等于目标挡位且行程合法",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "CONTACT_NOT_FOUND",
+          "meaning": "未建立预期接触",
+          "retryable": true
+        },
+        {
+          "code": "ARTICULATION_BLOCKED",
+          "meaning": "关节对象受阻",
+          "retryable": false
+        },
+        {
+          "code": "FORCE_LIMIT",
+          "meaning": "力或力矩超过限制",
+          "retryable": false
+        },
+        {
+          "code": "STATE_NOT_REACHED",
+          "meaning": "目标状态未达到",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm",
+          "end_effector"
+        ],
+        "shared": [
+          "force_torque_sensor",
+          "robot_state"
+        ],
+        "estimated_duration_s": 12,
+        "control_rate_hz": 100
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "speed_mps",
+          "axis_constraint_gain"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "control"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "gap_addition_23",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "merged_alias"
+        }
+      },
+      "executor": {
+        "adapter_key": "slide_switch",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 15,
+        "config": {
+          "adapter_kind": "articulation_policy_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_slide_switch",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "最终挡位等于目标挡位且行程合法",
+          "required_evidence": [
+            "状态前后值",
+            "行程轨迹",
+            "作用力"
+          ]
+        }
+      }
+    },
+    {
+      "id": "A08",
+      "name": "latch_engage",
+      "name_zh": "闭合机械卡扣",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "articulated_object",
+      "subcategory": "latch",
+      "description": "施加一次有限动作使已对准卡扣从released转为locked。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "object_id": {
+            "type": "string",
+            "description": "object_id"
+          },
+          "engage_axis": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "engage_axis"
+          },
+          "max_travel_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "max_travel_m"
+          },
+          "force_limit_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "force_limit_n"
+          }
+        },
+        "required": [
+          "object_id",
+          "engage_axis",
+          "max_travel_m",
+          "force_limit_n"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "latch_state": {
+            "type": "string",
+            "description": "latch_state"
+          },
+          "actual_travel_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "actual_travel_m"
+          },
+          "peak_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "peak_force_n"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "latch_state",
+          "actual_travel_m",
+          "peak_force_n",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_force_control",
+        "latch_state_observer",
+        "force_torque_sensor"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "卡扣初态为released且两侧已对准"
+      ],
+      "postconditions": [
+        "卡扣状态转移为locked"
+      ],
+      "invariants": [
+        "行程与作用力受限且不得自动执行前置对准",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "状态观察器确认locked",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 18,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "状态观察器确认locked",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "CONTACT_NOT_FOUND",
+          "meaning": "未建立预期接触",
+          "retryable": true
+        },
+        {
+          "code": "ARTICULATION_BLOCKED",
+          "meaning": "关节对象受阻",
+          "retryable": false
+        },
+        {
+          "code": "FORCE_LIMIT",
+          "meaning": "力或力矩超过限制",
+          "retryable": false
+        },
+        {
+          "code": "STATE_NOT_REACHED",
+          "meaning": "目标状态未达到",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm",
+          "end_effector"
+        ],
+        "shared": [
+          "force_torque_sensor",
+          "robot_state"
+        ],
+        "estimated_duration_s": 12,
+        "control_rate_hz": 100
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "engage_speed_mps",
+          "force_limit_n"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "latch"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "normalized_base_41",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "merged_alias"
+        }
+      },
+      "executor": {
+        "adapter_key": "latch_engage",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 18,
+        "config": {
+          "adapter_kind": "articulation_policy_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_latch_engage",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "状态观察器确认locked",
+          "required_evidence": [
+            "卡扣状态前后值",
+            "位移轨迹",
+            "力轨迹"
+          ]
+        }
+      }
+    },
+    {
+      "id": "A09",
+      "name": "detach_fitted_lid",
+      "name_zh": "分离嵌合盖",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "articulated_object",
+      "subcategory": "closure",
+      "description": "沿注册分离轴解除一个已抓持盖体的嵌合连接。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "attachment_id": {
+            "type": "string",
+            "description": "attachment_id"
+          },
+          "object_id": {
+            "type": "string",
+            "description": "object_id"
+          },
+          "closure_id": {
+            "type": "string",
+            "description": "closure_id"
+          },
+          "separation_axis": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "separation_axis"
+          },
+          "max_travel_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "max_travel_m"
+          },
+          "force_limit_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "force_limit_n"
+          }
+        },
+        "required": [
+          "attachment_id",
+          "object_id",
+          "closure_id",
+          "separation_axis",
+          "max_travel_m",
+          "force_limit_n"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "closure_state": {
+            "type": "string",
+            "description": "closure_state"
+          },
+          "clearance_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "clearance_m"
+          },
+          "peak_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "peak_force_n"
+          },
+          "attachment_preserved": {
+            "type": "boolean",
+            "description": "attachment_preserved"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "closure_state",
+          "clearance_m",
+          "peak_force_n",
+          "attachment_preserved",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_force_control",
+        "attachment_estimator",
+        "closure_state_observer",
+        "force_torque_sensor"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "抓取附着有效且连接类型和分离轴已知"
+      ],
+      "postconditions": [
+        "嵌合连接状态转移为detached"
+      ],
+      "invariants": [
+        "抓取保持且分离力和行程受限",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "连接为detached、间隙达标且抓取保持",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 30,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "连接为detached、间隙达标且抓取保持",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_NOT_HELD",
+          "meaning": "对象未被稳定持有",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_SLIP",
+          "meaning": "对象滑移",
+          "retryable": false
+        },
+        {
+          "code": "ARTICULATION_BLOCKED",
+          "meaning": "关节对象受阻",
+          "retryable": false
+        },
+        {
+          "code": "FORCE_LIMIT",
+          "meaning": "力或力矩超过限制",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm",
+          "end_effector"
+        ],
+        "shared": [
+          "force_torque_sensor",
+          "robot_state"
+        ],
+        "estimated_duration_s": 12,
+        "control_rate_hz": 100
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "separation_speed_mps",
+          "wiggle_amplitude_rad",
+          "force_limit_n"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "closure"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "normalized_base_41",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "optional_extension"
+        }
+      },
+      "executor": {
+        "adapter_key": "detach_fitted_lid",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 30,
+        "config": {
+          "adapter_kind": "articulation_policy_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_detach_fitted_lid",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "连接为detached、间隙达标且抓取保持",
+          "required_evidence": [
+            "连接状态",
+            "位移与力轨迹",
+            "抓取附着"
+          ]
+        }
+      }
+    },
+    {
+      "id": "A10",
+      "name": "engage_fitted_lid",
+      "name_zh": "嵌合盖压合",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "articulated_object",
+      "subcategory": "closure",
+      "description": "沿注册压合轴建立一个已抓持盖体的嵌合连接。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "attachment_id": {
+            "type": "string",
+            "description": "attachment_id"
+          },
+          "object_id": {
+            "type": "string",
+            "description": "object_id"
+          },
+          "closure_id": {
+            "type": "string",
+            "description": "closure_id"
+          },
+          "engagement_axis": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "engagement_axis"
+          },
+          "max_travel_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "max_travel_m"
+          },
+          "force_limit_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "force_limit_n"
+          }
+        },
+        "required": [
+          "attachment_id",
+          "object_id",
+          "closure_id",
+          "engagement_axis",
+          "max_travel_m",
+          "force_limit_n"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "closure_state": {
+            "type": "string",
+            "description": "closure_state"
+          },
+          "seating_error_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "seating_error_m"
+          },
+          "peak_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "peak_force_n"
+          },
+          "attachment_preserved": {
+            "type": "boolean",
+            "description": "attachment_preserved"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "closure_state",
+          "seating_error_m",
+          "peak_force_n",
+          "attachment_preserved",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_force_control",
+        "attachment_estimator",
+        "closure_state_observer",
+        "force_torque_sensor"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "抓取有效且盖体已经对准目标连接"
+      ],
+      "postconditions": [
+        "嵌合连接状态转移为engaged"
+      ],
+      "invariants": [
+        "不得自行对准或释放且压合力与行程受限",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "连接为engaged且落座误差与压合力达标",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 30,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "连接为engaged且落座误差与压合力达标",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_NOT_HELD",
+          "meaning": "对象未被稳定持有",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_SLIP",
+          "meaning": "对象滑移",
+          "retryable": false
+        },
+        {
+          "code": "ARTICULATION_BLOCKED",
+          "meaning": "关节对象受阻",
+          "retryable": false
+        },
+        {
+          "code": "FORCE_LIMIT",
+          "meaning": "力或力矩超过限制",
+          "retryable": false
+        },
+        {
+          "code": "STATE_NOT_REACHED",
+          "meaning": "目标状态未达到",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm",
+          "end_effector"
+        ],
+        "shared": [
+          "force_torque_sensor",
+          "robot_state"
+        ],
+        "estimated_duration_s": 12,
+        "control_rate_hz": 100
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "engagement_speed_mps",
+          "force_limit_n",
+          "seating_threshold_m"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "closure"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "normalized_base_41",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "optional_extension"
+        }
+      },
+      "executor": {
+        "adapter_key": "engage_fitted_lid",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 30,
+        "config": {
+          "adapter_kind": "articulation_policy_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_engage_fitted_lid",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "连接为engaged且落座误差与压合力达标",
+          "required_evidence": [
+            "连接状态",
+            "位移与力轨迹",
+            "落座误差"
+          ]
+        }
+      }
+    },
+    {
+      "id": "T01",
+      "name": "cut_tool_stroke",
+      "name_zh": "工具单次切割行程",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "tool_and_media",
+      "subcategory": "cutting",
+      "description": "保持工具附着，沿给定线段执行一次有限切割行程。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "tool_attachment_id": {
+            "type": "string",
+            "description": "tool_attachment_id"
+          },
+          "tool_id": {
+            "type": "string",
+            "description": "tool_id"
+          },
+          "target_id": {
+            "type": "string",
+            "description": "target_id"
+          },
+          "start_point": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "start_point"
+          },
+          "end_point": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "end_point"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          },
+          "normal_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "normal_force_n"
+          },
+          "speed_mps": {
+            "type": "number",
+            "minimum": 0,
+            "description": "speed_mps"
+          },
+          "force_limit_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "force_limit_n"
+          }
+        },
+        "required": [
+          "tool_attachment_id",
+          "tool_id",
+          "target_id",
+          "start_point",
+          "end_point",
+          "frame_id",
+          "normal_force_n",
+          "speed_mps",
+          "force_limit_n"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "stroke_completion": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "stroke_completion"
+          },
+          "separation_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "separation_score"
+          },
+          "peak_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "peak_force_n"
+          },
+          "tool_attachment_preserved": {
+            "type": "boolean",
+            "description": "tool_attachment_preserved"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "stroke_completion",
+          "separation_score",
+          "peak_force_n",
+          "tool_attachment_preserved",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_force_control",
+        "attachment_estimator",
+        "force_torque_sensor",
+        "material_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "工具附着有效、类型允许切割且线段安全"
+      ],
+      "postconditions": [
+        "目标材料沿指定线段的分离状态增加"
+      ],
+      "invariants": [
+        "工具附着保持且作用力和路径受限",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "行程完成、分离分数达标且工具与力约束满足",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 35,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "行程完成、分离分数达标且工具与力约束满足",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_NOT_HELD",
+          "meaning": "对象未被稳定持有",
+          "retryable": false
+        },
+        {
+          "code": "TOOL_CONTACT_INVALID",
+          "meaning": "工具接触几何不合格",
+          "retryable": false
+        },
+        {
+          "code": "CONTACT_LOST",
+          "meaning": "执行中失去接触",
+          "retryable": true
+        },
+        {
+          "code": "FORCE_LIMIT",
+          "meaning": "力或力矩超过限制",
+          "retryable": false
+        },
+        {
+          "code": "STATE_NOT_REACHED",
+          "meaning": "目标状态未达到",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm",
+          "end_effector"
+        ],
+        "shared": [
+          "force_torque_sensor",
+          "material_state_observer"
+        ],
+        "estimated_duration_s": 15,
+        "control_rate_hz": 100
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "normal_force_n",
+          "speed_mps",
+          "saw_amplitude_m"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "cutting"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "normalized_base_41",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "optional_extension"
+        }
+      },
+      "executor": {
+        "adapter_key": "cut_tool_stroke",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 35,
+        "config": {
+          "adapter_kind": "tool_policy_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_cut_tool_stroke",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "行程完成、分离分数达标且工具与力约束满足",
+          "required_evidence": [
+            "工具轨迹",
+            "目标轨迹",
+            "力轨迹",
+            "材料状态"
+          ]
+        }
+      }
+    },
+    {
+      "id": "T02",
+      "name": "scoop_tool_once",
+      "name_zh": "工具单次舀取",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "tool_and_media",
+      "subcategory": "scooping",
+      "description": "保持工具附着，从源介质完成一次有限舀取。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "tool_attachment_id": {
+            "type": "string",
+            "description": "tool_attachment_id"
+          },
+          "tool_id": {
+            "type": "string",
+            "description": "tool_id"
+          },
+          "source_container_id": {
+            "type": "string",
+            "description": "source_container_id"
+          },
+          "entry_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "entry_pose"
+          },
+          "scoop_vector": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "scoop_vector"
+          },
+          "stroke_length_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "stroke_length_m"
+          },
+          "target_amount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "target_amount"
+          },
+          "amount_unit": {
+            "type": "string",
+            "description": "amount_unit"
+          }
+        },
+        "required": [
+          "tool_attachment_id",
+          "tool_id",
+          "source_container_id",
+          "entry_pose",
+          "scoop_vector",
+          "stroke_length_m",
+          "target_amount",
+          "amount_unit"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "loaded_amount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "loaded_amount"
+          },
+          "amount_unit": {
+            "type": "string",
+            "description": "amount_unit"
+          },
+          "spill_amount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "spill_amount"
+          },
+          "tool_attachment_preserved": {
+            "type": "boolean",
+            "description": "tool_attachment_preserved"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "loaded_amount",
+          "amount_unit",
+          "spill_amount",
+          "tool_attachment_preserved",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_force_control",
+        "attachment_estimator",
+        "media_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "工具附着有效且源介质可舀取"
+      ],
+      "postconditions": [
+        "工具承载的目标介质量增加一次"
+      ],
+      "invariants": [
+        "不得混入移向目标容器或倾倒且工具附着保持",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "承载量达到请求容差且溢洒合格",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 30,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "承载量达到请求容差且溢洒合格",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_NOT_HELD",
+          "meaning": "对象未被稳定持有",
+          "retryable": false
+        },
+        {
+          "code": "TOOL_CONTACT_INVALID",
+          "meaning": "工具接触几何不合格",
+          "retryable": false
+        },
+        {
+          "code": "MATERIAL_FLOW_ERROR",
+          "meaning": "介质流量异常",
+          "retryable": true
+        },
+        {
+          "code": "STATE_NOT_REACHED",
+          "meaning": "目标状态未达到",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm",
+          "end_effector"
+        ],
+        "shared": [
+          "force_torque_sensor",
+          "material_state_observer"
+        ],
+        "estimated_duration_s": 15,
+        "control_rate_hz": 100
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "stroke_length_m",
+          "entry_angle_rad",
+          "scoop_speed_mps"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "scooping"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "normalized_base_41",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "optional_extension"
+        }
+      },
+      "executor": {
+        "adapter_key": "scoop_tool_once",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 30,
+        "config": {
+          "adapter_kind": "tool_policy_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_scoop_tool_once",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "承载量达到请求容差且溢洒合格",
+          "required_evidence": [
+            "工具载荷前后值",
+            "源介质量",
+            "溢洒观测"
+          ]
+        }
+      }
+    },
+    {
+      "id": "T03",
+      "name": "pour_dosed",
+      "name_zh": "定量倾倒",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "tool_and_media",
+      "subcategory": "pouring",
+      "description": "对已持容器执行有限倾倒直到指定介质转移量。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "container_attachment_id": {
+            "type": "string",
+            "description": "container_attachment_id"
+          },
+          "source_container_id": {
+            "type": "string",
+            "description": "source_container_id"
+          },
+          "target_container_id": {
+            "type": "string",
+            "description": "target_container_id"
+          },
+          "target_amount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "target_amount"
+          },
+          "amount_unit": {
+            "type": "string",
+            "description": "amount_unit"
+          },
+          "max_tilt_rad": {
+            "type": "number",
+            "minimum": 0,
+            "description": "max_tilt_rad"
+          },
+          "flow_timeout_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "flow_timeout_s"
+          }
+        },
+        "required": [
+          "container_attachment_id",
+          "source_container_id",
+          "target_container_id",
+          "target_amount",
+          "amount_unit",
+          "max_tilt_rad",
+          "flow_timeout_s"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "transferred_amount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "transferred_amount"
+          },
+          "amount_unit": {
+            "type": "string",
+            "description": "amount_unit"
+          },
+          "spill_amount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "spill_amount"
+          },
+          "final_tilt_rad": {
+            "type": "number",
+            "minimum": 0,
+            "description": "final_tilt_rad"
+          },
+          "attachment_preserved": {
+            "type": "boolean",
+            "description": "attachment_preserved"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "transferred_amount",
+          "amount_unit",
+          "spill_amount",
+          "final_tilt_rad",
+          "attachment_preserved",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_control",
+        "attachment_estimator",
+        "media_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "容器附着有效、目标开口可达且介质可流动"
+      ],
+      "postconditions": [
+        "介质从源容器向目标容器转移指定量"
+      ],
+      "invariants": [
+        "附着保持且倾角、时长和溢洒受限",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "转移量在容差内、溢洒合格且附着保持",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 40,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "转移量在容差内、溢洒合格且附着保持",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_NOT_HELD",
+          "meaning": "对象未被稳定持有",
+          "retryable": false
+        },
+        {
+          "code": "MATERIAL_FLOW_ERROR",
+          "meaning": "介质流量异常",
+          "retryable": true
+        },
+        {
+          "code": "OBJECT_SLIP",
+          "meaning": "对象滑移",
+          "retryable": false
+        },
+        {
+          "code": "STATE_NOT_REACHED",
+          "meaning": "目标状态未达到",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm",
+          "end_effector"
+        ],
+        "shared": [
+          "force_torque_sensor",
+          "material_state_observer"
+        ],
+        "estimated_duration_s": 15,
+        "control_rate_hz": 100
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "tilt_rate_rps",
+          "flow_model_gain",
+          "stop_lead_time_s"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "pouring"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "normalized_base_41",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "optional_extension"
+        }
+      },
+      "executor": {
+        "adapter_key": "pour_dosed",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 40,
+        "config": {
+          "adapter_kind": "tool_policy_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_pour_dosed",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "转移量在容差内、溢洒合格且附着保持",
+          "required_evidence": [
+            "源目标介质量",
+            "倾角轨迹",
+            "溢洒观测",
+            "附着"
+          ]
+        }
+      }
+    },
+    {
+      "id": "T05",
+      "name": "tear_material_along_seam",
+      "name_zh": "沿接缝撕裂材料",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "tool_and_media",
+      "subcategory": "deformable_material",
+      "description": "在材料两侧接触或附着已建立后，沿给定接缝执行一次有限撕裂行程。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "material_id": {
+            "type": "string",
+            "description": "可变形材料对象ID"
+          },
+          "fixed_side_ref": {
+            "type": "string",
+            "description": "被固定一侧的接触或夹具引用"
+          },
+          "moving_attachment_id": {
+            "type": "string",
+            "description": "运动侧抓取附着ID"
+          },
+          "seam_start": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "接缝起点"
+          },
+          "tear_direction": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "归一化撕裂方向"
+          },
+          "target_length_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "目标撕裂长度"
+          },
+          "speed_mps": {
+            "type": "number",
+            "minimum": 0,
+            "description": "撕裂速度"
+          },
+          "force_limit_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "拉力上限"
+          }
+        },
+        "required": [
+          "material_id",
+          "fixed_side_ref",
+          "moving_attachment_id",
+          "seam_start",
+          "tear_direction",
+          "target_length_m",
+          "speed_mps",
+          "force_limit_n"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "是否达到目标长度"
+          },
+          "tear_length_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "实际撕裂长度"
+          },
+          "seam_deviation_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "最大接缝偏差"
+          },
+          "peak_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "峰值拉力"
+          },
+          "attachment_preserved": {
+            "type": "boolean",
+            "description": "运动侧附着是否保持"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "执行时长"
+          }
+        },
+        "required": [
+          "achieved",
+          "tear_length_m",
+          "seam_deviation_m",
+          "peak_force_n",
+          "attachment_preserved",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_force_control",
+        "attachment_estimator",
+        "deformable_state_observer",
+        "force_torque_sensor"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "材料两侧约束已建立、运动侧附着有效且接缝已定位"
+      ],
+      "postconditions": [
+        "材料沿指定接缝的分离长度增加到目标范围"
+      ],
+      "invariants": [
+        "拉力、接缝偏差和撕裂行程不得超限",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "tear_length_m达到目标容差、接缝偏差与峰值力合格且附着保持",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 35,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "tear_length_m达到目标容差、接缝偏差与峰值力合格且附着保持",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_NOT_HELD",
+          "meaning": "对象未被稳定持有",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_SLIP",
+          "meaning": "对象滑移",
+          "retryable": false
+        },
+        {
+          "code": "FORCE_LIMIT",
+          "meaning": "力或力矩超过限制",
+          "retryable": false
+        },
+        {
+          "code": "STATE_NOT_REACHED",
+          "meaning": "目标状态未达到",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm",
+          "end_effector"
+        ],
+        "shared": [
+          "force_torque_sensor",
+          "deformable_state_observer"
+        ],
+        "estimated_duration_s": 15,
+        "control_rate_hz": 100
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "speed_mps",
+          "pull_angle_rad",
+          "force_limit_n"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "deformable_material"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "normalized_base_41",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "optional_extension"
+        }
+      },
+      "executor": {
+        "adapter_key": "tear_material_along_seam",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 35,
+        "config": {
+          "adapter_kind": "tool_policy_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_tear_material_along_seam",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "tear_length_m达到目标容差、接缝偏差与峰值力合格且附着保持",
+          "required_evidence": [
+            "材料分割状态前后值",
+            "附着状态",
+            "末端轨迹",
+            "力轨迹"
+          ]
+        }
+      }
+    },
+    {
+      "id": "T06",
+      "name": "stir_tool_finite",
+      "name_zh": "工具有限搅拌",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "tool_and_media",
+      "subcategory": "mixing",
+      "description": "保持工具附着，在容器内执行有限圈数的搅拌。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "tool_attachment_id": {
+            "type": "string",
+            "description": "tool_attachment_id"
+          },
+          "tool_id": {
+            "type": "string",
+            "description": "tool_id"
+          },
+          "container_id": {
+            "type": "string",
+            "description": "container_id"
+          },
+          "center_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "center_pose"
+          },
+          "radius_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "radius_m"
+          },
+          "cycles": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "cycles"
+          },
+          "angular_speed_rps": {
+            "type": "number",
+            "minimum": 0,
+            "description": "angular_speed_rps"
+          },
+          "force_limit_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "force_limit_n"
+          }
+        },
+        "required": [
+          "tool_attachment_id",
+          "tool_id",
+          "container_id",
+          "center_pose",
+          "radius_m",
+          "cycles",
+          "angular_speed_rps",
+          "force_limit_n"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "completed_cycles": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "completed_cycles"
+          },
+          "mixing_delta": {
+            "type": "number",
+            "description": "mixing_delta"
+          },
+          "peak_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "peak_force_n"
+          },
+          "tool_attachment_preserved": {
+            "type": "boolean",
+            "description": "tool_attachment_preserved"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "completed_cycles",
+          "mixing_delta",
+          "peak_force_n",
+          "tool_attachment_preserved",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_force_control",
+        "attachment_estimator",
+        "media_state_observer",
+        "force_torque_sensor"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "工具附着有效、工具端在容器内且圈数有限"
+      ],
+      "postconditions": [
+        "容器内介质均匀度在有限周期后改变"
+      ],
+      "invariants": [
+        "不得碰撞容器壁、不得超力且必须按圈数终止",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "完成请求圈数、混合增量达标且力安全",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 45,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "完成请求圈数、混合增量达标且力安全",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_NOT_HELD",
+          "meaning": "对象未被稳定持有",
+          "retryable": false
+        },
+        {
+          "code": "TOOL_CONTACT_INVALID",
+          "meaning": "工具接触几何不合格",
+          "retryable": false
+        },
+        {
+          "code": "FORCE_LIMIT",
+          "meaning": "力或力矩超过限制",
+          "retryable": false
+        },
+        {
+          "code": "STATE_NOT_REACHED",
+          "meaning": "目标状态未达到",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm",
+          "end_effector"
+        ],
+        "shared": [
+          "force_torque_sensor",
+          "material_state_observer"
+        ],
+        "estimated_duration_s": 15,
+        "control_rate_hz": 100
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "radius_m",
+          "angular_speed_rps",
+          "depth_m"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "mixing"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "normalized_base_41",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "optional_extension"
+        }
+      },
+      "executor": {
+        "adapter_key": "stir_tool_finite",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 45,
+        "config": {
+          "adapter_kind": "tool_policy_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_stir_tool_finite",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "完成请求圈数、混合增量达标且力安全",
+          "required_evidence": [
+            "工具轨迹",
+            "圈数",
+            "介质状态",
+            "力轨迹"
+          ]
+        }
+      }
+    },
+    {
+      "id": "T07",
+      "name": "scrape_tool_stroke",
+      "name_zh": "工具单次刮取行程",
+      "version": "1.0.0",
+      "kind": "atomic_execution",
+      "category": "tool_and_media",
+      "subcategory": "cleaning",
+      "description": "保持工具附着，沿有限线段刮取表面附着物。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "tool_attachment_id": {
+            "type": "string",
+            "description": "tool_attachment_id"
+          },
+          "tool_id": {
+            "type": "string",
+            "description": "tool_id"
+          },
+          "surface_id": {
+            "type": "string",
+            "description": "surface_id"
+          },
+          "start_point": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "start_point"
+          },
+          "end_point": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "end_point"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          },
+          "blade_angle_rad": {
+            "type": "number",
+            "description": "blade_angle_rad"
+          },
+          "normal_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "normal_force_n"
+          },
+          "force_limit_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "force_limit_n"
+          }
+        },
+        "required": [
+          "tool_attachment_id",
+          "tool_id",
+          "surface_id",
+          "start_point",
+          "end_point",
+          "frame_id",
+          "blade_angle_rad",
+          "normal_force_n",
+          "force_limit_n"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "stroke_completion": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "stroke_completion"
+          },
+          "removed_fraction": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "removed_fraction"
+          },
+          "surface_damage_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "surface_damage_score"
+          },
+          "peak_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "peak_force_n"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "stroke_completion",
+          "removed_fraction",
+          "surface_damage_score",
+          "peak_force_n",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "requires_capabilities": [
+        "arm_cartesian_force_control",
+        "attachment_estimator",
+        "surface_state_observer",
+        "force_torque_sensor"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "工具附着有效且线段位于目标表面"
+      ],
+      "postconditions": [
+        "目标表面附着物沿线段减少"
+      ],
+      "invariants": [
+        "表面损伤、作用力受限且工具附着保持",
+        "执行期间不得静默改变未声明资源或状态"
+      ],
+      "termination": {
+        "success": "行程完成、移除比例达标且损伤与力合格",
+        "failure": [
+          "返回非可恢复failure_code",
+          "验证证据不可用或失效"
+        ],
+        "timeout_s": 35,
+        "cancelable": true,
+        "cancellation_postcondition": "进入安全保持或停止状态，并返回最后可观测状态"
+      },
+      "success_criteria": {
+        "predicate": "行程完成、移除比例达标且损伤与力合格",
+        "verifier_required": true
+      },
+      "failure_modes": [
+        "返回非可恢复failure_code",
+        "验证证据不可用或失效"
+      ],
+      "failure_codes": [
+        {
+          "code": "INPUT_INVALID",
+          "meaning": "输入未通过结构或语义校验",
+          "retryable": false
+        },
+        {
+          "code": "CAPABILITY_UNAVAILABLE",
+          "meaning": "所需硬件或服务能力不可用",
+          "retryable": false
+        },
+        {
+          "code": "TIMEOUT",
+          "meaning": "有限时域内未满足终止条件",
+          "retryable": true
+        },
+        {
+          "code": "CANCELLED",
+          "meaning": "收到取消请求并安全终止",
+          "retryable": false
+        },
+        {
+          "code": "VERIFIER_UNAVAILABLE",
+          "meaning": "验证证据或验证器不可用",
+          "retryable": false
+        },
+        {
+          "code": "BACKEND_NOT_BOUND",
+          "meaning": "尚未绑定实验机后端",
+          "retryable": false
+        },
+        {
+          "code": "OBJECT_NOT_HELD",
+          "meaning": "对象未被稳定持有",
+          "retryable": false
+        },
+        {
+          "code": "TOOL_CONTACT_INVALID",
+          "meaning": "工具接触几何不合格",
+          "retryable": false
+        },
+        {
+          "code": "CONTACT_LOST",
+          "meaning": "执行中失去接触",
+          "retryable": true
+        },
+        {
+          "code": "FORCE_LIMIT",
+          "meaning": "力或力矩超过限制",
+          "retryable": false
+        },
+        {
+          "code": "STATE_NOT_REACHED",
+          "meaning": "目标状态未达到",
+          "retryable": false
+        }
+      ],
+      "resources": {
+        "exclusive": [
+          "arm",
+          "end_effector"
+        ],
+        "shared": [
+          "force_torque_sensor",
+          "material_state_observer"
+        ],
+        "estimated_duration_s": 15,
+        "control_rate_hz": 100
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "single_arm_suction",
+        "dual_arm",
+        "mobile_manipulator",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "offline_candidate_only",
+        "adaptable_parameters": [
+          "blade_angle_rad",
+          "normal_force_n",
+          "speed_mps"
+        ],
+        "immutable_contract_fields": [
+          "id",
+          "input_schema",
+          "output_schema",
+          "state_preconditions",
+          "effects",
+          "invariants",
+          "termination"
+        ],
+        "update_sources": [
+          "versioned_execution_traces",
+          "verifier_outcomes"
+        ],
+        "candidate_scope": "executor_configuration_or_policy_weights_only",
+        "online_mutation_allowed": false,
+        "promotion_gate": {
+          "paired_identity_required": true,
+          "minimum_trials": 50,
+          "primary_metric": "verifier_success_rate",
+          "minimum_absolute_gain": 0.02,
+          "non_regression_metrics": [
+            "safety_violation_rate",
+            "p95_duration_s"
+          ],
+          "maximum_safety_violations": 0
+        },
+        "rollback": {
+          "retain_last_approved_version": true,
+          "automatic_on_gate_regression": true
+        }
+      },
+      "tags": [
+        "countable_atomic",
+        "backend_pending",
+        "cleaning"
+      ],
+      "metadata": {
+        "countable": true,
+        "source_revision": "atomic_catalog_v1.0",
+        "migration_group": "normalized_base_41",
+        "retired_definition": {
+          "source": "../atomic_skills.json",
+          "source_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+          "disposition": "optional_extension"
+        }
+      },
+      "executor": {
+        "adapter_key": "scrape_tool_stroke",
+        "protocol": "atomic_skill_executor_v1",
+        "implementation_status": "backend_pending",
+        "timeout_s": 35,
+        "config": {
+          "adapter_kind": "tool_policy_adapter"
+        }
+      },
+      "verifier": {
+        "adapter_key": "verify_scrape_tool_stroke",
+        "protocol": "skill_verifier_v1",
+        "implementation_status": "backend_pending",
+        "config": {
+          "predicate": "行程完成、移除比例达标且损伤与力合格",
+          "required_evidence": [
+            "表面状态前后图",
+            "工具轨迹",
+            "力与损伤"
+          ]
+        }
+      }
+    }
+  ]
+}

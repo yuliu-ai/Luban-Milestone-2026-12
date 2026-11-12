@@ -1,0 +1,57 @@
+{
+  "skill_id": "M03",
+  "skill_version": "2.2.0",
+  "catalog_version": "2.2.0",
+  "maturity": "verified",
+  "executor_status": "implemented",
+  "verifier_status": "implemented",
+  "case_count": 6,
+  "examples_origin": "由契约生成并在构建时自检（正例必须通过、结构负例与语义负例必须被拒绝）",
+  "real_backend_evidence": [
+    {
+      "kind": "simulator_motion_probe",
+      "provider": "robocasa365 (gym.make robocasa/ScrubCuttingBoard, split=pretrain, seed=0)",
+      "checkpoint": "n/a（闭环脚本控制，无模型）",
+      "device": "cuda（EGL 渲染）",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/motion_probe/motion_probe_summary.json",
+        "catalogs/v2.2/evidence/motion_probe/motion_result_M03_rotate.json",
+        "catalogs/v2.2/evidence/motion_probe/runtime_events.jsonl"
+      ],
+      "steps": 41,
+      "duration_s": 2.05,
+      "orientation_error_rad": 0.0481,
+      "position_drift_m": 0.0025,
+      "measured_max_angular_speed_radps": 0.4,
+      "verification_verdict": "passed",
+      "terminal_status": "unverified",
+      "limitations": "单段探针（绕 z 0.25rad），未覆盖任意轴大角度旋转；位置保持策略是零位置增量指令（重力补偿保持），漂移为实测值。"
+    },
+    {
+      "kind": "vision_endpoint_crosscheck",
+      "provider": "sam3 (scripts/study/probe_p12_m_vision_crosscheck.py, profile v3)",
+      "checkpoint": "sam3.pt",
+      "device": "cuda",
+      "host": "self-evolution-machine",
+      "gpu": "NVIDIA GeForce RTX 4090 (24 GB)",
+      "date": "2026-09-13",
+      "evidence_files": [
+        "catalogs/v2.2/evidence/vision_crosscheck/vision_crosscheck_summary.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/M03_rotate_vision_crosscheck.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/motion_result_M03_rotate.json",
+        "catalogs/v2.2/evidence/vision_crosscheck/M03_rotate_before.png",
+        "catalogs/v2.2/evidence/vision_crosscheck/M03_rotate_after.png",
+        "catalogs/v2.2/evidence/vision_crosscheck/runtime_events.jsonl"
+      ],
+      "independent": true,
+      "method": "原地旋转的位置保持由视觉核验：EE 世界坐标投影像素在旋转前后不变，要求 SAM3 在该像素 ±15px 内给出腕部尺度（≤8000px^2）检测片段；姿态本身不做视觉判定（单目无深度），由 sim 状态与契约验证器判定",
+      "endpoint_fragment_area_px2": 3140.9,
+      "passed": true,
+      "limitations": "位置保持的视觉核验是端点覆盖核验；旋转量本身（0.25rad）由 sim 状态判定，视觉无法在无标志物场景下测量姿态。"
+    }
+  ],
+  "note": "真实后端证据见 real_backend_evidence；独立复核条目仅出现在有第二来源的技能上；再升版本需按 promotion_gate 做配对实验。"
+}

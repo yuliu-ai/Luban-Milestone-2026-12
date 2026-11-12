@@ -1,0 +1,67 @@
+{
+  "started_at_s": 1789286659.7653034,
+  "frame": "<HISTORICAL_PROJECT_ROOT>/runs/p12_probe/input_frame_agentview_left.png",
+  "bbox": [
+    69.0,
+    119.0,
+    166.0,
+    212.0
+  ],
+  "observation_ref": "<HISTORICAL_PROJECT_ROOT>/runs/p09_probe/crop_cutting_board.png",
+  "camera_slot": "video.robot0_eye_in_hand",
+  "provider": "molmo2",
+  "model": "molmo2-4b (bfloat16)",
+  "gpu": "NVIDIA GeForce RTX 4090, 23700 MiB, 24564 MiB",
+  "client_requests": 2,
+  "client_failures": 0,
+  "runs": {
+    "answerable": {
+      "status": "failed",
+      "verification_verdict": "not_run",
+      "verification_reason": "Molmo2 returned no answer for any requested state key; P09 cannot report states.",
+      "state_keys": [
+        "open_state"
+      ],
+      "allowed_values": {
+        "open_state": [
+          "open",
+          "closed"
+        ]
+      },
+      "states": null,
+      "confidence_by_state": null,
+      "raw_answers": null,
+      "unknown_keys": null,
+      "confidence_source": null,
+      "latency_ms": null,
+      "elapsed_s": 1.4167726673185825
+    },
+    "hard": {
+      "status": "failed",
+      "verification_verdict": "not_run",
+      "verification_reason": "Molmo2 returned no answer for any requested state key; P09 cannot report states.",
+      "state_keys": [
+        "temperature_state",
+        "lid_state"
+      ],
+      "allowed_values": {
+        "temperature_state": [
+          "hot",
+          "cold"
+        ]
+      },
+      "states": null,
+      "confidence_by_state": null,
+      "raw_answers": null,
+      "unknown_keys": null,
+      "confidence_source": null,
+      "latency_ms": null,
+      "elapsed_s": 1.92093051597476
+    }
+  },
+  "limitations": [
+    "感知协议 visual-perception-v1 的 frames 只接受三路相机名；P09 的裁剪观测借用 video.robot0_eye_in_hand 槽位承载（与 P06 相同的协议限制）。",
+    "confidence_by_state 是候选集匹配度（在集内 1.0 / 否则 0.0），不是校准概率；原始回答逐字保留在 signals.raw_answers。",
+    "VLM 对答不出的状态键也可能给出恰在候选集内的答案（与 P06 难题组相同的边界）。"
+  ]
+}

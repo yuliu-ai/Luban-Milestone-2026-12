@@ -1,0 +1,395 @@
+{
+  "benchmark": "RoboTwin 2.0",
+  "report_date": "2026-10-09",
+  "source_document": "OmniRoboAgent_实验配置与实验结果报告_RoboTwin版.docx",
+  "source_branch": "omniagent/robotwin-integration",
+  "source_commit": "52d8a314e3679ba1cc6d2b0ecaf3caf11bfd313e",
+  "protocol": {
+    "setting": "demo_clean",
+    "tasks": 50,
+    "episodes_per_task": 100,
+    "seeds": "held-out valid seeds",
+    "planner": "Qwen3.5-9B LoRA (step 3500)",
+    "policy": "shared multi-task π0.5 (step 20000)",
+    "success_signal": "task_env.check_success()",
+    "max_steps": 300,
+    "timeout_seconds": 1800,
+    "action_horizon": 32
+  },
+  "total": {
+    "episodes": 5000,
+    "successes": 3079,
+    "failures": 1921,
+    "success_rate_percent": 61.58
+  },
+  "per_task": [
+    {
+      "task": "adjust_bottle",
+      "episodes": 100,
+      "successes": 100,
+      "success_rate_percent": 100.0
+    },
+    {
+      "task": "beat_block_hammer",
+      "episodes": 100,
+      "successes": 61,
+      "success_rate_percent": 61.0
+    },
+    {
+      "task": "blocks_ranking_rgb",
+      "episodes": 100,
+      "successes": 42,
+      "success_rate_percent": 42.0
+    },
+    {
+      "task": "blocks_ranking_size",
+      "episodes": 100,
+      "successes": 24,
+      "success_rate_percent": 24.0
+    },
+    {
+      "task": "click_alarmclock",
+      "episodes": 100,
+      "successes": 99,
+      "success_rate_percent": 99.0
+    },
+    {
+      "task": "click_bell",
+      "episodes": 100,
+      "successes": 100,
+      "success_rate_percent": 100.0
+    },
+    {
+      "task": "dump_bin_bigbin",
+      "episodes": 100,
+      "successes": 64,
+      "success_rate_percent": 64.0
+    },
+    {
+      "task": "grab_roller",
+      "episodes": 100,
+      "successes": 97,
+      "success_rate_percent": 97.0
+    },
+    {
+      "task": "handover_block",
+      "episodes": 100,
+      "successes": 4,
+      "success_rate_percent": 4.0
+    },
+    {
+      "task": "handover_mic",
+      "episodes": 100,
+      "successes": 79,
+      "success_rate_percent": 79.0
+    },
+    {
+      "task": "hanging_mug",
+      "episodes": 100,
+      "successes": 22,
+      "success_rate_percent": 22.0
+    },
+    {
+      "task": "lift_pot",
+      "episodes": 100,
+      "successes": 58,
+      "success_rate_percent": 58.0
+    },
+    {
+      "task": "move_can_pot",
+      "episodes": 100,
+      "successes": 51,
+      "success_rate_percent": 51.0
+    },
+    {
+      "task": "move_pillbottle_pad",
+      "episodes": 100,
+      "successes": 59,
+      "success_rate_percent": 59.0
+    },
+    {
+      "task": "move_playingcard_away",
+      "episodes": 100,
+      "successes": 96,
+      "success_rate_percent": 96.0
+    },
+    {
+      "task": "move_stapler_pad",
+      "episodes": 100,
+      "successes": 11,
+      "success_rate_percent": 11.0
+    },
+    {
+      "task": "open_laptop",
+      "episodes": 100,
+      "successes": 69,
+      "success_rate_percent": 69.0
+    },
+    {
+      "task": "open_microwave",
+      "episodes": 100,
+      "successes": 54,
+      "success_rate_percent": 54.0
+    },
+    {
+      "task": "pick_diverse_bottles",
+      "episodes": 100,
+      "successes": 52,
+      "success_rate_percent": 52.0
+    },
+    {
+      "task": "pick_dual_bottles",
+      "episodes": 100,
+      "successes": 74,
+      "success_rate_percent": 74.0
+    },
+    {
+      "task": "place_a2b_left",
+      "episodes": 100,
+      "successes": 77,
+      "success_rate_percent": 77.0
+    },
+    {
+      "task": "place_a2b_right",
+      "episodes": 100,
+      "successes": 83,
+      "success_rate_percent": 83.0
+    },
+    {
+      "task": "place_bread_basket",
+      "episodes": 100,
+      "successes": 47,
+      "success_rate_percent": 47.0
+    },
+    {
+      "task": "place_bread_skillet",
+      "episodes": 100,
+      "successes": 66,
+      "success_rate_percent": 66.0
+    },
+    {
+      "task": "place_burger_fries",
+      "episodes": 100,
+      "successes": 84,
+      "success_rate_percent": 84.0
+    },
+    {
+      "task": "place_can_basket",
+      "episodes": 100,
+      "successes": 49,
+      "success_rate_percent": 49.0
+    },
+    {
+      "task": "place_cans_plasticbox",
+      "episodes": 100,
+      "successes": 56,
+      "success_rate_percent": 56.0
+    },
+    {
+      "task": "place_container_plate",
+      "episodes": 100,
+      "successes": 95,
+      "success_rate_percent": 95.0
+    },
+    {
+      "task": "place_dual_shoes",
+      "episodes": 100,
+      "successes": 39,
+      "success_rate_percent": 39.0
+    },
+    {
+      "task": "place_empty_cup",
+      "episodes": 100,
+      "successes": 93,
+      "success_rate_percent": 93.0
+    },
+    {
+      "task": "place_fan",
+      "episodes": 100,
+      "successes": 67,
+      "success_rate_percent": 67.0
+    },
+    {
+      "task": "place_mouse_pad",
+      "episodes": 100,
+      "successes": 33,
+      "success_rate_percent": 33.0
+    },
+    {
+      "task": "place_object_basket",
+      "episodes": 100,
+      "successes": 57,
+      "success_rate_percent": 57.0
+    },
+    {
+      "task": "place_object_scale",
+      "episodes": 100,
+      "successes": 62,
+      "success_rate_percent": 62.0
+    },
+    {
+      "task": "place_object_stand",
+      "episodes": 100,
+      "successes": 94,
+      "success_rate_percent": 94.0
+    },
+    {
+      "task": "place_phone_stand",
+      "episodes": 100,
+      "successes": 55,
+      "success_rate_percent": 55.0
+    },
+    {
+      "task": "place_shoe",
+      "episodes": 100,
+      "successes": 60,
+      "success_rate_percent": 60.0
+    },
+    {
+      "task": "press_stapler",
+      "episodes": 100,
+      "successes": 89,
+      "success_rate_percent": 89.0
+    },
+    {
+      "task": "put_bottles_dustbin",
+      "episodes": 100,
+      "successes": 9,
+      "success_rate_percent": 9.0
+    },
+    {
+      "task": "put_object_cabinet",
+      "episodes": 100,
+      "successes": 68,
+      "success_rate_percent": 68.0
+    },
+    {
+      "task": "rotate_qrcode",
+      "episodes": 100,
+      "successes": 65,
+      "success_rate_percent": 65.0
+    },
+    {
+      "task": "scan_object",
+      "episodes": 100,
+      "successes": 27,
+      "success_rate_percent": 27.0
+    },
+    {
+      "task": "shake_bottle",
+      "episodes": 100,
+      "successes": 99,
+      "success_rate_percent": 99.0
+    },
+    {
+      "task": "shake_bottle_horizontally",
+      "episodes": 100,
+      "successes": 98,
+      "success_rate_percent": 98.0
+    },
+    {
+      "task": "stack_blocks_three",
+      "episodes": 100,
+      "successes": 36,
+      "success_rate_percent": 36.0
+    },
+    {
+      "task": "stack_blocks_two",
+      "episodes": 100,
+      "successes": 72,
+      "success_rate_percent": 72.0
+    },
+    {
+      "task": "stack_bowls_three",
+      "episodes": 100,
+      "successes": 31,
+      "success_rate_percent": 31.0
+    },
+    {
+      "task": "stack_bowls_two",
+      "episodes": 100,
+      "successes": 80,
+      "success_rate_percent": 80.0
+    },
+    {
+      "task": "stamp_seal",
+      "episodes": 100,
+      "successes": 34,
+      "success_rate_percent": 34.0
+    },
+    {
+      "task": "turn_switch",
+      "episodes": 100,
+      "successes": 38,
+      "success_rate_percent": 38.0
+    }
+  ],
+  "planner_validation": {
+    "episodes": 250,
+    "aligned_slots": 785,
+    "parsed_plans": 248,
+    "result_batch": "2026-09-17",
+    "metrics": [
+      {
+        "metric_zh": "计划 JSON 可解析率",
+        "sample_or_unit": "250 episodes",
+        "result": "99.20%",
+        "definition_zh": "输出可解析为结构化计划"
+      },
+      {
+        "metric_zh": "子任务数量完全匹配率",
+        "sample_or_unit": "250 episodes",
+        "result": "80.40%",
+        "definition_zh": "预测段数等于参考段数"
+      },
+      {
+        "metric_zh": "Skill 完全匹配率",
+        "sample_or_unit": "785 aligned slots",
+        "result": "88.28%",
+        "definition_zh": "按 subtask_index 对齐"
+      },
+      {
+        "metric_zh": "子任务指令 token-F1",
+        "sample_or_unit": "785 aligned slots",
+        "result": "81.53%",
+        "definition_zh": "小写字母数字 token 多重集 F1"
+      },
+      {
+        "metric_zh": "成功条件 token-F1",
+        "sample_or_unit": "785 aligned slots",
+        "result": "81.13%",
+        "definition_zh": "仅衡量文字重合"
+      },
+      {
+        "metric_zh": "逐子任务预算完全匹配率",
+        "sample_or_unit": "785 aligned slots",
+        "result": "79.87%",
+        "definition_zh": "预测 chunk_budget 等于参考值"
+      },
+      {
+        "metric_zh": "整条预算序列完全匹配率",
+        "sample_or_unit": "250 episodes",
+        "result": "74.00%",
+        "definition_zh": "段数及每段预算均一致"
+      },
+      {
+        "metric_zh": "逐子任务预算 MAE",
+        "sample_or_unit": "chunk",
+        "result": "0.222",
+        "definition_zh": "已成对子任务的平均绝对误差"
+      },
+      {
+        "metric_zh": "总预算 MAE",
+        "sample_or_unit": "248 parsed plans",
+        "result": "0.726",
+        "definition_zh": "每条计划总 chunk 数误差"
+      },
+      {
+        "metric_zh": "整条计划逐字段完全一致",
+        "sample_or_unit": "250 episodes",
+        "result": "33.60%",
+        "definition_zh": "最严格参考；同义改写也会记错"
+      }
+    ]
+  }
+}

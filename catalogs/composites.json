@@ -1,0 +1,3685 @@
+{
+  "schema_version": "1.0.0",
+  "catalog_version": "1.0.0",
+  "generated_at": "2026-09-03T00:00:00+08:00",
+  "title": "Luban non-countable composite skill catalog",
+  "description": "12个固定DAG组合模板。它们不计入64个原子技能，不包含规划器、诊断器或演化算子。",
+  "project": "Luban",
+  "metadata": {
+    "countable_total": 0,
+    "composite_total": 12,
+    "count_rule": "组合节点不计入64项原子技能",
+    "execution_boundary": "bindings中的JSONPath由CompositeExecutor解析；loader校验结构、引用、DAG、来源路径以及目标技能required输入的绑定覆盖。真实step runner、deployment defaults和组合verifier仍需实验机注入。",
+    "binding_contract": "每个原子步骤的全部required输入均有显式binding；$.defaults.<skill_id>.<field>由实验机deployment profile提供，任务相关量优先来自$.inputs或前序step输出。"
+  },
+  "skills": [
+    {
+      "id": "X01",
+      "name": "pick_and_place_parallel",
+      "name_zh": "平行夹爪抓取放置",
+      "version": "1.0.0",
+      "kind": "composite",
+      "category": "composite_workflow",
+      "subcategory": "pick_place",
+      "description": "用平行夹爪把单个对象从当前场景抓起并放到已给定目标位姿；目标选择与路径规划在本组合之外。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rgbd_ref": {
+            "type": "string",
+            "minLength": 1,
+            "description": "rgbd_ref"
+          },
+          "object_id": {
+            "type": "string",
+            "description": "object_id"
+          },
+          "target_object_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "target_object_pose"
+          },
+          "pregrasp_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "pregrasp_pose"
+          },
+          "support_surface_id": {
+            "type": "string",
+            "description": "support_surface_id"
+          },
+          "lift_height_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "lift_height_m"
+          },
+          "grasp_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "grasp_force_n"
+          },
+          "release_width_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "release_width_m"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          }
+        },
+        "required": [
+          "rgbd_ref",
+          "object_id",
+          "target_object_pose",
+          "pregrasp_pose",
+          "support_surface_id",
+          "lift_height_m",
+          "grasp_force_n",
+          "release_width_m",
+          "frame_id"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "final_object_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "final_object_pose"
+          },
+          "released": {
+            "type": "boolean",
+            "description": "released"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "final_object_pose",
+          "released",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "steps": [
+        {
+          "step_id": "estimate_pose",
+          "skill_id": "P03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [],
+          "bindings": {
+            "rgbd_ref": "$.inputs.rgbd_ref",
+            "object_id": "$.inputs.object_id",
+            "target_frame": "$.inputs.frame_id"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "估计对象位姿"
+        },
+        {
+          "step_id": "move_pregrasp",
+          "skill_id": "M04",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "estimate_pose"
+          ],
+          "bindings": {
+            "target_pose": "$.inputs.pregrasp_pose",
+            "frame_id": "$.inputs.frame_id",
+            "max_linear_speed_mps": "$.defaults.M04.max_linear_speed_mps",
+            "max_angular_speed_rps": "$.defaults.M04.max_angular_speed_rps",
+            "position_tolerance_m": "$.defaults.M04.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.M04.orientation_tolerance_rad"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "移动到外部给定预抓取位姿"
+        },
+        {
+          "step_id": "grasp",
+          "skill_id": "G03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "move_pregrasp"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.object_id",
+            "target_force_n": "$.inputs.grasp_force_n",
+            "force_tolerance_n": "$.defaults.G03.force_tolerance_n",
+            "max_width_travel_m": "$.defaults.G03.max_width_travel_m",
+            "speed_mps": "$.defaults.G03.speed_mps"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "建立平行夹爪附着"
+        },
+        {
+          "step_id": "lift",
+          "skill_id": "I06",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "grasp"
+          ],
+          "bindings": {
+            "attachment_id": "$.steps.grasp.outputs.attachment_id",
+            "object_id": "$.inputs.object_id",
+            "height_m": "$.inputs.lift_height_m",
+            "speed_mps": "$.defaults.I06.speed_mps",
+            "height_tolerance_m": "$.defaults.I06.height_tolerance_m",
+            "force_limit_n": "$.defaults.I06.force_limit_n"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "抬升对象"
+        },
+        {
+          "step_id": "align_target",
+          "skill_id": "I09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "lift"
+          ],
+          "bindings": {
+            "attachment_id": "$.steps.grasp.outputs.attachment_id",
+            "object_id": "$.inputs.object_id",
+            "target_object_pose": "$.inputs.target_object_pose",
+            "frame_id": "$.inputs.frame_id",
+            "position_tolerance_m": "$.defaults.I09.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.I09.orientation_tolerance_rad",
+            "max_speed_mps": "$.defaults.I09.max_speed_mps"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "对准目标位姿"
+        },
+        {
+          "step_id": "seat",
+          "skill_id": "I08",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "align_target"
+          ],
+          "bindings": {
+            "attachment_id": "$.steps.grasp.outputs.attachment_id",
+            "object_id": "$.inputs.object_id",
+            "support_surface_id": "$.inputs.support_surface_id",
+            "approach_direction": "$.defaults.I08.approach_direction",
+            "max_travel_m": "$.defaults.I08.max_travel_m",
+            "contact_force_n": "$.defaults.I08.contact_force_n",
+            "pose_tolerance_m": "$.defaults.I08.pose_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "在目标表面落座"
+        },
+        {
+          "step_id": "release",
+          "skill_id": "G01",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "seat"
+          ],
+          "bindings": {
+            "width_m": "$.inputs.release_width_m",
+            "speed_mps": "$.defaults.G01.speed_mps",
+            "width_tolerance_m": "$.defaults.G01.width_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "张开夹爪释放"
+        }
+      ],
+      "requires_capabilities": [
+        "rgbd_camera",
+        "pose_estimator",
+        "arm_cartesian_control",
+        "parallel_gripper_force_control",
+        "attachment_estimator",
+        "object_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "夹爪初始张开",
+        "pregrasp_pose与target_object_pose由上层规划器或数据集提供",
+        "目标支撑面可用"
+      ],
+      "postconditions": [
+        "对象在目标支撑面稳定且抓取附着解除"
+      ],
+      "invariants": [
+        "步骤图必须无环且每个step只引用本目录中的原子技能",
+        "组合执行器不得绕过原子技能的输入校验、终止条件和验证器",
+        "失败时保留已完成步骤及证据，默认停止而不自动无限重试"
+      ],
+      "termination": {
+        "success": "全部七个步骤经验证且对象最终位姿在目标容差内",
+        "timeout_s": 90,
+        "cancelable": true,
+        "on_cancel": "取消当前原子步骤并进入安全保持"
+      },
+      "success_criteria": {
+        "predicate": "全部七个步骤经验证且对象最终位姿在目标容差内",
+        "all_required_steps_verified": true
+      },
+      "failure_modes": [
+        "任一required步骤失败",
+        "组合超时",
+        "步骤输出无法绑定到后继输入"
+      ],
+      "failure_codes": [
+        "STEP_FAILED",
+        "BINDING_ERROR",
+        "COMPOSITE_TIMEOUT",
+        "CANCELLED"
+      ],
+      "resources": {
+        "policy": "union_of_active_steps",
+        "parallel_execution": false
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "dual_arm",
+        "mobile_manipulator"
+      ],
+      "evolution_policy": {
+        "mode": "disabled_for_composite",
+        "reason": "只能在原子执行器候选版本上离线演化；组合模板变更必须走独立版本评审"
+      },
+      "tags": [
+        "non_countable",
+        "composite",
+        "static_dag"
+      ],
+      "metadata": {
+        "countable": false,
+        "planner_free_template": true,
+        "step_count": 7,
+        "default_binding_paths": [
+          "move_pregrasp.max_linear_speed_mps",
+          "move_pregrasp.max_angular_speed_rps",
+          "move_pregrasp.position_tolerance_m",
+          "move_pregrasp.orientation_tolerance_rad",
+          "grasp.force_tolerance_n",
+          "grasp.max_width_travel_m",
+          "grasp.speed_mps",
+          "lift.speed_mps",
+          "lift.height_tolerance_m",
+          "lift.force_limit_n",
+          "align_target.position_tolerance_m",
+          "align_target.orientation_tolerance_rad",
+          "align_target.max_speed_mps",
+          "seat.approach_direction",
+          "seat.max_travel_m",
+          "seat.contact_force_n",
+          "seat.pose_tolerance_m",
+          "release.speed_mps",
+          "release.width_tolerance_m"
+        ]
+      }
+    },
+    {
+      "id": "X02",
+      "name": "pick_and_place_dexterous",
+      "name_zh": "灵巧手捏取放置",
+      "version": "1.0.0",
+      "kind": "composite",
+      "category": "composite_workflow",
+      "subcategory": "pick_place",
+      "description": "用灵巧手指尖捏取单个对象并放到已给定目标位姿。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rgbd_ref": {
+            "type": "string",
+            "minLength": 1,
+            "description": "rgbd_ref"
+          },
+          "object_id": {
+            "type": "string",
+            "description": "object_id"
+          },
+          "target_object_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "target_object_pose"
+          },
+          "pregrasp_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "pregrasp_pose"
+          },
+          "support_surface_id": {
+            "type": "string",
+            "description": "support_surface_id"
+          },
+          "lift_height_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "lift_height_m"
+          },
+          "pinch_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "pinch_force_n"
+          },
+          "release_hand_joints": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "release_hand_joints"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          }
+        },
+        "required": [
+          "rgbd_ref",
+          "object_id",
+          "target_object_pose",
+          "pregrasp_pose",
+          "support_surface_id",
+          "lift_height_m",
+          "pinch_force_n",
+          "release_hand_joints",
+          "frame_id"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "final_object_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "final_object_pose"
+          },
+          "released": {
+            "type": "boolean",
+            "description": "released"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "final_object_pose",
+          "released",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "steps": [
+        {
+          "step_id": "estimate_pose",
+          "skill_id": "P03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [],
+          "bindings": {
+            "rgbd_ref": "$.inputs.rgbd_ref",
+            "object_id": "$.inputs.object_id",
+            "target_frame": "$.inputs.frame_id"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "估计对象位姿"
+        },
+        {
+          "step_id": "move_pregrasp",
+          "skill_id": "M04",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "estimate_pose"
+          ],
+          "bindings": {
+            "target_pose": "$.inputs.pregrasp_pose",
+            "frame_id": "$.inputs.frame_id",
+            "max_linear_speed_mps": "$.defaults.M04.max_linear_speed_mps",
+            "max_angular_speed_rps": "$.defaults.M04.max_angular_speed_rps",
+            "position_tolerance_m": "$.defaults.M04.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.M04.orientation_tolerance_rad"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "移动到预抓取位姿"
+        },
+        {
+          "step_id": "pinch",
+          "skill_id": "G05",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "move_pregrasp"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.object_id",
+            "target_force_n": "$.inputs.pinch_force_n",
+            "finger_pair": "$.defaults.G05.finger_pair",
+            "force_tolerance_n": "$.defaults.G05.force_tolerance_n",
+            "closure_limit_rad": "$.defaults.G05.closure_limit_rad"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "建立指尖附着"
+        },
+        {
+          "step_id": "lift",
+          "skill_id": "I06",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "pinch"
+          ],
+          "bindings": {
+            "attachment_id": "$.steps.pinch.outputs.attachment_id",
+            "object_id": "$.inputs.object_id",
+            "height_m": "$.inputs.lift_height_m",
+            "speed_mps": "$.defaults.I06.speed_mps",
+            "height_tolerance_m": "$.defaults.I06.height_tolerance_m",
+            "force_limit_n": "$.defaults.I06.force_limit_n"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "抬升对象"
+        },
+        {
+          "step_id": "align_target",
+          "skill_id": "I09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "lift"
+          ],
+          "bindings": {
+            "attachment_id": "$.steps.pinch.outputs.attachment_id",
+            "object_id": "$.inputs.object_id",
+            "target_object_pose": "$.inputs.target_object_pose",
+            "frame_id": "$.inputs.frame_id",
+            "position_tolerance_m": "$.defaults.I09.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.I09.orientation_tolerance_rad",
+            "max_speed_mps": "$.defaults.I09.max_speed_mps"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "对准目标位姿"
+        },
+        {
+          "step_id": "seat",
+          "skill_id": "I08",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "align_target"
+          ],
+          "bindings": {
+            "attachment_id": "$.steps.pinch.outputs.attachment_id",
+            "object_id": "$.inputs.object_id",
+            "support_surface_id": "$.inputs.support_surface_id",
+            "approach_direction": "$.defaults.I08.approach_direction",
+            "max_travel_m": "$.defaults.I08.max_travel_m",
+            "contact_force_n": "$.defaults.I08.contact_force_n",
+            "pose_tolerance_m": "$.defaults.I08.pose_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "落座对象"
+        },
+        {
+          "step_id": "release",
+          "skill_id": "G04",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "seat"
+          ],
+          "bindings": {
+            "joint_names": "$.inputs.release_hand_joints",
+            "hand_id": "$.defaults.G04.hand_id",
+            "target_positions": "$.defaults.G04.target_positions",
+            "velocity_scale": "$.defaults.G04.velocity_scale",
+            "joint_tolerance_rad": "$.defaults.G04.joint_tolerance_rad"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "打开手指解除附着"
+        }
+      ],
+      "requires_capabilities": [
+        "rgbd_camera",
+        "pose_estimator",
+        "arm_cartesian_control",
+        "dexterous_hand_force_control",
+        "tactile_sensor",
+        "attachment_estimator"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "灵巧手已张开并完成手指映射",
+        "目标与预抓取位姿由上层提供"
+      ],
+      "postconditions": [
+        "对象在目标表面稳定且手指不再承载对象"
+      ],
+      "invariants": [
+        "步骤图必须无环且每个step只引用本目录中的原子技能",
+        "组合执行器不得绕过原子技能的输入校验、终止条件和验证器",
+        "失败时保留已完成步骤及证据，默认停止而不自动无限重试"
+      ],
+      "termination": {
+        "success": "全部步骤经验证且对象稳定释放",
+        "timeout_s": 100,
+        "cancelable": true,
+        "on_cancel": "取消当前原子步骤并进入安全保持"
+      },
+      "success_criteria": {
+        "predicate": "全部步骤经验证且对象稳定释放",
+        "all_required_steps_verified": true
+      },
+      "failure_modes": [
+        "任一required步骤失败",
+        "组合超时",
+        "步骤输出无法绑定到后继输入"
+      ],
+      "failure_codes": [
+        "STEP_FAILED",
+        "BINDING_ERROR",
+        "COMPOSITE_TIMEOUT",
+        "CANCELLED"
+      ],
+      "resources": {
+        "policy": "union_of_active_steps",
+        "parallel_execution": false
+      },
+      "supported_embodiments": [
+        "single_arm_dexterous_hand",
+        "dual_arm"
+      ],
+      "evolution_policy": {
+        "mode": "disabled_for_composite",
+        "reason": "只能在原子执行器候选版本上离线演化；组合模板变更必须走独立版本评审"
+      },
+      "tags": [
+        "non_countable",
+        "composite",
+        "static_dag"
+      ],
+      "metadata": {
+        "countable": false,
+        "planner_free_template": true,
+        "step_count": 7,
+        "default_binding_paths": [
+          "move_pregrasp.max_linear_speed_mps",
+          "move_pregrasp.max_angular_speed_rps",
+          "move_pregrasp.position_tolerance_m",
+          "move_pregrasp.orientation_tolerance_rad",
+          "pinch.finger_pair",
+          "pinch.force_tolerance_n",
+          "pinch.closure_limit_rad",
+          "lift.speed_mps",
+          "lift.height_tolerance_m",
+          "lift.force_limit_n",
+          "align_target.position_tolerance_m",
+          "align_target.orientation_tolerance_rad",
+          "align_target.max_speed_mps",
+          "seat.approach_direction",
+          "seat.max_travel_m",
+          "seat.contact_force_n",
+          "seat.pose_tolerance_m",
+          "release.hand_id",
+          "release.target_positions",
+          "release.velocity_scale",
+          "release.joint_tolerance_rad"
+        ]
+      }
+    },
+    {
+      "id": "X03",
+      "name": "pick_and_place_suction",
+      "name_zh": "吸盘抓取放置",
+      "version": "1.0.0",
+      "kind": "composite",
+      "category": "composite_workflow",
+      "subcategory": "pick_place",
+      "description": "用吸盘吸附单个对象并放到已给定目标位姿。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rgbd_ref": {
+            "type": "string",
+            "minLength": 1,
+            "description": "rgbd_ref"
+          },
+          "object_id": {
+            "type": "string",
+            "description": "object_id"
+          },
+          "target_object_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "target_object_pose"
+          },
+          "contact_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "contact_pose"
+          },
+          "support_surface_id": {
+            "type": "string",
+            "description": "support_surface_id"
+          },
+          "lift_height_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "lift_height_m"
+          },
+          "vacuum_target_kpa": {
+            "type": "number",
+            "minimum": 0,
+            "description": "vacuum_target_kpa"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          }
+        },
+        "required": [
+          "rgbd_ref",
+          "object_id",
+          "target_object_pose",
+          "contact_pose",
+          "support_surface_id",
+          "lift_height_m",
+          "vacuum_target_kpa",
+          "frame_id"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "final_object_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "final_object_pose"
+          },
+          "released": {
+            "type": "boolean",
+            "description": "released"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "final_object_pose",
+          "released",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "steps": [
+        {
+          "step_id": "estimate_pose",
+          "skill_id": "P03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [],
+          "bindings": {
+            "rgbd_ref": "$.inputs.rgbd_ref",
+            "object_id": "$.inputs.object_id",
+            "target_frame": "$.inputs.frame_id"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "估计对象位姿"
+        },
+        {
+          "step_id": "move_contact",
+          "skill_id": "M04",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "estimate_pose"
+          ],
+          "bindings": {
+            "target_pose": "$.inputs.contact_pose",
+            "frame_id": "$.inputs.frame_id",
+            "max_linear_speed_mps": "$.defaults.M04.max_linear_speed_mps",
+            "max_angular_speed_rps": "$.defaults.M04.max_angular_speed_rps",
+            "position_tolerance_m": "$.defaults.M04.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.M04.orientation_tolerance_rad"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "移动到吸盘接触位姿"
+        },
+        {
+          "step_id": "attach",
+          "skill_id": "G07",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "move_contact"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.object_id",
+            "vacuum_target_kpa": "$.inputs.vacuum_target_kpa",
+            "seal_timeout_s": "$.defaults.G07.seal_timeout_s",
+            "leak_rate_limit_kpa_s": "$.defaults.G07.leak_rate_limit_kpa_s"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "建立吸盘附着"
+        },
+        {
+          "step_id": "lift",
+          "skill_id": "I06",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "attach"
+          ],
+          "bindings": {
+            "attachment_id": "$.steps.attach.outputs.attachment_id",
+            "object_id": "$.inputs.object_id",
+            "height_m": "$.inputs.lift_height_m",
+            "speed_mps": "$.defaults.I06.speed_mps",
+            "height_tolerance_m": "$.defaults.I06.height_tolerance_m",
+            "force_limit_n": "$.defaults.I06.force_limit_n"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "抬升对象"
+        },
+        {
+          "step_id": "align_target",
+          "skill_id": "I09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "lift"
+          ],
+          "bindings": {
+            "attachment_id": "$.steps.attach.outputs.attachment_id",
+            "object_id": "$.inputs.object_id",
+            "target_object_pose": "$.inputs.target_object_pose",
+            "frame_id": "$.inputs.frame_id",
+            "position_tolerance_m": "$.defaults.I09.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.I09.orientation_tolerance_rad",
+            "max_speed_mps": "$.defaults.I09.max_speed_mps"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "对准目标"
+        },
+        {
+          "step_id": "seat",
+          "skill_id": "I08",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "align_target"
+          ],
+          "bindings": {
+            "attachment_id": "$.steps.attach.outputs.attachment_id",
+            "object_id": "$.inputs.object_id",
+            "support_surface_id": "$.inputs.support_surface_id",
+            "approach_direction": "$.defaults.I08.approach_direction",
+            "max_travel_m": "$.defaults.I08.max_travel_m",
+            "contact_force_n": "$.defaults.I08.contact_force_n",
+            "pose_tolerance_m": "$.defaults.I08.pose_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "落座对象"
+        },
+        {
+          "step_id": "release",
+          "skill_id": "G08",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "seat"
+          ],
+          "bindings": {
+            "attachment_id": "$.steps.attach.outputs.attachment_id",
+            "vent_duration_s": "$.defaults.G08.vent_duration_s",
+            "residual_vacuum_limit_kpa": "$.defaults.G08.residual_vacuum_limit_kpa"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "解吸释放"
+        }
+      ],
+      "requires_capabilities": [
+        "rgbd_camera",
+        "pose_estimator",
+        "arm_cartesian_control",
+        "suction_control",
+        "vacuum_sensor",
+        "attachment_estimator"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "目标表面允许吸附",
+        "目标和接触位姿由上层提供"
+      ],
+      "postconditions": [
+        "对象在目标表面稳定且真空附着解除"
+      ],
+      "invariants": [
+        "步骤图必须无环且每个step只引用本目录中的原子技能",
+        "组合执行器不得绕过原子技能的输入校验、终止条件和验证器",
+        "失败时保留已完成步骤及证据，默认停止而不自动无限重试"
+      ],
+      "termination": {
+        "success": "全部步骤经验证且对象稳定释放",
+        "timeout_s": 90,
+        "cancelable": true,
+        "on_cancel": "取消当前原子步骤并进入安全保持"
+      },
+      "success_criteria": {
+        "predicate": "全部步骤经验证且对象稳定释放",
+        "all_required_steps_verified": true
+      },
+      "failure_modes": [
+        "任一required步骤失败",
+        "组合超时",
+        "步骤输出无法绑定到后继输入"
+      ],
+      "failure_codes": [
+        "STEP_FAILED",
+        "BINDING_ERROR",
+        "COMPOSITE_TIMEOUT",
+        "CANCELLED"
+      ],
+      "resources": {
+        "policy": "union_of_active_steps",
+        "parallel_execution": false
+      },
+      "supported_embodiments": [
+        "single_arm_suction",
+        "mobile_manipulator_suction"
+      ],
+      "evolution_policy": {
+        "mode": "disabled_for_composite",
+        "reason": "只能在原子执行器候选版本上离线演化；组合模板变更必须走独立版本评审"
+      },
+      "tags": [
+        "non_countable",
+        "composite",
+        "static_dag"
+      ],
+      "metadata": {
+        "countable": false,
+        "planner_free_template": true,
+        "step_count": 7,
+        "default_binding_paths": [
+          "move_contact.max_linear_speed_mps",
+          "move_contact.max_angular_speed_rps",
+          "move_contact.position_tolerance_m",
+          "move_contact.orientation_tolerance_rad",
+          "attach.seal_timeout_s",
+          "attach.leak_rate_limit_kpa_s",
+          "lift.speed_mps",
+          "lift.height_tolerance_m",
+          "lift.force_limit_n",
+          "align_target.position_tolerance_m",
+          "align_target.orientation_tolerance_rad",
+          "align_target.max_speed_mps",
+          "seat.approach_direction",
+          "seat.max_travel_m",
+          "seat.contact_force_n",
+          "seat.pose_tolerance_m",
+          "release.vent_duration_s",
+          "release.residual_vacuum_limit_kpa"
+        ]
+      }
+    },
+    {
+      "id": "X04",
+      "name": "stack_two_objects",
+      "name_zh": "双物体堆叠",
+      "version": "1.0.0",
+      "kind": "composite",
+      "category": "composite_workflow",
+      "subcategory": "stacking",
+      "description": "把一个已经持有的对象落座到另一个对象的外部给定堆叠位姿。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "attachment_id": {
+            "type": "string",
+            "description": "attachment_id"
+          },
+          "top_object_id": {
+            "type": "string",
+            "description": "top_object_id"
+          },
+          "base_object_id": {
+            "type": "string",
+            "description": "base_object_id"
+          },
+          "stack_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "stack_pose"
+          },
+          "lift_height_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "lift_height_m"
+          },
+          "release_width_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "release_width_m"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          }
+        },
+        "required": [
+          "attachment_id",
+          "top_object_id",
+          "base_object_id",
+          "stack_pose",
+          "lift_height_m",
+          "release_width_m",
+          "frame_id"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "stack_stability_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "stack_stability_score"
+          },
+          "released": {
+            "type": "boolean",
+            "description": "released"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "stack_stability_score",
+          "released",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "steps": [
+        {
+          "step_id": "estimate_base",
+          "skill_id": "P03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [],
+          "bindings": {
+            "object_id": "$.inputs.base_object_id",
+            "target_frame": "$.inputs.frame_id",
+            "rgbd_ref": "$.defaults.P03.rgbd_ref"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "核对底部对象位姿"
+        },
+        {
+          "step_id": "lift_top",
+          "skill_id": "I06",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "estimate_base"
+          ],
+          "bindings": {
+            "attachment_id": "$.inputs.attachment_id",
+            "object_id": "$.inputs.top_object_id",
+            "height_m": "$.inputs.lift_height_m",
+            "speed_mps": "$.defaults.I06.speed_mps",
+            "height_tolerance_m": "$.defaults.I06.height_tolerance_m",
+            "force_limit_n": "$.defaults.I06.force_limit_n"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "抬升顶部对象"
+        },
+        {
+          "step_id": "align_stack",
+          "skill_id": "I09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "lift_top"
+          ],
+          "bindings": {
+            "attachment_id": "$.inputs.attachment_id",
+            "object_id": "$.inputs.top_object_id",
+            "target_object_pose": "$.inputs.stack_pose",
+            "frame_id": "$.inputs.frame_id",
+            "position_tolerance_m": "$.defaults.I09.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.I09.orientation_tolerance_rad",
+            "max_speed_mps": "$.defaults.I09.max_speed_mps"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "对准堆叠位姿"
+        },
+        {
+          "step_id": "seat_stack",
+          "skill_id": "I08",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "align_stack"
+          ],
+          "bindings": {
+            "attachment_id": "$.inputs.attachment_id",
+            "object_id": "$.inputs.top_object_id",
+            "support_surface_id": "$.inputs.base_object_id",
+            "approach_direction": "$.defaults.I08.approach_direction",
+            "max_travel_m": "$.defaults.I08.max_travel_m",
+            "contact_force_n": "$.defaults.I08.contact_force_n",
+            "pose_tolerance_m": "$.defaults.I08.pose_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "在底部对象上落座"
+        },
+        {
+          "step_id": "release",
+          "skill_id": "G01",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "seat_stack"
+          ],
+          "bindings": {
+            "width_m": "$.inputs.release_width_m",
+            "speed_mps": "$.defaults.G01.speed_mps",
+            "width_tolerance_m": "$.defaults.G01.width_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "释放顶部对象"
+        },
+        {
+          "step_id": "verify_state",
+          "skill_id": "P09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "release"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.top_object_id",
+            "state_keys": [
+              "supported_by",
+              "stable"
+            ],
+            "observation_ref": "$.defaults.P09.observation_ref"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "验证堆叠关系"
+        }
+      ],
+      "requires_capabilities": [
+        "pose_estimator",
+        "arm_cartesian_control",
+        "attachment_estimator",
+        "object_state_observer",
+        "parallel_gripper_control"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "顶部对象抓取附着有效",
+        "stack_pose由上层几何或规划模块给出"
+      ],
+      "postconditions": [
+        "顶部对象由底部对象稳定支撑且抓取解除"
+      ],
+      "invariants": [
+        "步骤图必须无环且每个step只引用本目录中的原子技能",
+        "组合执行器不得绕过原子技能的输入校验、终止条件和验证器",
+        "失败时保留已完成步骤及证据，默认停止而不自动无限重试"
+      ],
+      "termination": {
+        "success": "状态估计确认supported_by和stable并且全部动作步骤经验证",
+        "timeout_s": 80,
+        "cancelable": true,
+        "on_cancel": "取消当前原子步骤并进入安全保持"
+      },
+      "success_criteria": {
+        "predicate": "状态估计确认supported_by和stable并且全部动作步骤经验证",
+        "all_required_steps_verified": true
+      },
+      "failure_modes": [
+        "任一required步骤失败",
+        "组合超时",
+        "步骤输出无法绑定到后继输入"
+      ],
+      "failure_codes": [
+        "STEP_FAILED",
+        "BINDING_ERROR",
+        "COMPOSITE_TIMEOUT",
+        "CANCELLED"
+      ],
+      "resources": {
+        "policy": "union_of_active_steps",
+        "parallel_execution": false
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "dual_arm",
+        "mobile_manipulator"
+      ],
+      "evolution_policy": {
+        "mode": "disabled_for_composite",
+        "reason": "只能在原子执行器候选版本上离线演化；组合模板变更必须走独立版本评审"
+      },
+      "tags": [
+        "non_countable",
+        "composite",
+        "static_dag"
+      ],
+      "metadata": {
+        "countable": false,
+        "planner_free_template": true,
+        "step_count": 6,
+        "default_binding_paths": [
+          "estimate_base.rgbd_ref",
+          "lift_top.speed_mps",
+          "lift_top.height_tolerance_m",
+          "lift_top.force_limit_n",
+          "align_stack.position_tolerance_m",
+          "align_stack.orientation_tolerance_rad",
+          "align_stack.max_speed_mps",
+          "seat_stack.approach_direction",
+          "seat_stack.max_travel_m",
+          "seat_stack.contact_force_n",
+          "seat_stack.pose_tolerance_m",
+          "release.speed_mps",
+          "release.width_tolerance_m",
+          "verify_state.observation_ref"
+        ]
+      }
+    },
+    {
+      "id": "X05",
+      "name": "operate_prismatic_container",
+      "name_zh": "直线关节容器开合",
+      "version": "1.0.0",
+      "kind": "composite",
+      "category": "composite_workflow",
+      "subcategory": "container",
+      "description": "把抽屉等直线关节容器移动到外部给定目标关节位置。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rgbd_ref": {
+            "type": "string",
+            "minLength": 1,
+            "description": "rgbd_ref"
+          },
+          "container_id": {
+            "type": "string",
+            "description": "container_id"
+          },
+          "joint_id": {
+            "type": "string",
+            "description": "joint_id"
+          },
+          "handle_pregrasp_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "handle_pregrasp_pose"
+          },
+          "target_joint_position_m": {
+            "type": "number",
+            "description": "target_joint_position_m"
+          },
+          "grasp_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "grasp_force_n"
+          },
+          "release_width_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "release_width_m"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          }
+        },
+        "required": [
+          "rgbd_ref",
+          "container_id",
+          "joint_id",
+          "handle_pregrasp_pose",
+          "target_joint_position_m",
+          "grasp_force_n",
+          "release_width_m",
+          "frame_id"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "final_joint_position_m": {
+            "type": "number",
+            "description": "final_joint_position_m"
+          },
+          "released": {
+            "type": "boolean",
+            "description": "released"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "final_joint_position_m",
+          "released",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "steps": [
+        {
+          "step_id": "estimate_joint",
+          "skill_id": "P08",
+          "version_constraint": "^1.0.0",
+          "depends_on": [],
+          "bindings": {
+            "rgbd_ref": "$.inputs.rgbd_ref",
+            "object_id": "$.inputs.container_id",
+            "observation_window_s": "$.defaults.P08.observation_window_s"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "估计直线关节"
+        },
+        {
+          "step_id": "move_handle",
+          "skill_id": "M04",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "estimate_joint"
+          ],
+          "bindings": {
+            "target_pose": "$.inputs.handle_pregrasp_pose",
+            "frame_id": "$.inputs.frame_id",
+            "max_linear_speed_mps": "$.defaults.M04.max_linear_speed_mps",
+            "max_angular_speed_rps": "$.defaults.M04.max_angular_speed_rps",
+            "position_tolerance_m": "$.defaults.M04.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.M04.orientation_tolerance_rad"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "移动到手柄"
+        },
+        {
+          "step_id": "grasp_handle",
+          "skill_id": "G03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "move_handle"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.container_id",
+            "target_force_n": "$.inputs.grasp_force_n",
+            "force_tolerance_n": "$.defaults.G03.force_tolerance_n",
+            "max_width_travel_m": "$.defaults.G03.max_width_travel_m",
+            "speed_mps": "$.defaults.G03.speed_mps"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "抓持手柄"
+        },
+        {
+          "step_id": "set_joint",
+          "skill_id": "A01",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "grasp_handle"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.container_id",
+            "joint_id": "$.inputs.joint_id",
+            "target_position_m": "$.inputs.target_joint_position_m",
+            "position_tolerance_m": "$.defaults.A01.position_tolerance_m",
+            "speed_mps": "$.defaults.A01.speed_mps",
+            "force_limit_n": "$.defaults.A01.force_limit_n"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "移动直线关节"
+        },
+        {
+          "step_id": "release_handle",
+          "skill_id": "G01",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "set_joint"
+          ],
+          "bindings": {
+            "width_m": "$.inputs.release_width_m",
+            "speed_mps": "$.defaults.G01.speed_mps",
+            "width_tolerance_m": "$.defaults.G01.width_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "释放手柄"
+        },
+        {
+          "step_id": "retreat",
+          "skill_id": "M07",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "release_handle"
+          ],
+          "bindings": {
+            "frame_id": "$.inputs.frame_id",
+            "direction": "$.defaults.M07.direction",
+            "distance_m": "$.defaults.M07.distance_m",
+            "speed_mps": "$.defaults.M07.speed_mps",
+            "position_tolerance_m": "$.defaults.M07.position_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "沿外部配置方向撤离"
+        }
+      ],
+      "requires_capabilities": [
+        "rgbd_camera",
+        "articulation_estimator",
+        "arm_cartesian_force_control",
+        "parallel_gripper_force_control",
+        "articulation_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "目标位置位于关节限位内",
+        "手柄位姿由上层提供"
+      ],
+      "postconditions": [
+        "容器关节位于目标位置且手柄已释放"
+      ],
+      "invariants": [
+        "步骤图必须无环且每个step只引用本目录中的原子技能",
+        "组合执行器不得绕过原子技能的输入校验、终止条件和验证器",
+        "失败时保留已完成步骤及证据，默认停止而不自动无限重试"
+      ],
+      "termination": {
+        "success": "关节位置误差达标并且末端已安全撤离",
+        "timeout_s": 80,
+        "cancelable": true,
+        "on_cancel": "取消当前原子步骤并进入安全保持"
+      },
+      "success_criteria": {
+        "predicate": "关节位置误差达标并且末端已安全撤离",
+        "all_required_steps_verified": true
+      },
+      "failure_modes": [
+        "任一required步骤失败",
+        "组合超时",
+        "步骤输出无法绑定到后继输入"
+      ],
+      "failure_codes": [
+        "STEP_FAILED",
+        "BINDING_ERROR",
+        "COMPOSITE_TIMEOUT",
+        "CANCELLED"
+      ],
+      "resources": {
+        "policy": "union_of_active_steps",
+        "parallel_execution": false
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "dual_arm",
+        "mobile_manipulator"
+      ],
+      "evolution_policy": {
+        "mode": "disabled_for_composite",
+        "reason": "只能在原子执行器候选版本上离线演化；组合模板变更必须走独立版本评审"
+      },
+      "tags": [
+        "non_countable",
+        "composite",
+        "static_dag"
+      ],
+      "metadata": {
+        "countable": false,
+        "planner_free_template": true,
+        "step_count": 6,
+        "default_binding_paths": [
+          "estimate_joint.observation_window_s",
+          "move_handle.max_linear_speed_mps",
+          "move_handle.max_angular_speed_rps",
+          "move_handle.position_tolerance_m",
+          "move_handle.orientation_tolerance_rad",
+          "grasp_handle.force_tolerance_n",
+          "grasp_handle.max_width_travel_m",
+          "grasp_handle.speed_mps",
+          "set_joint.position_tolerance_m",
+          "set_joint.speed_mps",
+          "set_joint.force_limit_n",
+          "release_handle.speed_mps",
+          "release_handle.width_tolerance_m",
+          "retreat.direction",
+          "retreat.distance_m",
+          "retreat.speed_mps",
+          "retreat.position_tolerance_m"
+        ]
+      }
+    },
+    {
+      "id": "X06",
+      "name": "operate_revolute_container",
+      "name_zh": "旋转关节容器开合",
+      "version": "1.0.0",
+      "kind": "composite",
+      "category": "composite_workflow",
+      "subcategory": "container",
+      "description": "把门或铰链盖移动到外部给定目标关节角。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rgbd_ref": {
+            "type": "string",
+            "minLength": 1,
+            "description": "rgbd_ref"
+          },
+          "container_id": {
+            "type": "string",
+            "description": "container_id"
+          },
+          "joint_id": {
+            "type": "string",
+            "description": "joint_id"
+          },
+          "handle_pregrasp_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "handle_pregrasp_pose"
+          },
+          "target_joint_angle_rad": {
+            "type": "number",
+            "description": "target_joint_angle_rad"
+          },
+          "grasp_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "grasp_force_n"
+          },
+          "release_width_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "release_width_m"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          }
+        },
+        "required": [
+          "rgbd_ref",
+          "container_id",
+          "joint_id",
+          "handle_pregrasp_pose",
+          "target_joint_angle_rad",
+          "grasp_force_n",
+          "release_width_m",
+          "frame_id"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "final_joint_angle_rad": {
+            "type": "number",
+            "description": "final_joint_angle_rad"
+          },
+          "released": {
+            "type": "boolean",
+            "description": "released"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "final_joint_angle_rad",
+          "released",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "steps": [
+        {
+          "step_id": "estimate_joint",
+          "skill_id": "P08",
+          "version_constraint": "^1.0.0",
+          "depends_on": [],
+          "bindings": {
+            "rgbd_ref": "$.inputs.rgbd_ref",
+            "object_id": "$.inputs.container_id",
+            "observation_window_s": "$.defaults.P08.observation_window_s"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "估计旋转关节"
+        },
+        {
+          "step_id": "move_handle",
+          "skill_id": "M04",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "estimate_joint"
+          ],
+          "bindings": {
+            "target_pose": "$.inputs.handle_pregrasp_pose",
+            "frame_id": "$.inputs.frame_id",
+            "max_linear_speed_mps": "$.defaults.M04.max_linear_speed_mps",
+            "max_angular_speed_rps": "$.defaults.M04.max_angular_speed_rps",
+            "position_tolerance_m": "$.defaults.M04.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.M04.orientation_tolerance_rad"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "移动到手柄"
+        },
+        {
+          "step_id": "grasp_handle",
+          "skill_id": "G03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "move_handle"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.container_id",
+            "target_force_n": "$.inputs.grasp_force_n",
+            "force_tolerance_n": "$.defaults.G03.force_tolerance_n",
+            "max_width_travel_m": "$.defaults.G03.max_width_travel_m",
+            "speed_mps": "$.defaults.G03.speed_mps"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "抓持手柄"
+        },
+        {
+          "step_id": "set_joint",
+          "skill_id": "A02",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "grasp_handle"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.container_id",
+            "joint_id": "$.inputs.joint_id",
+            "target_angle_rad": "$.inputs.target_joint_angle_rad",
+            "angle_tolerance_rad": "$.defaults.A02.angle_tolerance_rad",
+            "angular_speed_rps": "$.defaults.A02.angular_speed_rps",
+            "force_limit_n": "$.defaults.A02.force_limit_n"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "转动旋转关节"
+        },
+        {
+          "step_id": "release_handle",
+          "skill_id": "G01",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "set_joint"
+          ],
+          "bindings": {
+            "width_m": "$.inputs.release_width_m",
+            "speed_mps": "$.defaults.G01.speed_mps",
+            "width_tolerance_m": "$.defaults.G01.width_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "释放手柄"
+        },
+        {
+          "step_id": "retreat",
+          "skill_id": "M07",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "release_handle"
+          ],
+          "bindings": {
+            "frame_id": "$.inputs.frame_id",
+            "direction": "$.defaults.M07.direction",
+            "distance_m": "$.defaults.M07.distance_m",
+            "speed_mps": "$.defaults.M07.speed_mps",
+            "position_tolerance_m": "$.defaults.M07.position_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "安全撤离"
+        }
+      ],
+      "requires_capabilities": [
+        "rgbd_camera",
+        "articulation_estimator",
+        "arm_cartesian_force_control",
+        "parallel_gripper_force_control",
+        "articulation_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "目标角位于关节限位内",
+        "手柄位姿由上层提供"
+      ],
+      "postconditions": [
+        "容器关节位于目标角且手柄已释放"
+      ],
+      "invariants": [
+        "步骤图必须无环且每个step只引用本目录中的原子技能",
+        "组合执行器不得绕过原子技能的输入校验、终止条件和验证器",
+        "失败时保留已完成步骤及证据，默认停止而不自动无限重试"
+      ],
+      "termination": {
+        "success": "关节角误差达标并且末端已安全撤离",
+        "timeout_s": 90,
+        "cancelable": true,
+        "on_cancel": "取消当前原子步骤并进入安全保持"
+      },
+      "success_criteria": {
+        "predicate": "关节角误差达标并且末端已安全撤离",
+        "all_required_steps_verified": true
+      },
+      "failure_modes": [
+        "任一required步骤失败",
+        "组合超时",
+        "步骤输出无法绑定到后继输入"
+      ],
+      "failure_codes": [
+        "STEP_FAILED",
+        "BINDING_ERROR",
+        "COMPOSITE_TIMEOUT",
+        "CANCELLED"
+      ],
+      "resources": {
+        "policy": "union_of_active_steps",
+        "parallel_execution": false
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "dual_arm",
+        "mobile_manipulator"
+      ],
+      "evolution_policy": {
+        "mode": "disabled_for_composite",
+        "reason": "只能在原子执行器候选版本上离线演化；组合模板变更必须走独立版本评审"
+      },
+      "tags": [
+        "non_countable",
+        "composite",
+        "static_dag"
+      ],
+      "metadata": {
+        "countable": false,
+        "planner_free_template": true,
+        "step_count": 6,
+        "default_binding_paths": [
+          "estimate_joint.observation_window_s",
+          "move_handle.max_linear_speed_mps",
+          "move_handle.max_angular_speed_rps",
+          "move_handle.position_tolerance_m",
+          "move_handle.orientation_tolerance_rad",
+          "grasp_handle.force_tolerance_n",
+          "grasp_handle.max_width_travel_m",
+          "grasp_handle.speed_mps",
+          "set_joint.angle_tolerance_rad",
+          "set_joint.angular_speed_rps",
+          "set_joint.force_limit_n",
+          "release_handle.speed_mps",
+          "release_handle.width_tolerance_m",
+          "retreat.direction",
+          "retreat.distance_m",
+          "retreat.speed_mps",
+          "retreat.position_tolerance_m"
+        ]
+      }
+    },
+    {
+      "id": "X07",
+      "name": "peg_in_hole",
+      "name_zh": "轴孔插装",
+      "version": "1.0.0",
+      "kind": "composite",
+      "category": "composite_workflow",
+      "subcategory": "assembly",
+      "description": "把已持轴件对准并插入外部给定孔位。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "attachment_id": {
+            "type": "string",
+            "description": "attachment_id"
+          },
+          "peg_id": {
+            "type": "string",
+            "description": "peg_id"
+          },
+          "hole_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "hole_pose"
+          },
+          "insertion_axis": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "insertion_axis"
+          },
+          "target_depth_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "target_depth_m"
+          },
+          "release_width_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "release_width_m"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          }
+        },
+        "required": [
+          "attachment_id",
+          "peg_id",
+          "hole_pose",
+          "insertion_axis",
+          "target_depth_m",
+          "release_width_m",
+          "frame_id"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "insertion_depth_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "insertion_depth_m"
+          },
+          "released": {
+            "type": "boolean",
+            "description": "released"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "insertion_depth_m",
+          "released",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "steps": [
+        {
+          "step_id": "estimate_peg",
+          "skill_id": "P03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [],
+          "bindings": {
+            "object_id": "$.inputs.peg_id",
+            "target_frame": "$.inputs.frame_id",
+            "rgbd_ref": "$.defaults.P03.rgbd_ref"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "核对轴件位姿"
+        },
+        {
+          "step_id": "align",
+          "skill_id": "I09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "estimate_peg"
+          ],
+          "bindings": {
+            "attachment_id": "$.inputs.attachment_id",
+            "object_id": "$.inputs.peg_id",
+            "target_object_pose": "$.inputs.hole_pose",
+            "frame_id": "$.inputs.frame_id",
+            "position_tolerance_m": "$.defaults.I09.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.I09.orientation_tolerance_rad",
+            "max_speed_mps": "$.defaults.I09.max_speed_mps"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "对准孔位"
+        },
+        {
+          "step_id": "insert",
+          "skill_id": "I10",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "align"
+          ],
+          "bindings": {
+            "attachment_id": "$.inputs.attachment_id",
+            "object_id": "$.inputs.peg_id",
+            "insertion_axis": "$.inputs.insertion_axis",
+            "target_depth_m": "$.inputs.target_depth_m",
+            "depth_tolerance_m": "$.defaults.I10.depth_tolerance_m",
+            "lateral_force_limit_n": "$.defaults.I10.lateral_force_limit_n",
+            "axial_force_limit_n": "$.defaults.I10.axial_force_limit_n"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "轴向插入"
+        },
+        {
+          "step_id": "release",
+          "skill_id": "G01",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "insert"
+          ],
+          "bindings": {
+            "width_m": "$.inputs.release_width_m",
+            "speed_mps": "$.defaults.G01.speed_mps",
+            "width_tolerance_m": "$.defaults.G01.width_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "释放轴件"
+        },
+        {
+          "step_id": "retreat",
+          "skill_id": "M07",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "release"
+          ],
+          "bindings": {
+            "frame_id": "$.inputs.frame_id",
+            "direction": "$.defaults.M07.direction",
+            "distance_m": "$.defaults.M07.distance_m",
+            "speed_mps": "$.defaults.M07.speed_mps",
+            "position_tolerance_m": "$.defaults.M07.position_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "末端撤离"
+        },
+        {
+          "step_id": "verify_state",
+          "skill_id": "P09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "retreat"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.peg_id",
+            "state_keys": [
+              "inserted",
+              "insertion_depth"
+            ],
+            "observation_ref": "$.defaults.P09.observation_ref"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "验证插入状态"
+        }
+      ],
+      "requires_capabilities": [
+        "pose_estimator",
+        "arm_cartesian_force_control",
+        "attachment_estimator",
+        "force_torque_sensor",
+        "object_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "轴件抓取附着有效",
+        "hole_pose和插入轴由上层感知或任务配置给出"
+      ],
+      "postconditions": [
+        "轴件达到目标深度并解除抓取"
+      ],
+      "invariants": [
+        "步骤图必须无环且每个step只引用本目录中的原子技能",
+        "组合执行器不得绕过原子技能的输入校验、终止条件和验证器",
+        "失败时保留已完成步骤及证据，默认停止而不自动无限重试"
+      ],
+      "termination": {
+        "success": "插入深度达标且状态估计确认inserted",
+        "timeout_s": 70,
+        "cancelable": true,
+        "on_cancel": "取消当前原子步骤并进入安全保持"
+      },
+      "success_criteria": {
+        "predicate": "插入深度达标且状态估计确认inserted",
+        "all_required_steps_verified": true
+      },
+      "failure_modes": [
+        "任一required步骤失败",
+        "组合超时",
+        "步骤输出无法绑定到后继输入"
+      ],
+      "failure_codes": [
+        "STEP_FAILED",
+        "BINDING_ERROR",
+        "COMPOSITE_TIMEOUT",
+        "CANCELLED"
+      ],
+      "resources": {
+        "policy": "union_of_active_steps",
+        "parallel_execution": false
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "dual_arm",
+        "mobile_manipulator"
+      ],
+      "evolution_policy": {
+        "mode": "disabled_for_composite",
+        "reason": "只能在原子执行器候选版本上离线演化；组合模板变更必须走独立版本评审"
+      },
+      "tags": [
+        "non_countable",
+        "composite",
+        "static_dag"
+      ],
+      "metadata": {
+        "countable": false,
+        "planner_free_template": true,
+        "step_count": 6,
+        "default_binding_paths": [
+          "estimate_peg.rgbd_ref",
+          "align.position_tolerance_m",
+          "align.orientation_tolerance_rad",
+          "align.max_speed_mps",
+          "insert.depth_tolerance_m",
+          "insert.lateral_force_limit_n",
+          "insert.axial_force_limit_n",
+          "release.speed_mps",
+          "release.width_tolerance_m",
+          "retreat.direction",
+          "retreat.distance_m",
+          "retreat.speed_mps",
+          "retreat.position_tolerance_m",
+          "verify_state.observation_ref"
+        ]
+      }
+    },
+    {
+      "id": "X08",
+      "name": "pour_between_containers",
+      "name_zh": "容器间定量倾倒",
+      "version": "1.0.0",
+      "kind": "composite",
+      "category": "composite_workflow",
+      "subcategory": "pouring",
+      "description": "把已持源容器移到目标上方，倾倒指定量，再使源容器恢复姿态。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "attachment_id": {
+            "type": "string",
+            "description": "attachment_id"
+          },
+          "source_container_id": {
+            "type": "string",
+            "description": "source_container_id"
+          },
+          "target_container_id": {
+            "type": "string",
+            "description": "target_container_id"
+          },
+          "pour_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "pour_pose"
+          },
+          "target_amount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "target_amount"
+          },
+          "amount_unit": {
+            "type": "string",
+            "description": "amount_unit"
+          },
+          "return_flip_angle_rad": {
+            "type": "number",
+            "description": "return_flip_angle_rad"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          }
+        },
+        "required": [
+          "attachment_id",
+          "source_container_id",
+          "target_container_id",
+          "pour_pose",
+          "target_amount",
+          "amount_unit",
+          "return_flip_angle_rad",
+          "frame_id"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "transferred_amount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "transferred_amount"
+          },
+          "spill_amount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "spill_amount"
+          },
+          "source_upright": {
+            "type": "boolean",
+            "description": "source_upright"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "transferred_amount",
+          "spill_amount",
+          "source_upright",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "steps": [
+        {
+          "step_id": "estimate_target",
+          "skill_id": "P03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [],
+          "bindings": {
+            "object_id": "$.inputs.target_container_id",
+            "target_frame": "$.inputs.frame_id",
+            "rgbd_ref": "$.defaults.P03.rgbd_ref"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "核对目标容器位姿"
+        },
+        {
+          "step_id": "lift_source",
+          "skill_id": "I06",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "estimate_target"
+          ],
+          "bindings": {
+            "attachment_id": "$.inputs.attachment_id",
+            "object_id": "$.inputs.source_container_id",
+            "height_m": "$.defaults.I06.height_m",
+            "speed_mps": "$.defaults.I06.speed_mps",
+            "height_tolerance_m": "$.defaults.I06.height_tolerance_m",
+            "force_limit_n": "$.defaults.I06.force_limit_n"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "抬升源容器"
+        },
+        {
+          "step_id": "align_pour",
+          "skill_id": "I09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "lift_source"
+          ],
+          "bindings": {
+            "attachment_id": "$.inputs.attachment_id",
+            "object_id": "$.inputs.source_container_id",
+            "target_object_pose": "$.inputs.pour_pose",
+            "frame_id": "$.inputs.frame_id",
+            "position_tolerance_m": "$.defaults.I09.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.I09.orientation_tolerance_rad",
+            "max_speed_mps": "$.defaults.I09.max_speed_mps"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "对准倾倒位姿"
+        },
+        {
+          "step_id": "pour",
+          "skill_id": "T03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "align_pour"
+          ],
+          "bindings": {
+            "container_attachment_id": "$.inputs.attachment_id",
+            "source_container_id": "$.inputs.source_container_id",
+            "target_container_id": "$.inputs.target_container_id",
+            "target_amount": "$.inputs.target_amount",
+            "amount_unit": "$.inputs.amount_unit",
+            "max_tilt_rad": "$.defaults.T03.max_tilt_rad",
+            "flow_timeout_s": "$.defaults.T03.flow_timeout_s"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "定量倾倒"
+        },
+        {
+          "step_id": "upright",
+          "skill_id": "I12",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "pour"
+          ],
+          "bindings": {
+            "attachment_id": "$.inputs.attachment_id",
+            "object_id": "$.inputs.source_container_id",
+            "angle_rad": "$.inputs.return_flip_angle_rad",
+            "object_axis": "$.defaults.I12.object_axis",
+            "angular_speed_rps": "$.defaults.I12.angular_speed_rps",
+            "angle_tolerance_rad": "$.defaults.I12.angle_tolerance_rad"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "恢复源容器朝向"
+        },
+        {
+          "step_id": "verify_amount",
+          "skill_id": "P09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "upright"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.target_container_id",
+            "state_keys": [
+              "fill_amount",
+              "spill"
+            ],
+            "observation_ref": "$.defaults.P09.observation_ref"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "验证转移量"
+        }
+      ],
+      "requires_capabilities": [
+        "pose_estimator",
+        "arm_cartesian_control",
+        "attachment_estimator",
+        "media_state_observer",
+        "object_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "源容器抓取附着有效",
+        "pour_pose由上层提供",
+        "目标介质可流动"
+      ],
+      "postconditions": [
+        "目标容器介质量增加到请求范围且源容器恢复朝向"
+      ],
+      "invariants": [
+        "步骤图必须无环且每个step只引用本目录中的原子技能",
+        "组合执行器不得绕过原子技能的输入校验、终止条件和验证器",
+        "失败时保留已完成步骤及证据，默认停止而不自动无限重试"
+      ],
+      "termination": {
+        "success": "转移量与溢洒达标、附着保持且源容器恢复朝向",
+        "timeout_s": 100,
+        "cancelable": true,
+        "on_cancel": "取消当前原子步骤并进入安全保持"
+      },
+      "success_criteria": {
+        "predicate": "转移量与溢洒达标、附着保持且源容器恢复朝向",
+        "all_required_steps_verified": true
+      },
+      "failure_modes": [
+        "任一required步骤失败",
+        "组合超时",
+        "步骤输出无法绑定到后继输入"
+      ],
+      "failure_codes": [
+        "STEP_FAILED",
+        "BINDING_ERROR",
+        "COMPOSITE_TIMEOUT",
+        "CANCELLED"
+      ],
+      "resources": {
+        "policy": "union_of_active_steps",
+        "parallel_execution": false
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "dual_arm",
+        "mobile_manipulator"
+      ],
+      "evolution_policy": {
+        "mode": "disabled_for_composite",
+        "reason": "只能在原子执行器候选版本上离线演化；组合模板变更必须走独立版本评审"
+      },
+      "tags": [
+        "non_countable",
+        "composite",
+        "static_dag"
+      ],
+      "metadata": {
+        "countable": false,
+        "planner_free_template": true,
+        "step_count": 6,
+        "default_binding_paths": [
+          "estimate_target.rgbd_ref",
+          "lift_source.height_m",
+          "lift_source.speed_mps",
+          "lift_source.height_tolerance_m",
+          "lift_source.force_limit_n",
+          "align_pour.position_tolerance_m",
+          "align_pour.orientation_tolerance_rad",
+          "align_pour.max_speed_mps",
+          "pour.max_tilt_rad",
+          "pour.flow_timeout_s",
+          "upright.object_axis",
+          "upright.angular_speed_rps",
+          "upright.angle_tolerance_rad",
+          "verify_amount.observation_ref"
+        ]
+      }
+    },
+    {
+      "id": "X09",
+      "name": "cut_with_tool",
+      "name_zh": "持工具切割",
+      "version": "1.0.0",
+      "kind": "composite",
+      "category": "composite_workflow",
+      "subcategory": "tool_use",
+      "description": "把已持刀具移动到给定起点，完成一次切割行程后撤离。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "tool_attachment_id": {
+            "type": "string",
+            "description": "tool_attachment_id"
+          },
+          "tool_id": {
+            "type": "string",
+            "description": "tool_id"
+          },
+          "target_id": {
+            "type": "string",
+            "description": "target_id"
+          },
+          "start_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "start_pose"
+          },
+          "start_point": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "start_point"
+          },
+          "end_point": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "end_point"
+          },
+          "normal_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "normal_force_n"
+          },
+          "speed_mps": {
+            "type": "number",
+            "minimum": 0,
+            "description": "speed_mps"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          }
+        },
+        "required": [
+          "tool_attachment_id",
+          "tool_id",
+          "target_id",
+          "start_pose",
+          "start_point",
+          "end_point",
+          "normal_force_n",
+          "speed_mps",
+          "frame_id"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "separation_score": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "separation_score"
+          },
+          "tool_attachment_preserved": {
+            "type": "boolean",
+            "description": "tool_attachment_preserved"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "separation_score",
+          "tool_attachment_preserved",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "steps": [
+        {
+          "step_id": "estimate_target",
+          "skill_id": "P03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [],
+          "bindings": {
+            "object_id": "$.inputs.target_id",
+            "target_frame": "$.inputs.frame_id",
+            "rgbd_ref": "$.defaults.P03.rgbd_ref"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "核对切割目标位姿"
+        },
+        {
+          "step_id": "move_start",
+          "skill_id": "M04",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "estimate_target"
+          ],
+          "bindings": {
+            "target_pose": "$.inputs.start_pose",
+            "frame_id": "$.inputs.frame_id",
+            "max_linear_speed_mps": "$.defaults.M04.max_linear_speed_mps",
+            "max_angular_speed_rps": "$.defaults.M04.max_angular_speed_rps",
+            "position_tolerance_m": "$.defaults.M04.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.M04.orientation_tolerance_rad"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "移动到切割起点"
+        },
+        {
+          "step_id": "cut",
+          "skill_id": "T01",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "move_start"
+          ],
+          "bindings": {
+            "tool_attachment_id": "$.inputs.tool_attachment_id",
+            "tool_id": "$.inputs.tool_id",
+            "target_id": "$.inputs.target_id",
+            "start_point": "$.inputs.start_point",
+            "end_point": "$.inputs.end_point",
+            "normal_force_n": "$.inputs.normal_force_n",
+            "speed_mps": "$.inputs.speed_mps",
+            "frame_id": "$.defaults.T01.frame_id",
+            "force_limit_n": "$.defaults.T01.force_limit_n"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "执行一次切割行程"
+        },
+        {
+          "step_id": "retreat",
+          "skill_id": "M07",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "cut"
+          ],
+          "bindings": {
+            "frame_id": "$.inputs.frame_id",
+            "direction": "$.defaults.M07.direction",
+            "distance_m": "$.defaults.M07.distance_m",
+            "speed_mps": "$.defaults.M07.speed_mps",
+            "position_tolerance_m": "$.defaults.M07.position_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "工具撤离"
+        },
+        {
+          "step_id": "verify_material",
+          "skill_id": "P09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "retreat"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.target_id",
+            "state_keys": [
+              "separated",
+              "damage"
+            ],
+            "observation_ref": "$.defaults.P09.observation_ref"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "验证材料状态"
+        }
+      ],
+      "requires_capabilities": [
+        "pose_estimator",
+        "arm_cartesian_force_control",
+        "attachment_estimator",
+        "force_torque_sensor",
+        "material_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "工具抓取附着有效",
+        "切割线与安全包络由上层提供"
+      ],
+      "postconditions": [
+        "切割线分离度达标且工具附着保持"
+      ],
+      "invariants": [
+        "步骤图必须无环且每个step只引用本目录中的原子技能",
+        "组合执行器不得绕过原子技能的输入校验、终止条件和验证器",
+        "失败时保留已完成步骤及证据，默认停止而不自动无限重试"
+      ],
+      "termination": {
+        "success": "切割、撤离和材料状态验证均成功",
+        "timeout_s": 80,
+        "cancelable": true,
+        "on_cancel": "取消当前原子步骤并进入安全保持"
+      },
+      "success_criteria": {
+        "predicate": "切割、撤离和材料状态验证均成功",
+        "all_required_steps_verified": true
+      },
+      "failure_modes": [
+        "任一required步骤失败",
+        "组合超时",
+        "步骤输出无法绑定到后继输入"
+      ],
+      "failure_codes": [
+        "STEP_FAILED",
+        "BINDING_ERROR",
+        "COMPOSITE_TIMEOUT",
+        "CANCELLED"
+      ],
+      "resources": {
+        "policy": "union_of_active_steps",
+        "parallel_execution": false
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "dual_arm",
+        "mobile_manipulator"
+      ],
+      "evolution_policy": {
+        "mode": "disabled_for_composite",
+        "reason": "只能在原子执行器候选版本上离线演化；组合模板变更必须走独立版本评审"
+      },
+      "tags": [
+        "non_countable",
+        "composite",
+        "static_dag"
+      ],
+      "metadata": {
+        "countable": false,
+        "planner_free_template": true,
+        "step_count": 5,
+        "default_binding_paths": [
+          "estimate_target.rgbd_ref",
+          "move_start.max_linear_speed_mps",
+          "move_start.max_angular_speed_rps",
+          "move_start.position_tolerance_m",
+          "move_start.orientation_tolerance_rad",
+          "cut.frame_id",
+          "cut.force_limit_n",
+          "retreat.direction",
+          "retreat.distance_m",
+          "retreat.speed_mps",
+          "retreat.position_tolerance_m",
+          "verify_material.observation_ref"
+        ]
+      }
+    },
+    {
+      "id": "X10",
+      "name": "scoop_and_transfer",
+      "name_zh": "舀取并转移",
+      "version": "1.0.0",
+      "kind": "composite",
+      "category": "composite_workflow",
+      "subcategory": "tool_use",
+      "description": "用已持舀取工具从源容器取一次介质并定量转移到目标容器。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "tool_attachment_id": {
+            "type": "string",
+            "description": "tool_attachment_id"
+          },
+          "tool_id": {
+            "type": "string",
+            "description": "tool_id"
+          },
+          "source_container_id": {
+            "type": "string",
+            "description": "source_container_id"
+          },
+          "target_container_id": {
+            "type": "string",
+            "description": "target_container_id"
+          },
+          "entry_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "entry_pose"
+          },
+          "transfer_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "transfer_pose"
+          },
+          "scoop_vector": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "scoop_vector"
+          },
+          "target_amount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "target_amount"
+          },
+          "amount_unit": {
+            "type": "string",
+            "description": "amount_unit"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          }
+        },
+        "required": [
+          "tool_attachment_id",
+          "tool_id",
+          "source_container_id",
+          "target_container_id",
+          "entry_pose",
+          "transfer_pose",
+          "scoop_vector",
+          "target_amount",
+          "amount_unit",
+          "frame_id"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "transferred_amount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "transferred_amount"
+          },
+          "spill_amount": {
+            "type": "number",
+            "minimum": 0,
+            "description": "spill_amount"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "transferred_amount",
+          "spill_amount",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "steps": [
+        {
+          "step_id": "estimate_source",
+          "skill_id": "P03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [],
+          "bindings": {
+            "object_id": "$.inputs.source_container_id",
+            "target_frame": "$.inputs.frame_id",
+            "rgbd_ref": "$.defaults.P03.rgbd_ref"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "核对源容器"
+        },
+        {
+          "step_id": "move_entry",
+          "skill_id": "M04",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "estimate_source"
+          ],
+          "bindings": {
+            "target_pose": "$.inputs.entry_pose",
+            "frame_id": "$.inputs.frame_id",
+            "max_linear_speed_mps": "$.defaults.M04.max_linear_speed_mps",
+            "max_angular_speed_rps": "$.defaults.M04.max_angular_speed_rps",
+            "position_tolerance_m": "$.defaults.M04.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.M04.orientation_tolerance_rad"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "移动到舀取入口"
+        },
+        {
+          "step_id": "scoop",
+          "skill_id": "T02",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "move_entry"
+          ],
+          "bindings": {
+            "tool_attachment_id": "$.inputs.tool_attachment_id",
+            "tool_id": "$.inputs.tool_id",
+            "source_container_id": "$.inputs.source_container_id",
+            "entry_pose": "$.inputs.entry_pose",
+            "scoop_vector": "$.inputs.scoop_vector",
+            "target_amount": "$.inputs.target_amount",
+            "amount_unit": "$.inputs.amount_unit",
+            "stroke_length_m": "$.defaults.T02.stroke_length_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "单次舀取"
+        },
+        {
+          "step_id": "lift_tool",
+          "skill_id": "I06",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "scoop"
+          ],
+          "bindings": {
+            "attachment_id": "$.inputs.tool_attachment_id",
+            "object_id": "$.inputs.tool_id",
+            "height_m": "$.defaults.I06.height_m",
+            "speed_mps": "$.defaults.I06.speed_mps",
+            "height_tolerance_m": "$.defaults.I06.height_tolerance_m",
+            "force_limit_n": "$.defaults.I06.force_limit_n"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "抬升工具"
+        },
+        {
+          "step_id": "align_transfer",
+          "skill_id": "I09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "lift_tool"
+          ],
+          "bindings": {
+            "attachment_id": "$.inputs.tool_attachment_id",
+            "object_id": "$.inputs.tool_id",
+            "target_object_pose": "$.inputs.transfer_pose",
+            "frame_id": "$.inputs.frame_id",
+            "position_tolerance_m": "$.defaults.I09.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.I09.orientation_tolerance_rad",
+            "max_speed_mps": "$.defaults.I09.max_speed_mps"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "移动到转移位姿"
+        },
+        {
+          "step_id": "empty_tool",
+          "skill_id": "T03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "align_transfer"
+          ],
+          "bindings": {
+            "container_attachment_id": "$.inputs.tool_attachment_id",
+            "source_container_id": "$.inputs.tool_id",
+            "target_container_id": "$.inputs.target_container_id",
+            "target_amount": "$.steps.scoop.outputs.loaded_amount",
+            "amount_unit": "$.inputs.amount_unit",
+            "max_tilt_rad": "$.defaults.T03.max_tilt_rad",
+            "flow_timeout_s": "$.defaults.T03.flow_timeout_s"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "把工具承载介质倒入目标容器"
+        },
+        {
+          "step_id": "verify_target",
+          "skill_id": "P09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "empty_tool"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.target_container_id",
+            "state_keys": [
+              "fill_amount",
+              "spill"
+            ],
+            "observation_ref": "$.defaults.P09.observation_ref"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "验证目标介质量"
+        }
+      ],
+      "requires_capabilities": [
+        "pose_estimator",
+        "arm_cartesian_control",
+        "attachment_estimator",
+        "media_state_observer",
+        "object_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "舀取工具附着有效",
+        "入口和转移位姿由上层提供"
+      ],
+      "postconditions": [
+        "介质已转移到目标容器且溢洒在上限内"
+      ],
+      "invariants": [
+        "步骤图必须无环且每个step只引用本目录中的原子技能",
+        "组合执行器不得绕过原子技能的输入校验、终止条件和验证器",
+        "失败时保留已完成步骤及证据，默认停止而不自动无限重试"
+      ],
+      "termination": {
+        "success": "舀取量与转移量一致且溢洒达标",
+        "timeout_s": 110,
+        "cancelable": true,
+        "on_cancel": "取消当前原子步骤并进入安全保持"
+      },
+      "success_criteria": {
+        "predicate": "舀取量与转移量一致且溢洒达标",
+        "all_required_steps_verified": true
+      },
+      "failure_modes": [
+        "任一required步骤失败",
+        "组合超时",
+        "步骤输出无法绑定到后继输入"
+      ],
+      "failure_codes": [
+        "STEP_FAILED",
+        "BINDING_ERROR",
+        "COMPOSITE_TIMEOUT",
+        "CANCELLED"
+      ],
+      "resources": {
+        "policy": "union_of_active_steps",
+        "parallel_execution": false
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "dual_arm",
+        "mobile_manipulator"
+      ],
+      "evolution_policy": {
+        "mode": "disabled_for_composite",
+        "reason": "只能在原子执行器候选版本上离线演化；组合模板变更必须走独立版本评审"
+      },
+      "tags": [
+        "non_countable",
+        "composite",
+        "static_dag"
+      ],
+      "metadata": {
+        "countable": false,
+        "planner_free_template": true,
+        "step_count": 7,
+        "default_binding_paths": [
+          "estimate_source.rgbd_ref",
+          "move_entry.max_linear_speed_mps",
+          "move_entry.max_angular_speed_rps",
+          "move_entry.position_tolerance_m",
+          "move_entry.orientation_tolerance_rad",
+          "scoop.stroke_length_m",
+          "lift_tool.height_m",
+          "lift_tool.speed_mps",
+          "lift_tool.height_tolerance_m",
+          "lift_tool.force_limit_n",
+          "align_transfer.position_tolerance_m",
+          "align_transfer.orientation_tolerance_rad",
+          "align_transfer.max_speed_mps",
+          "empty_tool.max_tilt_rad",
+          "empty_tool.flow_timeout_s",
+          "verify_target.observation_ref"
+        ]
+      }
+    },
+    {
+      "id": "X11",
+      "name": "wipe_surface_region",
+      "name_zh": "持工具擦拭区域",
+      "version": "1.0.0",
+      "kind": "composite",
+      "category": "composite_workflow",
+      "subcategory": "tool_use",
+      "description": "把已持擦拭工具移动到表面并执行一次外部给定轨迹。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "tool_attachment_id": {
+            "type": "string",
+            "description": "tool_attachment_id"
+          },
+          "tool_id": {
+            "type": "string",
+            "description": "tool_id"
+          },
+          "surface_id": {
+            "type": "string",
+            "description": "surface_id"
+          },
+          "start_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "start_pose"
+          },
+          "path": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 7,
+              "maxItems": 7
+            },
+            "minItems": 1,
+            "description": "path"
+          },
+          "normal_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "normal_force_n"
+          },
+          "speed_mps": {
+            "type": "number",
+            "minimum": 0,
+            "description": "speed_mps"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          }
+        },
+        "required": [
+          "tool_attachment_id",
+          "tool_id",
+          "surface_id",
+          "start_pose",
+          "path",
+          "normal_force_n",
+          "speed_mps",
+          "frame_id"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "cleanliness_delta": {
+            "type": "number",
+            "description": "cleanliness_delta"
+          },
+          "path_completion": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "path_completion"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "cleanliness_delta",
+          "path_completion",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "steps": [
+        {
+          "step_id": "estimate_surface",
+          "skill_id": "P03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [],
+          "bindings": {
+            "object_id": "$.inputs.surface_id",
+            "target_frame": "$.inputs.frame_id",
+            "rgbd_ref": "$.defaults.P03.rgbd_ref"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "核对表面位姿"
+        },
+        {
+          "step_id": "move_start",
+          "skill_id": "M04",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "estimate_surface"
+          ],
+          "bindings": {
+            "target_pose": "$.inputs.start_pose",
+            "frame_id": "$.inputs.frame_id",
+            "max_linear_speed_mps": "$.defaults.M04.max_linear_speed_mps",
+            "max_angular_speed_rps": "$.defaults.M04.max_angular_speed_rps",
+            "position_tolerance_m": "$.defaults.M04.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.M04.orientation_tolerance_rad"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "移动到擦拭起点"
+        },
+        {
+          "step_id": "detect_contact",
+          "skill_id": "P11",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "move_start"
+          ],
+          "bindings": {
+            "force_threshold_n": "$.inputs.normal_force_n",
+            "sensor_stream_ref": "$.defaults.P11.sensor_stream_ref",
+            "window_ms": "$.defaults.P11.window_ms"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "确认工具接触"
+        },
+        {
+          "step_id": "wipe",
+          "skill_id": "T04",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "detect_contact"
+          ],
+          "bindings": {
+            "tool_attachment_id": "$.inputs.tool_attachment_id",
+            "tool_id": "$.inputs.tool_id",
+            "surface_id": "$.inputs.surface_id",
+            "path_xy": "$.inputs.path",
+            "normal_force_n": "$.inputs.normal_force_n",
+            "speed_mps": "$.inputs.speed_mps",
+            "surface_frame": "$.defaults.T04.surface_frame"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "执行擦拭轨迹"
+        },
+        {
+          "step_id": "retreat",
+          "skill_id": "M07",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "wipe"
+          ],
+          "bindings": {
+            "frame_id": "$.inputs.frame_id",
+            "direction": "$.defaults.M07.direction",
+            "distance_m": "$.defaults.M07.distance_m",
+            "speed_mps": "$.defaults.M07.speed_mps",
+            "position_tolerance_m": "$.defaults.M07.position_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "工具撤离"
+        },
+        {
+          "step_id": "verify_surface",
+          "skill_id": "P09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "retreat"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.surface_id",
+            "state_keys": [
+              "cleanliness",
+              "damage"
+            ],
+            "observation_ref": "$.defaults.P09.observation_ref"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "验证表面状态"
+        }
+      ],
+      "requires_capabilities": [
+        "pose_estimator",
+        "arm_cartesian_force_control",
+        "attachment_estimator",
+        "force_torque_sensor",
+        "surface_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "擦拭工具附着有效",
+        "路径位于已建模表面"
+      ],
+      "postconditions": [
+        "路径完成且表面清洁度提高并无超限损伤"
+      ],
+      "invariants": [
+        "步骤图必须无环且每个step只引用本目录中的原子技能",
+        "组合执行器不得绕过原子技能的输入校验、终止条件和验证器",
+        "失败时保留已完成步骤及证据，默认停止而不自动无限重试"
+      ],
+      "termination": {
+        "success": "轨迹完成、清洁增量达标且损伤不回退",
+        "timeout_s": 100,
+        "cancelable": true,
+        "on_cancel": "取消当前原子步骤并进入安全保持"
+      },
+      "success_criteria": {
+        "predicate": "轨迹完成、清洁增量达标且损伤不回退",
+        "all_required_steps_verified": true
+      },
+      "failure_modes": [
+        "任一required步骤失败",
+        "组合超时",
+        "步骤输出无法绑定到后继输入"
+      ],
+      "failure_codes": [
+        "STEP_FAILED",
+        "BINDING_ERROR",
+        "COMPOSITE_TIMEOUT",
+        "CANCELLED"
+      ],
+      "resources": {
+        "policy": "union_of_active_steps",
+        "parallel_execution": false
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "single_arm_dexterous_hand",
+        "dual_arm",
+        "mobile_manipulator"
+      ],
+      "evolution_policy": {
+        "mode": "disabled_for_composite",
+        "reason": "只能在原子执行器候选版本上离线演化；组合模板变更必须走独立版本评审"
+      },
+      "tags": [
+        "non_countable",
+        "composite",
+        "static_dag"
+      ],
+      "metadata": {
+        "countable": false,
+        "planner_free_template": true,
+        "step_count": 6,
+        "default_binding_paths": [
+          "estimate_surface.rgbd_ref",
+          "move_start.max_linear_speed_mps",
+          "move_start.max_angular_speed_rps",
+          "move_start.position_tolerance_m",
+          "move_start.orientation_tolerance_rad",
+          "detect_contact.sensor_stream_ref",
+          "detect_contact.window_ms",
+          "wipe.surface_frame",
+          "retreat.direction",
+          "retreat.distance_m",
+          "retreat.speed_mps",
+          "retreat.position_tolerance_m",
+          "verify_surface.observation_ref"
+        ]
+      }
+    },
+    {
+      "id": "X12",
+      "name": "close_fitted_lid",
+      "name_zh": "嵌合盖抓取压合",
+      "version": "1.0.0",
+      "kind": "composite",
+      "category": "composite_workflow",
+      "subcategory": "container",
+      "description": "抓取已定位盖体，将其对准容器并压合到位。",
+      "inputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "rgbd_ref": {
+            "type": "string",
+            "minLength": 1,
+            "description": "rgbd_ref"
+          },
+          "lid_id": {
+            "type": "string",
+            "description": "lid_id"
+          },
+          "container_id": {
+            "type": "string",
+            "description": "container_id"
+          },
+          "pregrasp_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "pregrasp_pose"
+          },
+          "target_lid_pose": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 7,
+            "maxItems": 7,
+            "description": "target_lid_pose"
+          },
+          "closure_id": {
+            "type": "string",
+            "description": "closure_id"
+          },
+          "engagement_axis": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3,
+            "description": "engagement_axis"
+          },
+          "grasp_force_n": {
+            "type": "number",
+            "minimum": 0,
+            "description": "grasp_force_n"
+          },
+          "release_width_m": {
+            "type": "number",
+            "minimum": 0,
+            "description": "release_width_m"
+          },
+          "frame_id": {
+            "type": "string",
+            "description": "frame_id"
+          }
+        },
+        "required": [
+          "rgbd_ref",
+          "lid_id",
+          "container_id",
+          "pregrasp_pose",
+          "target_lid_pose",
+          "closure_id",
+          "engagement_axis",
+          "grasp_force_n",
+          "release_width_m",
+          "frame_id"
+        ]
+      },
+      "outputs": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "achieved": {
+            "type": "boolean",
+            "description": "achieved"
+          },
+          "closure_state": {
+            "type": "string",
+            "description": "closure_state"
+          },
+          "released": {
+            "type": "boolean",
+            "description": "released"
+          },
+          "duration_s": {
+            "type": "number",
+            "minimum": 0,
+            "description": "duration_s"
+          }
+        },
+        "required": [
+          "achieved",
+          "closure_state",
+          "released",
+          "duration_s"
+        ]
+      },
+      "dependencies": [],
+      "steps": [
+        {
+          "step_id": "estimate_lid",
+          "skill_id": "P03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [],
+          "bindings": {
+            "rgbd_ref": "$.inputs.rgbd_ref",
+            "object_id": "$.inputs.lid_id",
+            "target_frame": "$.inputs.frame_id"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "估计盖体位姿"
+        },
+        {
+          "step_id": "move_pregrasp",
+          "skill_id": "M04",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "estimate_lid"
+          ],
+          "bindings": {
+            "target_pose": "$.inputs.pregrasp_pose",
+            "frame_id": "$.inputs.frame_id",
+            "max_linear_speed_mps": "$.defaults.M04.max_linear_speed_mps",
+            "max_angular_speed_rps": "$.defaults.M04.max_angular_speed_rps",
+            "position_tolerance_m": "$.defaults.M04.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.M04.orientation_tolerance_rad"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "移动到预抓取位姿"
+        },
+        {
+          "step_id": "grasp_lid",
+          "skill_id": "G03",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "move_pregrasp"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.lid_id",
+            "target_force_n": "$.inputs.grasp_force_n",
+            "force_tolerance_n": "$.defaults.G03.force_tolerance_n",
+            "max_width_travel_m": "$.defaults.G03.max_width_travel_m",
+            "speed_mps": "$.defaults.G03.speed_mps"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "抓取盖体"
+        },
+        {
+          "step_id": "align_lid",
+          "skill_id": "I09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "grasp_lid"
+          ],
+          "bindings": {
+            "attachment_id": "$.steps.grasp_lid.outputs.attachment_id",
+            "object_id": "$.inputs.lid_id",
+            "target_object_pose": "$.inputs.target_lid_pose",
+            "frame_id": "$.inputs.frame_id",
+            "position_tolerance_m": "$.defaults.I09.position_tolerance_m",
+            "orientation_tolerance_rad": "$.defaults.I09.orientation_tolerance_rad",
+            "max_speed_mps": "$.defaults.I09.max_speed_mps"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "对准容器"
+        },
+        {
+          "step_id": "engage",
+          "skill_id": "A10",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "align_lid"
+          ],
+          "bindings": {
+            "attachment_id": "$.steps.grasp_lid.outputs.attachment_id",
+            "object_id": "$.inputs.lid_id",
+            "closure_id": "$.inputs.closure_id",
+            "engagement_axis": "$.inputs.engagement_axis",
+            "max_travel_m": "$.defaults.A10.max_travel_m",
+            "force_limit_n": "$.defaults.A10.force_limit_n"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "压合嵌合连接"
+        },
+        {
+          "step_id": "release",
+          "skill_id": "G01",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "engage"
+          ],
+          "bindings": {
+            "width_m": "$.inputs.release_width_m",
+            "speed_mps": "$.defaults.G01.speed_mps",
+            "width_tolerance_m": "$.defaults.G01.width_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "释放盖体"
+        },
+        {
+          "step_id": "retreat",
+          "skill_id": "M07",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "release"
+          ],
+          "bindings": {
+            "frame_id": "$.inputs.frame_id",
+            "direction": "$.defaults.M07.direction",
+            "distance_m": "$.defaults.M07.distance_m",
+            "speed_mps": "$.defaults.M07.speed_mps",
+            "position_tolerance_m": "$.defaults.M07.position_tolerance_m"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "末端撤离"
+        },
+        {
+          "step_id": "verify_closure",
+          "skill_id": "P09",
+          "version_constraint": "^1.0.0",
+          "depends_on": [
+            "retreat"
+          ],
+          "bindings": {
+            "object_id": "$.inputs.container_id",
+            "state_keys": [
+              "closure_state",
+              "sealed"
+            ],
+            "observation_ref": "$.defaults.P09.observation_ref"
+          },
+          "on_failure": "stop",
+          "required": true,
+          "description": "验证闭合状态"
+        }
+      ],
+      "requires_capabilities": [
+        "rgbd_camera",
+        "pose_estimator",
+        "arm_cartesian_force_control",
+        "parallel_gripper_force_control",
+        "attachment_estimator",
+        "closure_state_observer"
+      ],
+      "status": "specified",
+      "preconditions": [
+        "盖体与容器关系已知",
+        "目标盖体位姿由上层提供"
+      ],
+      "postconditions": [
+        "嵌合连接为engaged且夹爪已经释放并撤离"
+      ],
+      "invariants": [
+        "步骤图必须无环且每个step只引用本目录中的原子技能",
+        "组合执行器不得绕过原子技能的输入校验、终止条件和验证器",
+        "失败时保留已完成步骤及证据，默认停止而不自动无限重试"
+      ],
+      "termination": {
+        "success": "闭合状态验证为engaged且全部动作步骤成功",
+        "timeout_s": 100,
+        "cancelable": true,
+        "on_cancel": "取消当前原子步骤并进入安全保持"
+      },
+      "success_criteria": {
+        "predicate": "闭合状态验证为engaged且全部动作步骤成功",
+        "all_required_steps_verified": true
+      },
+      "failure_modes": [
+        "任一required步骤失败",
+        "组合超时",
+        "步骤输出无法绑定到后继输入"
+      ],
+      "failure_codes": [
+        "STEP_FAILED",
+        "BINDING_ERROR",
+        "COMPOSITE_TIMEOUT",
+        "CANCELLED"
+      ],
+      "resources": {
+        "policy": "union_of_active_steps",
+        "parallel_execution": false
+      },
+      "supported_embodiments": [
+        "single_arm_parallel_gripper",
+        "dual_arm",
+        "mobile_manipulator"
+      ],
+      "evolution_policy": {
+        "mode": "disabled_for_composite",
+        "reason": "只能在原子执行器候选版本上离线演化；组合模板变更必须走独立版本评审"
+      },
+      "tags": [
+        "non_countable",
+        "composite",
+        "static_dag"
+      ],
+      "metadata": {
+        "countable": false,
+        "planner_free_template": true,
+        "step_count": 8,
+        "default_binding_paths": [
+          "move_pregrasp.max_linear_speed_mps",
+          "move_pregrasp.max_angular_speed_rps",
+          "move_pregrasp.position_tolerance_m",
+          "move_pregrasp.orientation_tolerance_rad",
+          "grasp_lid.force_tolerance_n",
+          "grasp_lid.max_width_travel_m",
+          "grasp_lid.speed_mps",
+          "align_lid.position_tolerance_m",
+          "align_lid.orientation_tolerance_rad",
+          "align_lid.max_speed_mps",
+          "engage.max_travel_m",
+          "engage.force_limit_n",
+          "release.speed_mps",
+          "release.width_tolerance_m",
+          "retreat.direction",
+          "retreat.distance_m",
+          "retreat.speed_mps",
+          "retreat.position_tolerance_m",
+          "verify_closure.observation_ref"
+        ]
+      }
+    }
+  ]
+}

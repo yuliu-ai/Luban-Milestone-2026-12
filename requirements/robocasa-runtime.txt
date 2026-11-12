@@ -1,0 +1,21 @@
+# Inference-only RoboCasa365 runtime, tested with Python 3.11.
+# RoboCasa source is loaded via LUBAN_ROBOCASA_ROOT; assets are separate.
+# Training/data-pipeline dependencies (lerobot, tianshou, Torch) are not required
+# by the tested simulator path. Policy inference runs in its own environment.
+numpy==2.2.5
+numba==0.61.2
+scipy==1.15.3
+mujoco==3.3.1
+gymnasium==0.29.1
+pygame==2.6.1
+Pillow==12.3.0
+opencv-python==5.0.0.93
+PyYAML==6.0.3
+pynput==1.8.2
+tqdm==4.70.1
+termcolor==3.3.0
+imageio==2.38.0
+h5py==3.16.0
+lxml==6.1.3
+hidapi==0.15.0
+robosuite @ https://github.com/ARISE-Initiative/robosuite/archive/5ce6643f3092639d08f7b0f90ed1c6a84f50552c.tar.gz

@@ -1,0 +1,145 @@
+{
+  "invocation_id": "3a29e381-a2cc-4bfd-892e-898dd9f46a37",
+  "skill_ref": "M01@2.2.0",
+  "status": "failed",
+  "success": false,
+  "started_at": "2026-09-13T07:34:18.134Z",
+  "finished_at": "2026-09-13T07:34:18.135Z",
+  "duration_s": 0.0018934458494186401,
+  "outputs": {},
+  "observation": {
+    "environment_executed": false,
+    "outputs": {},
+    "post_state": {},
+    "signals": {
+      "frame_id": "world"
+    },
+    "trace": [],
+    "error_code": "FRAME_UNRESOLVED",
+    "error_message": "target frame 'world' 不可解析：本后端只提供 'robot0_base' 坐标系",
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "not_run",
+    "reason": "target frame 'world' 不可解析：本后端只提供 'robot0_base' 坐标系",
+    "verifier_key": "none",
+    "independent": false,
+    "criteria": {},
+    "metrics": {}
+  },
+  "events": [
+    {
+      "event_id": "b28e6265-5267-4e34-beb9-b7e9b0a36157",
+      "invocation_id": "3a29e381-a2cc-4bfd-892e-898dd9f46a37",
+      "occurred_at": "2026-09-13T07:34:18.134Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "M01",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "373d6116-e527-4778-bfdf-cd44961a96cb",
+      "invocation_id": "3a29e381-a2cc-4bfd-892e-898dd9f46a37",
+      "occurred_at": "2026-09-13T07:34:18.134Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "M01@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "3f211919-78ef-4ce8-a55f-87fe95a8c956",
+      "invocation_id": "3a29e381-a2cc-4bfd-892e-898dd9f46a37",
+      "occurred_at": "2026-09-13T07:34:18.134Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "M01@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "228ec98b-38bb-4557-896e-733961a75783",
+      "invocation_id": "3a29e381-a2cc-4bfd-892e-898dd9f46a37",
+      "occurred_at": "2026-09-13T07:34:18.134Z",
+      "event_type": "preflight_started",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "b141edb9-8d98-455e-aa65-cd8e62727bce",
+      "invocation_id": "3a29e381-a2cc-4bfd-892e-898dd9f46a37",
+      "occurred_at": "2026-09-13T07:34:18.134Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "eb36f80e-f8c0-4be0-9e47-4a77e4ee9220",
+      "invocation_id": "3a29e381-a2cc-4bfd-892e-898dd9f46a37",
+      "occurred_at": "2026-09-13T07:34:18.135Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "b366716b-a7ce-40c9-aaef-af301a4eb716",
+      "invocation_id": "3a29e381-a2cc-4bfd-892e-898dd9f46a37",
+      "occurred_at": "2026-09-13T07:34:18.135Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "backend_key": "move_ee_linear"
+      }
+    },
+    {
+      "event_id": "d0349e6b-1a20-4897-b225-ad3e25d9573d",
+      "invocation_id": "3a29e381-a2cc-4bfd-892e-898dd9f46a37",
+      "occurred_at": "2026-09-13T07:34:18.135Z",
+      "event_type": "command_prepared",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "backend_key": "move_ee_linear",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "24af81bc-876b-4630-8d64-39721384ad4a",
+      "invocation_id": "3a29e381-a2cc-4bfd-892e-898dd9f46a37",
+      "occurred_at": "2026-09-13T07:34:18.135Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "environment_key": "robocasa_ee_motion"
+      }
+    },
+    {
+      "event_id": "c4fab45c-4ddb-4f0c-bab2-bc2285f29c7c",
+      "invocation_id": "3a29e381-a2cc-4bfd-892e-898dd9f46a37",
+      "occurred_at": "2026-09-13T07:34:18.135Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "environment_key": "robocasa_ee_motion",
+        "environment_executed": false
+      }
+    },
+    {
+      "event_id": "cd431569-d228-4307-9c25-059dae778eaf",
+      "invocation_id": "3a29e381-a2cc-4bfd-892e-898dd9f46a37",
+      "occurred_at": "2026-09-13T07:34:18.135Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "status": "failed",
+        "error_code": "FRAME_UNRESOLVED"
+      }
+    }
+  ],
+  "error_code": "FRAME_UNRESOLVED",
+  "error_message": "target frame 'world' 不可解析：本后端只提供 'robot0_base' 坐标系"
+}

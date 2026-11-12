@@ -1,0 +1,82 @@
+{
+  "started_at_s": 1789286695.8275192,
+  "frame": "<HISTORICAL_PROJECT_ROOT>/runs/p12_probe/input_frame_agentview_left.png",
+  "bbox": [
+    69.0,
+    119.0,
+    166.0,
+    212.0
+  ],
+  "observation_ref": "<HISTORICAL_PROJECT_ROOT>/runs/p09_probe/crop_cutting_board.png",
+  "camera_slot": "video.robot0_eye_in_hand",
+  "provider": "molmo2",
+  "model": "molmo2-4b (bfloat16)",
+  "gpu": "NVIDIA GeForce RTX 4090, 10615 MiB, 24564 MiB",
+  "client_requests": 2,
+  "client_failures": 0,
+  "runs": {
+    "answerable": {
+      "status": "unverified",
+      "verification_verdict": "passed",
+      "verification_reason": "每个请求状态有值或显式unknown且置信度合法",
+      "state_keys": [
+        "open_state"
+      ],
+      "allowed_values": {
+        "open_state": [
+          "open",
+          "closed"
+        ]
+      },
+      "states": {
+        "open_state": "open"
+      },
+      "confidence_by_state": {
+        "open_state": 1.0
+      },
+      "raw_answers": {
+        "open_state": "open"
+      },
+      "unknown_keys": [],
+      "confidence_source": "candidate_set_match",
+      "latency_ms": 1766.5770798921585,
+      "elapsed_s": 1.7731593549251556
+    },
+    "hard": {
+      "status": "unverified",
+      "verification_verdict": "passed",
+      "verification_reason": "每个请求状态有值或显式unknown且置信度合法",
+      "state_keys": [
+        "temperature_state",
+        "lid_state"
+      ],
+      "allowed_values": {
+        "temperature_state": [
+          "hot",
+          "cold"
+        ]
+      },
+      "states": {
+        "temperature_state": "cold",
+        "lid_state": "open"
+      },
+      "confidence_by_state": {
+        "temperature_state": 1.0,
+        "lid_state": 0.0
+      },
+      "raw_answers": {
+        "temperature_state": "cold",
+        "lid_state": "open"
+      },
+      "unknown_keys": [],
+      "confidence_source": "candidate_set_match",
+      "latency_ms": 1723.1329530477524,
+      "elapsed_s": 1.7299332171678543
+    }
+  },
+  "limitations": [
+    "感知协议 visual-perception-v1 的 frames 只接受三路相机名；P09 的裁剪观测借用 video.robot0_eye_in_hand 槽位承载（与 P06 相同的协议限制）。",
+    "confidence_by_state 是候选集匹配度（在集内 1.0 / 否则 0.0），不是校准概率；原始回答逐字保留在 signals.raw_answers。",
+    "VLM 对答不出的状态键也可能给出恰在候选集内的答案（与 P06 难题组相同的边界）。"
+  ]
+}

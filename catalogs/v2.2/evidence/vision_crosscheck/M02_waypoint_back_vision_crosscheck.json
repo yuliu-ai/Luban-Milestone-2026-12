@@ -1,0 +1,129 @@
+{
+  "skill": "M02",
+  "runtime_status": "unverified",
+  "runtime_verdict": "passed",
+  "runtime_outputs": {
+    "final_pose": [
+      0.2531134784221649,
+      -0.001863814308308065,
+      0.6098686456680298,
+      -0.9863381662489202,
+      -0.06186204948397511,
+      -0.15233782930655163,
+      0.010163385091963576
+    ],
+    "reached_waypoints": 1,
+    "duration_s": 1.0
+  },
+  "runtime_inputs": {
+    "waypoints": [
+      [
+        0.2474035918712616,
+        -0.004307162947952747,
+        0.6101325750350952,
+        -0.9865260372644646,
+        -0.06198785980674937,
+        -0.15106822017998883,
+        0.010113154181632757
+      ]
+    ],
+    "frame_id": "robot0_base",
+    "speed_mps": 0.1,
+    "waypoint_tolerance_m": 0.008,
+    "stop_at_each": true,
+    "verification_profile_ref": "profile://motion/waypoints-v1"
+  },
+  "world_ee_before": [
+    2.9939602979673863,
+    -0.5566515565301211,
+    1.308404454341458
+  ],
+  "world_ee_after": [
+    2.999943064887105,
+    -0.5747763980659387,
+    1.3098708382868502
+  ],
+  "sam3_before": {
+    "query": "white robot arm",
+    "entities": 13,
+    "attempts": [
+      {
+        "query": "white robot arm",
+        "entities": 13
+      }
+    ]
+  },
+  "sam3_after": {
+    "query": "white robot arm",
+    "entities": 16,
+    "attempts": [
+      {
+        "query": "white robot arm",
+        "entities": 16
+      }
+    ]
+  },
+  "fragment_before": {
+    "bbox_xyxy": [
+      157.064697265625,
+      67.46272277832031,
+      210.66268920898438,
+      105.71638488769531
+    ],
+    "area_px2": 2050.319473542273,
+    "centroid": [
+      183.8636932373047,
+      86.58955383300781
+    ],
+    "containing_fragment_count": 11,
+    "containing_fragment_areas_px2": [
+      2050.3,
+      2279.0,
+      2349.1,
+      2384.1,
+      3967.0,
+      4676.7,
+      5242.4,
+      15627.1,
+      15853.4,
+      21872.5,
+      22327.8
+    ]
+  },
+  "legs": [
+    {
+      "leg": 0,
+      "target_pixel_uv": [
+        174.03,
+        113.92
+      ],
+      "wrist_fragment": {
+        "bbox_xyxy": [
+          173.34413146972656,
+          49.334815979003906,
+          214.87452697753906,
+          106.4684066772461
+        ],
+        "area_px2": 2372.7806184794754,
+        "centroid": [
+          194.1093292236328,
+          77.901611328125
+        ],
+        "containing_fragment_count": 9,
+        "containing_fragment_areas_px2": [
+          2372.8,
+          2404.9,
+          2432.8,
+          2528.6,
+          4012.1,
+          5556.2,
+          16414.8,
+          21552.5,
+          21858.5
+        ]
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}

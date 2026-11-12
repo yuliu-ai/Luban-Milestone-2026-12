@@ -1,0 +1,487 @@
+{
+  "schema_version": "2.1.0",
+  "catalog_version": "2.1.0-draft.1",
+  "title": "V1.0.0 -> V2.1 迁移账本",
+  "sources": {
+    "v1": "../atomic_skills.json",
+    "v1_sha256": "3a3366996302ced77af0eda0e4f1419871a66ef4468af49db3646b8b7ae4851c",
+    "v2_1": "atomic_skills.json",
+    "v2_1_sha256": "49b744d2c173087c04f3cb72c8136f2ef1512142e664999a483c2e070be7dd49"
+  },
+  "counts": {
+    "old_total": 64,
+    "retained_core": 48,
+    "merged_alias": 6,
+    "optional_extension": 10,
+    "new_contract": 16,
+    "new_total": 64,
+    "check": "old_total - merged_alias - optional_extension + new_contract == new_total"
+  },
+  "interpretation": "merged_alias 的适配器尚未实现（adapter_status=not_implemented）；optional_extension 只是产品范围取舍，不等于否认其原子性或等价于其他技能。",
+  "mappings": [
+    {
+      "legacy_id": "P01",
+      "legacy_name": "detect_objects",
+      "disposition": "retained_core",
+      "target_id": "P01",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "P02",
+      "legacy_name": "segment_instances",
+      "disposition": "retained_core",
+      "target_id": "P02",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "P03",
+      "legacy_name": "estimate_object_pose",
+      "disposition": "retained_core",
+      "target_id": "P03",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "P04",
+      "legacy_name": "estimate_depth",
+      "disposition": "retained_core",
+      "target_id": "P04",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "P05",
+      "legacy_name": "track_object_finite",
+      "disposition": "retained_core",
+      "target_id": "P05",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "P06",
+      "legacy_name": "classify_object_attributes",
+      "disposition": "retained_core",
+      "target_id": "P06",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "P07",
+      "legacy_name": "estimate_affordances",
+      "disposition": "retained_core",
+      "target_id": "P07",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "P08",
+      "legacy_name": "estimate_articulation",
+      "disposition": "retained_core",
+      "target_id": "P08",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "P09",
+      "legacy_name": "estimate_object_state",
+      "disposition": "retained_core",
+      "target_id": "P09",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "P10",
+      "legacy_name": "read_force_torque",
+      "disposition": "retained_core",
+      "target_id": "P10",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "P11",
+      "legacy_name": "detect_contact",
+      "disposition": "retained_core",
+      "target_id": "P11",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "P12",
+      "legacy_name": "read_robot_state",
+      "disposition": "retained_core",
+      "target_id": "P12",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "M01",
+      "legacy_name": "move_ee_linear",
+      "disposition": "retained_core",
+      "target_id": "M01",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "M02",
+      "legacy_name": "move_ee_waypoints",
+      "disposition": "retained_core",
+      "target_id": "M02",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "M03",
+      "legacy_name": "rotate_ee_in_place",
+      "disposition": "retained_core",
+      "target_id": "M03",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "M04",
+      "legacy_name": "move_ee_pose",
+      "disposition": "retained_core",
+      "target_id": "M04",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "M05",
+      "legacy_name": "move_arm_joints",
+      "disposition": "retained_core",
+      "target_id": "M05",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "M06",
+      "legacy_name": "hold_ee_pose",
+      "disposition": "retained_core",
+      "target_id": "M06",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "M07",
+      "legacy_name": "retreat_ee_linear",
+      "disposition": "merged_alias",
+      "target_id": "M01",
+      "adapter_status": "not_implemented",
+      "note": "撤离的直线、方向和距离可在M01相对模式表示；保留路径偏差限制，不包含恢复规划。"
+    },
+    {
+      "legacy_id": "M08",
+      "legacy_name": "move_base_linear",
+      "disposition": "retained_core",
+      "target_id": "M08",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "M09",
+      "legacy_name": "rotate_base_in_place",
+      "disposition": "retained_core",
+      "target_id": "M09",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "M10",
+      "legacy_name": "stop_robot_motion",
+      "disposition": "retained_core",
+      "target_id": "M10",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "M11",
+      "legacy_name": "move_bimanual_poses",
+      "disposition": "retained_core",
+      "target_id": "M11",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "M12",
+      "legacy_name": "servo_ee_to_target_finite",
+      "disposition": "retained_core",
+      "target_id": "M12",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "G01",
+      "legacy_name": "open_parallel_gripper",
+      "disposition": "retained_core",
+      "target_id": "G01",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "G02",
+      "legacy_name": "close_parallel_gripper_width",
+      "disposition": "merged_alias",
+      "target_id": "G01",
+      "adapter_status": "not_implemented",
+      "note": "张开与闭合都是定宽目标转移，合并后统一保留力限；不与力控抓取合并。"
+    },
+    {
+      "legacy_id": "G03",
+      "legacy_name": "grasp_parallel_force",
+      "disposition": "retained_core",
+      "target_id": "G03",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "G04",
+      "legacy_name": "set_hand_joint_positions",
+      "disposition": "retained_core",
+      "target_id": "G04",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "G05",
+      "legacy_name": "close_pinch_grasp",
+      "disposition": "retained_core",
+      "target_id": "G05",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "G06",
+      "legacy_name": "close_power_grasp",
+      "disposition": "merged_alias",
+      "target_id": "G05",
+      "adapter_status": "not_implemented",
+      "note": "与G05共同管理一次手部附着建立；模式保留接触拓扑与不同闭合限制。"
+    },
+    {
+      "legacy_id": "G07",
+      "legacy_name": "enable_suction",
+      "disposition": "retained_core",
+      "target_id": "G07",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "G08",
+      "legacy_name": "disable_suction",
+      "disposition": "retained_core",
+      "target_id": "G08",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "G09",
+      "legacy_name": "regulate_grasp_force",
+      "disposition": "retained_core",
+      "target_id": "G09",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "G10",
+      "legacy_name": "hold_gripper_state",
+      "disposition": "retained_core",
+      "target_id": "G10",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "I01",
+      "legacy_name": "push_object_linear",
+      "disposition": "retained_core",
+      "target_id": "I01",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "I02",
+      "legacy_name": "pull_object_linear",
+      "disposition": "retained_core",
+      "target_id": "I02",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "I03",
+      "legacy_name": "slide_object_planar",
+      "disposition": "optional_extension",
+      "target_id": null,
+      "archive": "legacy_retired_definitions.json",
+      "note": "平面滑移有效但主目录已有直线推拉；它不一定与I01完全等价，保留独立扩展定义。"
+    },
+    {
+      "legacy_id": "I04",
+      "legacy_name": "rotate_object_planar",
+      "disposition": "retained_core",
+      "target_id": "I04",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "I05",
+      "legacy_name": "pivot_object_edge",
+      "disposition": "optional_extension",
+      "target_id": null,
+      "archive": "legacy_retired_definitions.json",
+      "note": "绕边翻起是独特接触操作，但本轮优先地空导航；原edge_points维数也需要专项复核。"
+    },
+    {
+      "legacy_id": "I06",
+      "legacy_name": "lift_held_object",
+      "disposition": "retained_core",
+      "target_id": "I06",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "I07",
+      "legacy_name": "lower_held_object",
+      "disposition": "merged_alias",
+      "target_id": "I06",
+      "adapter_status": "not_implemented",
+      "note": "升降合并为方向参数，下降接触终止分支明确保留；稳定落座I08独立。"
+    },
+    {
+      "legacy_id": "I08",
+      "legacy_name": "place_held_object",
+      "disposition": "retained_core",
+      "target_id": "I08",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "I09",
+      "legacy_name": "align_held_object",
+      "disposition": "retained_core",
+      "target_id": "I09",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "I10",
+      "legacy_name": "insert_held_object",
+      "disposition": "retained_core",
+      "target_id": "I10",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "I11",
+      "legacy_name": "extract_held_object",
+      "disposition": "retained_core",
+      "target_id": "I11",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "I12",
+      "legacy_name": "flip_held_object",
+      "disposition": "retained_core",
+      "target_id": "I12",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "A01",
+      "legacy_name": "translate_prismatic_joint",
+      "disposition": "retained_core",
+      "target_id": "A01",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "A02",
+      "legacy_name": "rotate_revolute_joint",
+      "disposition": "retained_core",
+      "target_id": "A02",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "A03",
+      "legacy_name": "turn_rotary_control",
+      "disposition": "retained_core",
+      "target_id": "A03",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "A04",
+      "legacy_name": "press_button",
+      "disposition": "retained_core",
+      "target_id": "A04",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "A05",
+      "legacy_name": "toggle_lever",
+      "disposition": "retained_core",
+      "target_id": "A05",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "A06",
+      "legacy_name": "slide_switch",
+      "disposition": "merged_alias",
+      "target_id": "A05",
+      "adapter_status": "not_implemented",
+      "note": "拨动和滑动统一离散挡位目标，机构类型、轨迹和速度单位保持分支。"
+    },
+    {
+      "legacy_id": "A07",
+      "legacy_name": "latch_release",
+      "disposition": "retained_core",
+      "target_id": "A07",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "A08",
+      "legacy_name": "latch_engage",
+      "disposition": "merged_alias",
+      "target_id": "A07",
+      "adapter_status": "not_implemented",
+      "note": "开闭卡扣统一目标状态，原有两种前置条件和有限行程约束仍保留。"
+    },
+    {
+      "legacy_id": "A09",
+      "legacy_name": "detach_fitted_lid",
+      "disposition": "optional_extension",
+      "target_id": null,
+      "archive": "legacy_retired_definitions.json",
+      "note": "嵌合盖分离属于专项连接操作，不能直接声称等价于I11拔出。"
+    },
+    {
+      "legacy_id": "A10",
+      "legacy_name": "engage_fitted_lid",
+      "disposition": "optional_extension",
+      "target_id": null,
+      "archive": "legacy_retired_definitions.json",
+      "note": "嵌合盖压合属于专项连接操作，不能直接声称等价于I10插入。"
+    },
+    {
+      "legacy_id": "T01",
+      "legacy_name": "cut_tool_stroke",
+      "disposition": "optional_extension",
+      "target_id": null,
+      "archive": "legacy_retired_definitions.json",
+      "note": "单次切割是有效专项工具技能，本轮从跨形态主目录移到工具扩展。"
+    },
+    {
+      "legacy_id": "T02",
+      "legacy_name": "scoop_tool_once",
+      "disposition": "optional_extension",
+      "target_id": null,
+      "archive": "legacy_retired_definitions.json",
+      "note": "舀取及承载量验证属于介质专项后端，原样保留为扩展。"
+    },
+    {
+      "legacy_id": "T03",
+      "legacy_name": "pour_dosed",
+      "disposition": "optional_extension",
+      "target_id": null,
+      "archive": "legacy_retired_definitions.json",
+      "note": "倾倒与执行器定量分配不是同一动作；倾倒原样保留为介质扩展，不以T08宣称等价替代。"
+    },
+    {
+      "legacy_id": "T04",
+      "legacy_name": "wipe_tool_stroke",
+      "disposition": "retained_core",
+      "target_id": "T04",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    },
+    {
+      "legacy_id": "T05",
+      "legacy_name": "tear_material_along_seam",
+      "disposition": "optional_extension",
+      "target_id": null,
+      "archive": "legacy_retired_definitions.json",
+      "note": "撕裂涉及可变形介质及双侧约束，保留专项扩展而非通用移动技能。"
+    },
+    {
+      "legacy_id": "T06",
+      "legacy_name": "stir_tool_finite",
+      "disposition": "optional_extension",
+      "target_id": null,
+      "archive": "legacy_retired_definitions.json",
+      "note": "有限搅拌及混合效果验证属于介质专项，保留扩展。"
+    },
+    {
+      "legacy_id": "T07",
+      "legacy_name": "scrape_tool_stroke",
+      "disposition": "optional_extension",
+      "target_id": null,
+      "archive": "legacy_retired_definitions.json",
+      "note": "刮取与擦拭有不同损伤/移除约束，不视为完全重复；保留工具扩展。"
+    },
+    {
+      "legacy_id": "T08",
+      "legacy_name": "dispense_dosed",
+      "disposition": "retained_core",
+      "target_id": "T08",
+      "note": "保留核心；契约已修订，改动要点见 metadata.revision_summary 与 CHANGELOG.md。"
+    }
+  ]
+}

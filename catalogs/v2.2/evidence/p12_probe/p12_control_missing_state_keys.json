@@ -1,0 +1,152 @@
+{
+  "invocation_id": "3a27a838-490f-490b-a7d5-6577088e2dcc",
+  "skill_ref": "P12@2.2.0",
+  "status": "failed",
+  "success": false,
+  "started_at": "2026-09-12T18:19:00.069Z",
+  "finished_at": "2026-09-12T18:19:00.072Z",
+  "duration_s": 0.002554144710302353,
+  "outputs": {},
+  "observation": {
+    "environment_executed": false,
+    "outputs": {},
+    "post_state": {},
+    "signals": {
+      "missing_state_keys": [
+        "state.gripper_qpos"
+      ],
+      "state_keys": [
+        "state.end_effector_position_relative",
+        "state.end_effector_rotation_relative",
+        "state.gripper_qpos"
+      ]
+    },
+    "trace": [],
+    "error_code": "SENSOR_STALE",
+    "error_message": "RoboCasa observation is missing state.gripper_qpos",
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "not_run",
+    "reason": "RoboCasa observation is missing state.gripper_qpos",
+    "verifier_key": "none",
+    "independent": false,
+    "criteria": {},
+    "metrics": {}
+  },
+  "events": [
+    {
+      "event_id": "f4f8ef69-0b8f-4ee6-9d94-64eca2607fd4",
+      "invocation_id": "3a27a838-490f-490b-a7d5-6577088e2dcc",
+      "occurred_at": "2026-09-12T18:19:00.069Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "P12",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "5f54dfdd-e9a0-4fbf-8b12-b38bc765c9b1",
+      "invocation_id": "3a27a838-490f-490b-a7d5-6577088e2dcc",
+      "occurred_at": "2026-09-12T18:19:00.069Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "P12@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "49bd0d6c-3a86-4553-a92b-748943420ba2",
+      "invocation_id": "3a27a838-490f-490b-a7d5-6577088e2dcc",
+      "occurred_at": "2026-09-12T18:19:00.069Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "P12@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "0255082f-b98e-4385-91c3-0ed3c51d3e55",
+      "invocation_id": "3a27a838-490f-490b-a7d5-6577088e2dcc",
+      "occurred_at": "2026-09-12T18:19:00.069Z",
+      "event_type": "preflight_started",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "584ff99a-26f5-4f69-a3a2-fc5803b221d7",
+      "invocation_id": "3a27a838-490f-490b-a7d5-6577088e2dcc",
+      "occurred_at": "2026-09-12T18:19:00.069Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "c41f71cd-f4c6-43e1-8683-a5471ff6c92c",
+      "invocation_id": "3a27a838-490f-490b-a7d5-6577088e2dcc",
+      "occurred_at": "2026-09-12T18:19:00.071Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "a43e6373-c4cb-4f6f-88e2-3c62ed71588b",
+      "invocation_id": "3a27a838-490f-490b-a7d5-6577088e2dcc",
+      "occurred_at": "2026-09-12T18:19:00.071Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "backend_key": "read_robot_state"
+      }
+    },
+    {
+      "event_id": "2784afc4-0b4a-4c5a-9305-dcfadf7c8afc",
+      "invocation_id": "3a27a838-490f-490b-a7d5-6577088e2dcc",
+      "occurred_at": "2026-09-12T18:19:00.071Z",
+      "event_type": "command_prepared",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "backend_key": "read_robot_state",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "c2f1f9f8-4951-4dd5-94f9-db0715994c6f",
+      "invocation_id": "3a27a838-490f-490b-a7d5-6577088e2dcc",
+      "occurred_at": "2026-09-12T18:19:00.071Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "environment_key": "robocasa_state"
+      }
+    },
+    {
+      "event_id": "6aaa9216-8f13-49e3-9543-9b2d1e2833bb",
+      "invocation_id": "3a27a838-490f-490b-a7d5-6577088e2dcc",
+      "occurred_at": "2026-09-12T18:19:00.071Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "environment_key": "robocasa_state",
+        "environment_executed": false
+      }
+    },
+    {
+      "event_id": "bada289b-77f4-4a92-b2c0-39626528b3fd",
+      "invocation_id": "3a27a838-490f-490b-a7d5-6577088e2dcc",
+      "occurred_at": "2026-09-12T18:19:00.072Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "status": "failed",
+        "error_code": "SENSOR_STALE"
+      }
+    }
+  ],
+  "error_code": "SENSOR_STALE",
+  "error_message": "RoboCasa observation is missing state.gripper_qpos"
+}

@@ -1,0 +1,119 @@
+{
+  "started_at_s": 1789237615.9457762,
+  "frame": "<HISTORICAL_PROJECT_ROOT>/runs/p12_probe/input_frame_agentview_left.png",
+  "bbox": [
+    69.0,
+    119.0,
+    166.0,
+    212.0
+  ],
+  "crop_ref": "<HISTORICAL_PROJECT_ROOT>/runs/p06_probe/crop_cutting_board.png",
+  "camera_slot": "video.robot0_eye_in_hand",
+  "provider": "molmo2",
+  "model": "molmo2-4b (bfloat16)",
+  "gpu": "NVIDIA GeForce RTX 4090, 10611 MiB, 24564 MiB",
+  "client_requests": 2,
+  "client_failures": 0,
+  "runs": {
+    "answerable": {
+      "status": "unverified",
+      "verification_verdict": "passed",
+      "verification_reason": "每个请求属性有合法值或显式unknown",
+      "attribute_keys": [
+        "color",
+        "cleanliness",
+        "material"
+      ],
+      "candidate_values": {
+        "color": [
+          "white",
+          "brown",
+          "green",
+          "black"
+        ],
+        "cleanliness": [
+          "dirty",
+          "clean"
+        ],
+        "material": [
+          "wood",
+          "plastic",
+          "metal"
+        ]
+      },
+      "attributes": {
+        "color": "brown",
+        "cleanliness": "clean",
+        "material": "wood"
+      },
+      "confidence_by_attribute": {
+        "color": 1.0,
+        "cleanliness": 1.0,
+        "material": 1.0
+      },
+      "raw_answers": {
+        "color": "brown",
+        "cleanliness": "clean",
+        "material": "wood"
+      },
+      "unknown_keys": [],
+      "answered_keys": [
+        "cleanliness",
+        "color",
+        "material"
+      ],
+      "confidence_source": "candidate_set_match",
+      "latency_ms": 4892.793491482735,
+      "elapsed_s": 4.8997951447963715
+    },
+    "hard": {
+      "status": "unverified",
+      "verification_verdict": "passed",
+      "verification_reason": "每个请求属性有合法值或显式unknown",
+      "attribute_keys": [
+        "temperature",
+        "weight",
+        "brand"
+      ],
+      "candidate_values": {
+        "temperature": [
+          "hot",
+          "cold"
+        ],
+        "weight": [
+          "light",
+          "heavy"
+        ]
+      },
+      "attributes": {
+        "temperature": "cold",
+        "weight": "light",
+        "brand": "unknown brand"
+      },
+      "confidence_by_attribute": {
+        "temperature": 1.0,
+        "weight": 1.0,
+        "brand": 0.0
+      },
+      "raw_answers": {
+        "temperature": "cold",
+        "weight": "light",
+        "brand": "unknown brand"
+      },
+      "unknown_keys": [],
+      "answered_keys": [
+        "brand",
+        "temperature",
+        "weight"
+      ],
+      "confidence_source": "candidate_set_match",
+      "latency_ms": 2822.84901663661,
+      "elapsed_s": 2.828837376087904
+    }
+  },
+  "limitations": [
+    "感知协议 visual-perception-v1 的 frames 只接受三路相机名；P06 的裁剪图借用 video.robot0_eye_in_hand 槽位承载。",
+    "confidence_by_attribute 是候选集匹配度（在集内 1.0 / 否则 0.0），不是校准概率；原始回答逐字保留在 signals.raw_answers。",
+    "无候选集的属性键保留 raw answer 且置信度恒为 0.0，不可当作可核验判断。"
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+  "skill_ref": "M01@2.2.0",
+  "status": "unverified",
+  "success": false,
+  "started_at": "2026-09-13T07:34:09.454Z",
+  "finished_at": "2026-09-13T07:34:10.454Z",
+  "duration_s": 1.000161089003086,
+  "outputs": {
+    "final_pose": [
+      0.2680453956127167,
+      -0.0018254840979352593,
+      0.5928975939750671,
+      -0.9877869192897986,
+      -0.031157300829225444,
+      -0.15010804397049393,
+      0.02781725759952634
+    ],
+    "position_error_m": 0.007620297586190321,
+    "path_length_m": 0.10000000000000005,
+    "duration_s": 1.0,
+    "actual_distance_m": 0.02408362130458046,
+    "max_lateral_error_m": 0.001144812602408458
+  },
+  "observation": {
+    "environment_executed": true,
+    "outputs": {
+      "final_pose": [
+        0.2680453956127167,
+        -0.0018254840979352593,
+        0.5928975939750671,
+        -0.9877869192897986,
+        -0.031157300829225444,
+        -0.15010804397049393,
+        0.02781725759952634
+      ],
+      "position_error_m": 0.007620297586190321,
+      "path_length_m": 0.10000000000000005,
+      "duration_s": 1.0,
+      "actual_distance_m": 0.02408362130458046,
+      "max_lateral_error_m": 0.001144812602408458
+    },
+    "post_state": {
+      "frame_id": "robot0_base",
+      "steps": 20
+    },
+    "signals": {
+      "done": true,
+      "environment_kind": "robocasa_ee_motion",
+      "frame_id": "robot0_base",
+      "start_pose": [
+        0.2450970560312271,
+        -0.00907805934548378,
+        0.5937890410423279,
+        -0.9883264598553522,
+        -0.029058127711252765,
+        -0.14686058014839823,
+        0.028256042932075117
+      ],
+      "target_position": [
+        0.27509705603122714,
+        0.0009219406545162203,
+        0.5937890410423279
+      ],
+      "target_orientation": null,
+      "orientation_mode": "hold",
+      "target_reached": true,
+      "steps": 20,
+      "step_budget": 400,
+      "step_budget_exhausted": false,
+      "measured_max_speed_mps": 0.10000000000000003,
+      "control_freq": 20.0
+    },
+    "trace": [
+      {
+        "stage": "robocasa_ee_linear",
+        "steps": 20
+      }
+    ],
+    "error_code": null,
+    "error_message": null,
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "passed",
+    "reason": "末端到达目标位置且横向误差与速度上限满足契约",
+    "verifier_key": "verify_ee_motion",
+    "independent": false,
+    "criteria": {
+      "evidence": {
+        "起始位姿": [
+          0.2450970560312271,
+          -0.00907805934548378,
+          0.5937890410423279,
+          -0.9883264598553522,
+          -0.029058127711252765,
+          -0.14686058014839823,
+          0.028256042932075117
+        ],
+        "目标位置": [
+          0.27509705603122714,
+          0.0009219406545162203,
+          0.5937890410423279
+        ],
+        "final_pose": [
+          0.2680453956127167,
+          -0.0018254840979352593,
+          0.5928975939750671,
+          -0.9877869192897986,
+          -0.031157300829225444,
+          -0.15010804397049393,
+          0.02781725759952634
+        ],
+        "位置误差": 0.007620297586190321,
+        "最大横向误差": 0.001144812602408458,
+        "路径长度": 0.10000000000000005,
+        "时长": 1.0
+      }
+    },
+    "metrics": {
+      "position_error_m": 0.007620297586190321,
+      "max_lateral_error_m": 0.001144812602408458,
+      "steps": 20.0
+    }
+  },
+  "events": [
+    {
+      "event_id": "daeca89e-d9a7-4be8-bc97-7347bee41add",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:09.454Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "M01",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "b6d257b5-1432-4618-8655-e554638d65ab",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:09.454Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "M01@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "c5d81586-9ba3-43a9-b2fb-db10a51112b6",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:09.454Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "M01@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "8dfcf8ff-9a5f-4d0c-bf52-fae3e82e0f61",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:09.454Z",
+      "event_type": "preflight_started",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "7c69685f-dd65-42cf-a60b-638003453186",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:09.454Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "a509761f-55d2-4e6a-8a8e-32891f884986",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:09.456Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "c37e4baa-80d5-446c-bc49-bd89fb26c8d9",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:09.456Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "backend_key": "move_ee_linear"
+      }
+    },
+    {
+      "event_id": "e36c22c2-49cf-40d8-9e3e-4f5f6b8f943d",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:09.456Z",
+      "event_type": "command_prepared",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "backend_key": "move_ee_linear",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "afc21859-4e7f-4962-88d9-1e114be01b11",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:09.456Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "environment_key": "robocasa_ee_motion"
+      }
+    },
+    {
+      "event_id": "73bc096c-7c65-41bd-8efe-5af5becc9624",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:10.453Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "environment_key": "robocasa_ee_motion",
+        "environment_executed": true
+      }
+    },
+    {
+      "event_id": "0fcb7163-bcb8-4247-b1b1-7b7f11006143",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:10.454Z",
+      "event_type": "outputs_validated",
+      "skill_ref": "M01@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "98afbea9-f3de-44de-b176-ff5a94eea2ea",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:10.454Z",
+      "event_type": "verification_started",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "verifier_key": "verify_move_ee_linear"
+      }
+    },
+    {
+      "event_id": "a1d88bb2-a03f-40f1-be1d-cc879acab78f",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:10.454Z",
+      "event_type": "verification_finished",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "verdict": "passed",
+        "verifier_key": "verify_ee_motion",
+        "independent": false
+      }
+    },
+    {
+      "event_id": "44c80063-627f-47ba-bd06-0f47deb5719b",
+      "invocation_id": "c1b85920-bbe4-4644-af6b-ffdd18642146",
+      "occurred_at": "2026-09-13T07:34:10.454Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "M01@2.2.0",
+      "data": {
+        "status": "unverified"
+      }
+    }
+  ],
+  "error_code": "verification_inconclusive",
+  "error_message": "末端到达目标位置且横向误差与速度上限满足契约"
+}

@@ -1,0 +1,190 @@
+agent:
+  class_path: luban.agent_core.SelfEvolvingAgent
+  init_args:
+    high_skill_write_mode: propose
+    max_validated_experiences: 4
+    knowledge_base:
+      class_path: luban.agent_core.JsonlKnowledgeBase
+      init_args:
+        path: configs/knowledge/xr1_robot_memory_knowledge.jsonl
+    robot_profile: xr1_mobile_manipulator
+    robot_capabilities:
+      - mobile_manipulation
+      - visual_grounding
+      - task_graph_execution
+    knowledge_limit: 6
+    streaming_memory_sidecar:
+      class_path: luban.agent_core.StreamingMemorySidecar
+      init_args:
+        enabled: true
+        mode: evidence_prefetch
+        knowledge_base_path: configs/knowledge/xr1_robot_memory_knowledge.jsonl
+        experience_capsule_path: runs/self_evolving_xr1_atomic/experience_capsules.jsonl
+        retrieval_top_k: 3
+        actual_inflight_per_worker: 1
+        pending_refresh_per_worker: 1
+        publish_complete_only: true
+        poll_wait_ms: 0
+        synthesis_enabled: false
+        on_miss: original_planner
+        invalidate_on_scope_change: true
+        require_evidence_refs: true
+    atomic_skill_system:
+      class_path: luban.agent_core.AtomicSkillSystem
+      init_args:
+        catalog_paths:
+          - catalogs/atomic_skills.json
+          - catalogs/composites.json
+        base_policy: &base_policy_id xiaomi-robotics-1-robocasa365@3a6d0293bfa90759d34a7fc48c2c62413cd7bcf4
+        embodiment_profile: mobile_manipulator
+        mode: planning_shadow
+        expected_atomic_count: 64
+        capabilities: []
+        skill_bindings: {}
+    module_evolution_manager:
+      class_path: luban.agent_core.ModuleEvolutionManager
+      init_args:
+        path: runs/self_evolving_xr1_atomic/module_evolution.jsonl
+        base_policy: *base_policy_id
+        proposal_only: true
+        min_paired_samples: 20
+        max_regressions: 0
+    module_evolution_reasoner:
+      class_path: luban.agent_core.ModuleEvolutionReasoner
+      init_args:
+        backend: &api_backend
+          class_path: luban.backends.llm.OpenAICompatibleLLMBackend
+          init_args:
+            base_url: "${LLM_BASE_URL:-http://127.0.0.1:8000/v1}"
+            model: "${LLM_MODEL:-replace-with-your-model-id}"
+            timeout_seconds: 600
+            max_retries: 2
+            omit_temperature: false
+        max_tokens: 8192
+        temperature: 0
+    module_versions:
+      planner: planner-xr1-v1
+      verifier: verifier-xr1-v1
+      graph: task-graph-xr1-v1
+      atomic_skill: atomic-catalog-1.0.0
+    experience_capsule_store:
+      class_path: luban.agent_core.ExperienceCapsuleStore
+      init_args:
+        path: runs/self_evolving_xr1_atomic/experience_capsules.jsonl
+        min_positive_validations: 2
+    experience_context:
+      code_version: codex/self-evolution-atomic-skills@working-tree
+      config_version: self-evolving-xr1-atomic-deepseek-flash-v1
+      base_policy: *base_policy_id
+      responsible_module: planner
+      source_robot_profile: xr1_mobile_manipulator
+      compatible_robot_profiles:
+        - xr1_mobile_manipulator
+      required_capabilities:
+        - mobile_manipulation
+      transfer_notes: >-
+        Transfer semantic preconditions, postconditions, and failure patterns
+        only; re-ground camera frame, reachability, and end-effector arguments
+        on the target robot before execution.
+
+task_decomposer:
+  class_path: luban.agent_core.TaskDecomposer
+  init_args:
+    backend: *api_backend
+    camera_keys: &camera_keys
+      - video.robot0_agentview_left
+      - video.robot0_agentview_right
+      - video.robot0_eye_in_hand
+    max_images: 3
+    max_nodes: 8
+    max_tokens: 8192
+    temperature: 0
+    response_format_mode: json_object
+    task_atomic_skill_catalog:
+      class_path: luban.agent_core.RoboCasaAtomicSkillCatalog
+
+planner:
+  class_path: luban.agent_core.SubtaskSkillPlanner
+  init_args:
+    backend: *api_backend
+    skill_ids:
+      Close_Door: 1
+      Open_Door: 2
+      Close_Lid: 3
+      Open_Lid: 4
+      Insertion: 5
+      Navigation: 6
+      Pick_Place: 7
+      Press_Button: 8
+      Slide_Rack: 9
+      Turn_Lever: 10
+      Twist_Knob: 11
+    skill_definitions:
+      Close_Door: Close a door while preserving the rest of the scene.
+      Open_Door: Open a door enough to access its target region.
+      Close_Lid: Close a lid, cover, cap, or mixer head.
+      Open_Lid: Open a lid, cover, cap, or mixer head.
+      Insertion: Insert a held object or tool into a target fixture.
+      Navigation: Move the XR-1 mobile base to a task-relevant region.
+      Pick_Place: Pick, move, and place or release one object.
+      Press_Button: Press and release an appliance button.
+      Slide_Rack: Translate a rack, drawer, or drawer-like fixture.
+      Turn_Lever: Move a lever, handle, faucet control, or spout.
+      Twist_Knob: Rotate a knob or dial to a target setting.
+    camera_keys: *camera_keys
+    history_limit: 10
+    max_images: 6
+    require_task_graph: true
+    require_current_camera_views: true
+    max_tokens: 8192
+    temperature: 0
+    response_format_mode: json_object
+
+verifier:
+  class_path: luban.agent_core.ActionSummarySubtaskVerifier
+  init_args:
+    backend: *api_backend
+    camera_keys: *camera_keys
+    check_interval_chunks: 32
+    max_images: 6
+    action_summary_max_chars: 512
+    max_tokens: 8192
+    temperature: 0
+    response_format_mode: json_object
+
+memory:
+  class_path: luban.agent_core.LongMemory
+  init_args:
+    recent_event_limit: 16
+    failed_event_limit: 6
+    key_event_limit: 24
+    summary_max_chars: 4096
+    summary_async: false
+
+skill_backend:
+  name: xr1_remote
+  init_args:
+    host: 127.0.0.1
+    port: 18100
+    timeout_seconds: 900
+    observation_history: 4
+    observation_interval: 2
+    instruction_mode: task_graph
+    expected_model_path: "${XR1_MODEL_PATH}"  # Required: checkpoint path on your server.
+    expected_policy_seed_mode: episode_step
+
+skill_manager:
+  class_path: luban.agent_core.SkillManager
+  init_args:
+    root: runs/self_evolving_xr1_atomic/high_skills
+
+high_skill_reasoner:
+  class_path: luban.agent_core.HighSkillReasoner
+  init_args:
+    backend: *api_backend
+    max_selected_skills: 3
+    max_update_images: 6
+    camera_keys: *camera_keys
+    max_tokens: 8192
+    temperature: 0
+    response_format_mode: json_object

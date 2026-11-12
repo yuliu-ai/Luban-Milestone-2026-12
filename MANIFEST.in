@@ -1,0 +1,26 @@
+include LICENSE NOTICE THIRD_PARTY_NOTICES.md pyproject.toml uv.lock
+include requirements.txt requirement.txt
+include README.md README.zh-CN.md CONTRIBUTING.md CODE_OF_CONDUCT.md SECURITY.md REPRODUCTION.md CITATION.md mkdocs.yml AGENTS.md
+recursive-include src *.py *.yaml py.typed
+recursive-include src/luban/environments/atomic *.xml
+recursive-include benchmarks/chemistry-bench-proto *.py *.proto
+recursive-include benchmarks/chemistry-bench-sim *.py *.yaml *.md
+recursive-include configs *.yaml *.json *.jsonl *.txt *.md
+recursive-include catalogs *.json *.jsonl *.md *.py *.png
+recursive-include scripts *.py *.sh
+recursive-include tests *.py
+recursive-include docs *.md *.svg *.png *.gif *.mp4 *.json
+recursive-include impl_docs *.md
+recursive-include rules *.md
+global-exclude *.py[cod]
+prune .release
+prune .venv
+prune dist
+prune runs
+include .gitignore .env.example .pre-commit-config.yaml
+recursive-include .github *.yml *.yaml *.md
+recursive-include ci *.yml
+
+recursive-include requirements *.txt
+
+include CONTRIBUTING.zh-CN.md SECURITY.zh-CN.md REPRODUCTION.zh-CN.md CITATION.zh-CN.md THIRD_PARTY_NOTICES.zh-CN.md

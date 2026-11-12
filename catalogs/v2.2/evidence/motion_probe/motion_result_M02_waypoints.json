@@ -1,0 +1,259 @@
+{
+  "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+  "skill_ref": "M02@2.2.0",
+  "status": "unverified",
+  "success": false,
+  "started_at": "2026-09-13T07:34:14.564Z",
+  "finished_at": "2026-09-13T07:34:18.133Z",
+  "duration_s": 3.5691916197538376,
+  "outputs": {
+    "final_pose": [
+      0.2504022717475891,
+      -0.006415195297449827,
+      0.5933853387832642,
+      -0.9882615124788904,
+      -0.029383690688053063,
+      -0.1472084747556128,
+      0.028380391727580667
+    ],
+    "reached_waypoints": 2,
+    "duration_s": 4.3
+  },
+  "observation": {
+    "environment_executed": true,
+    "outputs": {
+      "final_pose": [
+        0.2504022717475891,
+        -0.006415195297449827,
+        0.5933853387832642,
+        -0.9882615124788904,
+        -0.029383690688053063,
+        -0.1472084747556128,
+        0.028380391727580667
+      ],
+      "reached_waypoints": 2,
+      "duration_s": 4.3
+    },
+    "post_state": {
+      "frame_id": "robot0_base",
+      "steps": 86
+    },
+    "signals": {
+      "done": true,
+      "environment_kind": "robocasa_ee_motion",
+      "frame_id": "robot0_base",
+      "start_pose": [
+        0.23080186545848846,
+        -0.01735493540763855,
+        0.5853725075721741,
+        -0.9886460974858186,
+        0.02181799857788232,
+        -0.14716168746171057,
+        0.021125969978648292
+      ],
+      "waypoint_count": 2,
+      "reached_indexes": [
+        0,
+        1
+      ],
+      "per_waypoint_steps": [
+        44,
+        32
+      ],
+      "steps": 86,
+      "step_budget": 400,
+      "step_budget_exhausted": false,
+      "measured_max_speed_mps": 0.10000000000000003,
+      "control_freq": 20.0
+    },
+    "trace": [
+      {
+        "stage": "robocasa_ee_waypoints",
+        "reached": 2
+      }
+    ],
+    "error_code": null,
+    "error_message": null,
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "passed",
+    "reason": "全部航点依次到达并停稳",
+    "verifier_key": "verify_ee_motion",
+    "independent": false,
+    "criteria": {
+      "evidence": {
+        "起始位姿": [
+          0.23080186545848846,
+          -0.01735493540763855,
+          0.5853725075721741,
+          -0.9886460974858186,
+          0.02181799857788232,
+          -0.14716168746171057,
+          0.021125969978648292
+        ],
+        "航点数": 2,
+        "已到达": 2,
+        "final_pose": [
+          0.2504022717475891,
+          -0.006415195297449827,
+          0.5933853387832642,
+          -0.9882615124788904,
+          -0.029383690688053063,
+          -0.1472084747556128,
+          0.028380391727580667
+        ],
+        "时长": 4.3
+      }
+    },
+    "metrics": {
+      "reached_waypoints": 2.0,
+      "waypoint_count": 2.0,
+      "steps": 86.0
+    }
+  },
+  "events": [
+    {
+      "event_id": "065cc8d1-8138-4edf-936c-9277c16483b9",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:14.564Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "M02",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "8144a18b-a0a6-4ae3-a7f6-e22f0621ae70",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:14.564Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "M02@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "e37588d5-11e8-4309-abed-dbca7fc4887d",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:14.564Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "M02@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "1a5ab36b-1134-41d3-937b-c518a198d84e",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:14.564Z",
+      "event_type": "preflight_started",
+      "skill_ref": "M02@2.2.0",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "0802e6c1-7e8c-4fe7-8562-4297b493314f",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:14.564Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "M02@2.2.0",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "287f3b13-59f1-4c40-8a02-f4ff65757d4b",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:14.565Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "M02@2.2.0",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "93526c4a-c1b7-4481-b2de-0c27f9e92708",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:14.565Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "M02@2.2.0",
+      "data": {
+        "backend_key": "move_ee_waypoints"
+      }
+    },
+    {
+      "event_id": "7cdc218e-0c69-4420-942f-644848a3a375",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:14.565Z",
+      "event_type": "command_prepared",
+      "skill_ref": "M02@2.2.0",
+      "data": {
+        "backend_key": "move_ee_waypoints",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "f9fb3902-af79-4567-b824-af2227393632",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:14.565Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "M02@2.2.0",
+      "data": {
+        "environment_key": "robocasa_ee_motion"
+      }
+    },
+    {
+      "event_id": "da653b33-72e0-4944-8b3f-8ba8c857ae2d",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:18.133Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "M02@2.2.0",
+      "data": {
+        "environment_key": "robocasa_ee_motion",
+        "environment_executed": true
+      }
+    },
+    {
+      "event_id": "236e68fe-e35f-43a7-a107-14850255d412",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:18.133Z",
+      "event_type": "outputs_validated",
+      "skill_ref": "M02@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "87021060-c8f0-45b5-923d-fc0fc0e28e4f",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:18.133Z",
+      "event_type": "verification_started",
+      "skill_ref": "M02@2.2.0",
+      "data": {
+        "verifier_key": "verify_move_ee_waypoints"
+      }
+    },
+    {
+      "event_id": "5b3e8911-4c43-4146-9f14-60cda98836d8",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:18.133Z",
+      "event_type": "verification_finished",
+      "skill_ref": "M02@2.2.0",
+      "data": {
+        "verdict": "passed",
+        "verifier_key": "verify_ee_motion",
+        "independent": false
+      }
+    },
+    {
+      "event_id": "1ddd9183-4a44-4b50-a1f3-6cde74998298",
+      "invocation_id": "039c879a-11a4-4f11-8b54-a6f98a2068f6",
+      "occurred_at": "2026-09-13T07:34:18.133Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "M02@2.2.0",
+      "data": {
+        "status": "unverified"
+      }
+    }
+  ],
+  "error_code": "verification_inconclusive",
+  "error_message": "全部航点依次到达并停稳"
+}

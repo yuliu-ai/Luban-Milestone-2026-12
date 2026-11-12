@@ -1,0 +1,266 @@
+{
+  "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+  "skill_ref": "P06@2.2.0",
+  "status": "unverified",
+  "success": false,
+  "started_at": "2026-09-13T13:37:08.524Z",
+  "finished_at": "2026-09-13T13:37:12.313Z",
+  "duration_s": 3.7893354929983616,
+  "outputs": {
+    "object_id": "cutting-board-1",
+    "attributes": {
+      "color": "brown",
+      "cleanliness": "clean",
+      "material": "wood"
+    },
+    "confidence_by_attribute": {
+      "color": 1.0,
+      "cleanliness": 1.0,
+      "material": 1.0
+    },
+    "model_version": "molmo2"
+  },
+  "observation": {
+    "environment_executed": true,
+    "outputs": {
+      "object_id": "cutting-board-1",
+      "attributes": {
+        "color": "brown",
+        "cleanliness": "clean",
+        "material": "wood"
+      },
+      "confidence_by_attribute": {
+        "color": 1.0,
+        "cleanliness": 1.0,
+        "material": 1.0
+      },
+      "model_version": "molmo2"
+    },
+    "post_state": {
+      "crop_ref": "<HISTORICAL_PROJECT_ROOT>/runs/p06_probe/crop_cutting_board.png",
+      "camera_id": "video.robot0_eye_in_hand"
+    },
+    "signals": {
+      "done": true,
+      "environment_kind": "molmo2_attribute",
+      "provider": "molmo2",
+      "answered_keys": [
+        "cleanliness",
+        "color",
+        "material"
+      ],
+      "unknown_keys": [],
+      "raw_answers": {
+        "color": "brown",
+        "cleanliness": "clean",
+        "material": "wood"
+      },
+      "confidence_source": "candidate_set_match",
+      "latency_ms": 3762.317519634962,
+      "warnings": [
+        "vqa mode: the model reports no calibrated confidence; entity confidence is 0.0 and means 'unavailable'"
+      ]
+    },
+    "trace": [
+      {
+        "stage": "molmo2_attribute_vqa",
+        "camera_id": "video.robot0_eye_in_hand",
+        "attribute_keys": [
+          "color",
+          "cleanliness",
+          "material"
+        ],
+        "answered": 3
+      }
+    ],
+    "error_code": null,
+    "error_message": null,
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "passed",
+    "reason": "每个请求属性有合法值或显式unknown",
+    "verifier_key": "verify_classify_object_attributes",
+    "independent": false,
+    "criteria": {
+      "evidence": {
+        "对象裁剪": "<HISTORICAL_PROJECT_ROOT>/runs/p06_probe/crop_cutting_board.png",
+        "候选值": {
+          "color": [
+            "white",
+            "brown",
+            "green",
+            "black"
+          ],
+          "cleanliness": [
+            "dirty",
+            "clean"
+          ],
+          "material": [
+            "wood",
+            "plastic",
+            "metal"
+          ]
+        },
+        "属性结果": {
+          "color": "brown",
+          "cleanliness": "clean",
+          "material": "wood"
+        },
+        "逐项置信度": {
+          "color": 1.0,
+          "cleanliness": 1.0,
+          "material": 1.0
+        }
+      }
+    },
+    "metrics": {
+      "attribute_count": 3.0,
+      "unknown_count": 0.0
+    }
+  },
+  "events": [
+    {
+      "event_id": "7a6c8d71-c213-429c-a4d4-a5ad0c2f7466",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:08.524Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "P06",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "93b8cc0f-4b54-4b6c-a503-845241b52884",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:08.524Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "P06@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "b69fdbba-34f8-4737-8654-a787acc4170a",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:08.524Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "P06@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "51c07755-b9d2-4963-871a-0635e91d1f4e",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:08.524Z",
+      "event_type": "preflight_started",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "d1c63159-4d6e-471a-9250-36f1e3ff0bf9",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:08.524Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "8ee9ab50-3bd6-4404-83c6-d338bd9b02c0",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:08.526Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "ba8b427b-e602-4144-a36f-845a6822883c",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:08.526Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "backend_key": "classify_object_attributes"
+      }
+    },
+    {
+      "event_id": "5b8d284d-1fcf-4d2f-8af5-4190100724d2",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:08.526Z",
+      "event_type": "command_prepared",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "backend_key": "classify_object_attributes",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "12b2968a-92ec-4aed-8542-ea7b165d8972",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:08.526Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "environment_key": "molmo2_attribute"
+      }
+    },
+    {
+      "event_id": "4fd00769-e6d9-4b8c-84f7-b28be3039883",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:12.312Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "environment_key": "molmo2_attribute",
+        "environment_executed": true
+      }
+    },
+    {
+      "event_id": "d573157a-1eaa-4fee-9849-06734f799369",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:12.312Z",
+      "event_type": "outputs_validated",
+      "skill_ref": "P06@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "843da38e-18e1-4a58-a7c5-83d7952dbe73",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:12.312Z",
+      "event_type": "verification_started",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "verifier_key": "verify_classify_object_attributes"
+      }
+    },
+    {
+      "event_id": "e178e7d4-0cc7-4c5c-b982-983a3f1427a5",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:12.313Z",
+      "event_type": "verification_finished",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "verdict": "passed",
+        "verifier_key": "verify_classify_object_attributes",
+        "independent": false
+      }
+    },
+    {
+      "event_id": "52b5b459-8da1-400f-a773-f78d99ce90c9",
+      "invocation_id": "5d30d24b-e586-4a83-a992-aed9abc88fae",
+      "occurred_at": "2026-09-13T13:37:12.313Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "status": "unverified"
+      }
+    }
+  ],
+  "error_code": "verification_inconclusive",
+  "error_message": "每个请求属性有合法值或显式unknown"
+}

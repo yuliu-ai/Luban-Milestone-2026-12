@@ -1,0 +1,13 @@
+agent_config: ../agents/offline.yaml
+pipeline:
+  class_path: luban.pipelines.DirectPipeline
+runtime:
+  class_path: luban.runtimes.SyncRuntime
+  init_args:
+    max_steps: 3
+    timeout_seconds: 30
+    output_dir: runs/offline_config
+environment:
+  class_path: luban.examples.offline.CounterEnvironment
+task:
+  name: increment

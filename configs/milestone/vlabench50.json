@@ -1,0 +1,408 @@
+{
+  "name": "vlabench-fixed50",
+  "benchmark": "VLABench",
+  "track": "track_1_in_distribution",
+  "scope": "specified 50-episode replay set",
+  "tasks": [
+    {
+      "task_id": "select_book:000",
+      "task": "select_book",
+      "episode": 0,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:001",
+      "task": "select_book",
+      "episode": 1,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:002",
+      "task": "select_book",
+      "episode": 2,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:003",
+      "task": "select_book",
+      "episode": 3,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:004",
+      "task": "select_book",
+      "episode": 4,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:005",
+      "task": "select_book",
+      "episode": 5,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:006",
+      "task": "select_book",
+      "episode": 6,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:008",
+      "task": "select_book",
+      "episode": 8,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:009",
+      "task": "select_book",
+      "episode": 9,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:010",
+      "task": "select_book",
+      "episode": 10,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:011",
+      "task": "select_book",
+      "episode": 11,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:012",
+      "task": "select_book",
+      "episode": 12,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:013",
+      "task": "select_book",
+      "episode": 13,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:014",
+      "task": "select_book",
+      "episode": 14,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:015",
+      "task": "select_book",
+      "episode": 15,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:016",
+      "task": "select_book",
+      "episode": 16,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:017",
+      "task": "select_book",
+      "episode": 17,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:018",
+      "task": "select_book",
+      "episode": 18,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:019",
+      "task": "select_book",
+      "episode": 19,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:021",
+      "task": "select_book",
+      "episode": 21,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:022",
+      "task": "select_book",
+      "episode": 22,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:023",
+      "task": "select_book",
+      "episode": 23,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:025",
+      "task": "select_book",
+      "episode": 25,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:026",
+      "task": "select_book",
+      "episode": 26,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:027",
+      "task": "select_book",
+      "episode": 27,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:028",
+      "task": "select_book",
+      "episode": 28,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:029",
+      "task": "select_book",
+      "episode": 29,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:030",
+      "task": "select_book",
+      "episode": 30,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:031",
+      "task": "select_book",
+      "episode": 31,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:032",
+      "task": "select_book",
+      "episode": 32,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:033",
+      "task": "select_book",
+      "episode": 33,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:034",
+      "task": "select_book",
+      "episode": 34,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:035",
+      "task": "select_book",
+      "episode": 35,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:036",
+      "task": "select_book",
+      "episode": 36,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:037",
+      "task": "select_book",
+      "episode": 37,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:038",
+      "task": "select_book",
+      "episode": 38,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:039",
+      "task": "select_book",
+      "episode": 39,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:040",
+      "task": "select_book",
+      "episode": 40,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:041",
+      "task": "select_book",
+      "episode": 41,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:042",
+      "task": "select_book",
+      "episode": 42,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:043",
+      "task": "select_book",
+      "episode": 43,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:044",
+      "task": "select_book",
+      "episode": 44,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:045",
+      "task": "select_book",
+      "episode": 45,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:047",
+      "task": "select_book",
+      "episode": 47,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:048",
+      "task": "select_book",
+      "episode": 48,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_book:049",
+      "task": "select_book",
+      "episode": 49,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_fruit:007",
+      "task": "select_fruit",
+      "episode": 7,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_fruit:009",
+      "task": "select_fruit",
+      "episode": 9,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_fruit:016",
+      "task": "select_fruit",
+      "episode": 16,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    },
+    {
+      "task_id": "select_fruit:026",
+      "task": "select_fruit",
+      "episode": 26,
+      "seed": 42,
+      "horizon": 200,
+      "category": "track_1_in_distribution"
+    }
+  ]
+}

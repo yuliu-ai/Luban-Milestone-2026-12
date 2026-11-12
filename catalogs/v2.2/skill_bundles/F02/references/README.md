@@ -1,0 +1,31 @@
+# F02 · 参考资料
+
+本目录只登记"设计这份契约时可以核对"的外部资料。本目录不存放模型权重、标定文件或设备配置；这些必须由部署时的 `verification_profile_ref` 与资源绑定提供。
+
+## 已登记来源
+
+| 来源 | 位置 | 在本技能中的用途 |
+|---|---|---|
+| 契约定义 | `../../atomic_skills.json` 的 `F02` 条目 | 唯一事实来源。与本文档冲突时以契约为准。 |
+| PX4 Guide — Offboard Mode | `https://docs.px4.io/main/en/flight_modes/offboard` | 连续控制、坐标约定与控制接管边界；说明控制心跳与失效接管必须由持久后端承担 |
+| PX4 Guide — Terrain Following/Holding | `https://docs.px4.io/main/en/flying/terrain_following_holding` | AGL 与恒海拔的区别、距离传感器有效量程与模式限制 |
+| ROS REP-103 标准单位与坐标约定 | `https://www.ros.org/reps/rep-0103.html` | 单位、坐标系与角速度表达约定 |
+
+## 待补（绑定后端前必须完成）
+
+- [ ] 绑定 `multirotor_position_control` 对应的后端与版本
+- [ ] 绑定 `flight_state_provider` 对应的后端与版本
+- [ ] 绑定 `flight_safety_supervisor` 对应的后端与版本
+- [ ] 绑定 `time_synchronized_observations` 对应的后端与版本
+- [ ] 绑定 `transform_tree` 对应的后端与版本
+- [ ] 绑定 `landing_state_detector` 对应的后端与版本
+- [ ] 绑定 `localization` 对应的后端与版本
+- [ ] 绑定 `obstacle_monitor_3d` 对应的后端与版本
+- [ ] 绑定 `geofence_monitor` 对应的后端与版本
+- [ ] 提供 `profile://land_vertical/...` 验证配置：在指定区域触地，触地速度满足限制，landed和近零运动状态连续维持landed_confirm_s，最终flight_state=landed；安全记录合格且控制权接管已确认。
+- [ ] 确认证据采集方式与保存周期，并登记到 `evidence/index.json`
+
+## 边界提醒
+
+- 本技能的主要效果：从已处于指定着陆区上方的受控飞行状态下降并完成着陆确认；不负责返航、搜索备降点或降落后的断电任务。
+- 不包含：全局规划、跨阶段任务编排、无限等待、自动失败重试

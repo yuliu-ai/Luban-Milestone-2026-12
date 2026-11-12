@@ -1,0 +1,10 @@
+<mujoco><option impratio="10" timestep="0.001" integrator="implicitfast" /><default><geom friction="1.2 0.005 0.0001" solref="0.005 1" /></default><worldbody>
+<geom name="floor" type="plane" size="1 1 .1" />
+<geom name="base" type="box" pos="0 0 .01" size=".03 .03 .01" />
+<geom priority="1" friction=".15 .005 .0001" solref=".05 1" name="rim_l" type="box" pos="-.020 0 .03" size=".005 .025 .01" />
+<geom priority="1" friction=".15 .005 .0001" solref=".05 1" name="rim_r" type="box" pos=".020 0 .03" size=".005 .025 .01" />
+<geom priority="1" friction=".15 .005 .0001" solref=".05 1" name="rim_f" type="box" pos="0 -.020 .03" size=".015 .005 .01" />
+<geom priority="1" friction=".15 .005 .0001" solref=".05 1" name="rim_b" type="box" pos="0 .020 .03" size=".015 .005 .01" />
+<body name="lid" pos="0 0 .043"><freejoint /><geom name="plug" type="box" pos="0 0 -.012" size=".01501 .01501 .012" mass=".03" /><geom name="cap" type="box" pos="0 0 .015" size=".025 .025 .020" mass=".05" /></body>
+<body name="gripper" pos="0 0 .065" gravcomp="1"><joint name="lift" type="slide" axis="0 0 1" damping="5" /><inertial pos="0 0 0" mass=".3" diaginertia=".001 .001 .001" />
+</body></worldbody><actuator><motor name="lift_motor" joint="lift" /></actuator><equality><weld name="held_lid" body1="gripper" body2="lid" solref="0.002 1" /></equality></mujoco>

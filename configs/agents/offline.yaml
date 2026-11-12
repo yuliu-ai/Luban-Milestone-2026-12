@@ -1,0 +1,10 @@
+agent:
+  class_path: luban.agent_core.DefaultAgent
+planner:
+  class_path: luban.agent_core.TaskSkillPlanner
+verifier:
+  class_path: luban.agent_core.EnvironmentVerifier
+memory:
+  class_path: luban.agent_core.InMemoryMemory
+skill_backend:
+  class_path: luban.backends.skills.LanguageSkillBackend

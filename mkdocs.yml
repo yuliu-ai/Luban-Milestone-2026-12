@@ -1,0 +1,60 @@
+site_name: Luban
+site_description: Luban — 具身智能体框架 / Composable embodied agents
+docs_dir: docs
+theme:
+  name: material
+nav:
+- English:
+  - Home: README.md
+  - Quickstart: quickstart.md
+  - Installation and resources: installation.md
+  - Configuration: configuration.md
+  - Real episode: episodes.md
+  - Advanced episode: advanced-episode.md
+  - Models and policies: models.md
+  - Environment/robot interfaces: environments.md
+  - Logs and results: results.md
+  - Troubleshooting: troubleshooting.md
+  - New machine: new-machine.md
+  - Access and editing: access.md
+  - Development and tests: development.md
+  - Validation record: validation.md
+  - Source provenance: provenance.md
+  - Project / arXiv / Demo: project-page.md
+  - Demo gallery: demo-gallery.md
+  - Atomic skills: atomic-skills.md
+  - RoboSynChallenge: robosynchallenge.md
+  - Reported results: reported-results.md
+  - Demonstration console: reader-console.md
+  - Spatial memory report: spatial-memory-report.md
+  - Presentation references: project-page-references.md
+- 简体中文:
+  - 首页: README.zh-CN.md
+  - 快速开始: quickstart.zh-CN.md
+  - 环境安装与资源: installation.zh-CN.md
+  - 配置说明: configuration.zh-CN.md
+  - 真实回合: episodes.zh-CN.md
+  - 高级任务图回合: advanced-episode.zh-CN.md
+  - 模型与策略: models.zh-CN.md
+  - 环境与机器人接口: environments.zh-CN.md
+  - 日志与结果: results.zh-CN.md
+  - 故障排查: troubleshooting.zh-CN.md
+  - 新机器验证: new-machine.zh-CN.md
+  - 访问与编辑: access.zh-CN.md
+  - 开发与测试: development.zh-CN.md
+  - 验证记录: validation.zh-CN.md
+  - 源码来源: provenance.zh-CN.md
+  - 项目与演示入口: project-page.zh-CN.md
+  - 演示资料: demo-gallery.zh-CN.md
+  - 原子技能: atomic-skills.zh-CN.md
+  - RoboSynChallenge: robosynchallenge.zh-CN.md
+  - 汇报结果: reported-results.zh-CN.md
+  - 演示控制台: reader-console.zh-CN.md
+  - 空间记忆报告: spatial-memory-report.zh-CN.md
+  - 展示参考: project-page-references.zh-CN.md
+validation:
+  links:
+    not_found: info
+exclude_docs: '_sidebar.md
+
+  '

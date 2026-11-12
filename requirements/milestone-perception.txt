@@ -1,0 +1,16 @@
+# Separate Qwen3-VL / SAM3 / metric-depth process. Python 3.11.
+--extra-index-url https://download.pytorch.org/whl/cu130
+torch==2.13.0
+torchvision==0.28.0
+transformers==5.17.0
+numpy==1.26.4
+timm==1.0.30
+huggingface-hub==1.32.0
+safetensors==0.8.0
+einops==0.8.2
+ftfy==6.1.1
+iopath==0.1.10
+pycocotools==2.0.11
+psutil==7.2.2
+regex
+Pillow==12.3.0

@@ -1,0 +1,487 @@
+{
+  "schema_version": "visual-perception-v1",
+  "provider": "sam3",
+  "request_id": "p02-recheck-v2-1789306179:sam3:0:request:1",
+  "frame_index": 0,
+  "timestamp": 1789306180.1777263,
+  "entities": [
+    {
+      "track_id": "video.robot0_agentview_left/0/cutting board/0",
+      "label": "cutting board",
+      "confidence": 0.0641537457704544,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        93.1951675415039,
+        143.09890747070312,
+        142.28900146484375,
+        188.02203369140625
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-cutting_board-0.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/cutting board/1",
+      "label": "cutting board",
+      "confidence": 0.07206068187952042,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        88.1162338256836,
+        79.65699768066406,
+        110.28186798095703,
+        134.95594787597656
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-cutting_board-1.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/cutting board/2",
+      "label": "cutting board",
+      "confidence": 0.05740806832909584,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        -2.2393245697021484,
+        133.3244171142578,
+        54.32331085205078,
+        202.06703186035156
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-cutting_board-2.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/cutting board/3",
+      "label": "cutting board",
+      "confidence": 0.22993174195289612,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        88.99908447265625,
+        96.20687866210938,
+        110.37846374511719,
+        133.2225799560547
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-cutting_board-3.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/cutting board/4",
+      "label": "cutting board",
+      "confidence": 0.05995600298047066,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        84.42467498779297,
+        -1.5053863525390625,
+        246.6678466796875,
+        91.7621078491211
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-cutting_board-4.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/cutting board/5",
+      "label": "cutting board",
+      "confidence": 0.9383186101913452,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        93.14856719970703,
+        142.96054077148438,
+        142.4197998046875,
+        188.02099609375
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-cutting_board-5.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/knife/0",
+      "label": "knife",
+      "confidence": 0.08019134402275085,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        103.60310363769531,
+        88.64348602294922,
+        107.91696166992188,
+        104.17816925048828
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-knife-0.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/knife/1",
+      "label": "knife",
+      "confidence": 0.060362257063388824,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        88.85369873046875,
+        80.30375671386719,
+        92.95755004882812,
+        97.59603881835938
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-knife-1.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/knife/2",
+      "label": "knife",
+      "confidence": 0.6711905598640442,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        93.73722839355469,
+        82.2589111328125,
+        98.26934814453125,
+        104.58602905273438
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-knife-2.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/knife/3",
+      "label": "knife",
+      "confidence": 0.6628521084785461,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        98.77943420410156,
+        88.85624694824219,
+        102.93707275390625,
+        104.23699951171875
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-knife-3.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/knife/4",
+      "label": "knife",
+      "confidence": 0.6843478679656982,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        103.69384765625,
+        88.50717163085938,
+        107.91705322265625,
+        104.16693115234375
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-knife-4.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/knife/5",
+      "label": "knife",
+      "confidence": 0.05413445830345154,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        88.62509155273438,
+        80.13021087646484,
+        91.31689453125,
+        88.6379623413086
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-knife-5.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/knife/6",
+      "label": "knife",
+      "confidence": 0.09376981109380722,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        88.52676391601562,
+        82.91523742675781,
+        110.17646789550781,
+        135.88665771484375
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-knife-6.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/knife/7",
+      "label": "knife",
+      "confidence": 0.06483807414770126,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        98.81835174560547,
+        88.9434814453125,
+        102.9228286743164,
+        104.124755859375
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-knife-7.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/knife/8",
+      "label": "knife",
+      "confidence": 0.6920366883277893,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        88.68761444091797,
+        80.36241912841797,
+        93.3486557006836,
+        103.31575775146484
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-knife-8.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/knife/9",
+      "label": "knife",
+      "confidence": 0.08310246467590332,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        88.94857025146484,
+        80.26238250732422,
+        93.61344146728516,
+        102.98673248291016
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-knife-9.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/knife/10",
+      "label": "knife",
+      "confidence": 0.13979880511760712,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        89.65050506591797,
+        80.5078353881836,
+        106.83570098876953,
+        105.0357894897461
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-knife-10.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/knife/11",
+      "label": "knife",
+      "confidence": 0.059421248733997345,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        103.62932586669922,
+        88.65326690673828,
+        107.8540267944336,
+        96.2447280883789
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-knife-11.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    },
+    {
+      "track_id": "video.robot0_agentview_left/0/knife/12",
+      "label": "knife",
+      "confidence": 0.05226721614599228,
+      "camera_id": "video.robot0_agentview_left",
+      "bbox_xyxy": [
+        93.84196472167969,
+        144.04319763183594,
+        137.5657196044922,
+        186.38108825683594
+      ],
+      "point_xy": null,
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_recheck_v2_masks/video.robot0_agentview_left-0-knife-12.png",
+      "attributes": {
+        "model_family": "sam3",
+        "prompt_mode": "text"
+      },
+      "provenance": {
+        "source_provider": "sam3",
+        "source_modality": "rgb",
+        "frame_index": 0,
+        "camera_id": "video.robot0_agentview_left",
+        "derived_from": []
+      }
+    }
+  ],
+  "relations": [],
+  "latency_ms": 772.6458162069321,
+  "warnings": []
+}

@@ -1,0 +1,148 @@
+{
+  "invocation_id": "532c7d8c-2fd0-40dc-a2ff-f5405bfeb3fd",
+  "skill_ref": "P12@2.2.0",
+  "status": "failed",
+  "success": false,
+  "started_at": "2026-09-12T18:19:00.062Z",
+  "finished_at": "2026-09-12T18:19:00.066Z",
+  "duration_s": 0.0041741617023944855,
+  "outputs": {},
+  "observation": {
+    "environment_executed": false,
+    "outputs": {},
+    "post_state": {},
+    "signals": {
+      "unsupported_fields": [
+        "joint_position",
+        "joint_effort"
+      ]
+    },
+    "trace": [],
+    "error_code": "CAPABILITY_UNAVAILABLE",
+    "error_message": "RoboCasa365 的 state.* 观测不提供这些字段：joint_position, joint_effort",
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "not_run",
+    "reason": "RoboCasa365 的 state.* 观测不提供这些字段：joint_position, joint_effort",
+    "verifier_key": "none",
+    "independent": false,
+    "criteria": {},
+    "metrics": {}
+  },
+  "events": [
+    {
+      "event_id": "0a6f093f-a5b1-4e7d-b01f-0767a33a4548",
+      "invocation_id": "532c7d8c-2fd0-40dc-a2ff-f5405bfeb3fd",
+      "occurred_at": "2026-09-12T18:19:00.062Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "P12",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "79ec6196-553e-477c-adca-a8dd2cceb849",
+      "invocation_id": "532c7d8c-2fd0-40dc-a2ff-f5405bfeb3fd",
+      "occurred_at": "2026-09-12T18:19:00.062Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "P12@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "ddf3e4a7-4fca-4cb9-bf7e-324ff273f955",
+      "invocation_id": "532c7d8c-2fd0-40dc-a2ff-f5405bfeb3fd",
+      "occurred_at": "2026-09-12T18:19:00.062Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "P12@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "4cc55d16-17e5-43f4-9241-cd516bab6e30",
+      "invocation_id": "532c7d8c-2fd0-40dc-a2ff-f5405bfeb3fd",
+      "occurred_at": "2026-09-12T18:19:00.063Z",
+      "event_type": "preflight_started",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "91f87da1-e622-4ccb-a667-44f684786d42",
+      "invocation_id": "532c7d8c-2fd0-40dc-a2ff-f5405bfeb3fd",
+      "occurred_at": "2026-09-12T18:19:00.064Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "0af08f56-af60-4b03-a1fc-a38fa08079d3",
+      "invocation_id": "532c7d8c-2fd0-40dc-a2ff-f5405bfeb3fd",
+      "occurred_at": "2026-09-12T18:19:00.065Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "59d2ddac-eb92-4b40-9437-9b1fb1533a56",
+      "invocation_id": "532c7d8c-2fd0-40dc-a2ff-f5405bfeb3fd",
+      "occurred_at": "2026-09-12T18:19:00.065Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "backend_key": "read_robot_state"
+      }
+    },
+    {
+      "event_id": "996f05f4-a650-46ea-b342-26f7050338b6",
+      "invocation_id": "532c7d8c-2fd0-40dc-a2ff-f5405bfeb3fd",
+      "occurred_at": "2026-09-12T18:19:00.065Z",
+      "event_type": "command_prepared",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "backend_key": "read_robot_state",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "d8a7aa4d-83b0-44c0-8690-62c17a28a485",
+      "invocation_id": "532c7d8c-2fd0-40dc-a2ff-f5405bfeb3fd",
+      "occurred_at": "2026-09-12T18:19:00.065Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "environment_key": "robocasa_state"
+      }
+    },
+    {
+      "event_id": "0b96acb5-b782-451e-8f78-f227300749aa",
+      "invocation_id": "532c7d8c-2fd0-40dc-a2ff-f5405bfeb3fd",
+      "occurred_at": "2026-09-12T18:19:00.066Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "environment_key": "robocasa_state",
+        "environment_executed": false
+      }
+    },
+    {
+      "event_id": "5af99f75-8758-4e4b-952a-b5ab2c9df74c",
+      "invocation_id": "532c7d8c-2fd0-40dc-a2ff-f5405bfeb3fd",
+      "occurred_at": "2026-09-12T18:19:00.066Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "P12@2.2.0",
+      "data": {
+        "status": "failed",
+        "error_code": "CAPABILITY_UNAVAILABLE"
+      }
+    }
+  ],
+  "error_code": "CAPABILITY_UNAVAILABLE",
+  "error_message": "RoboCasa365 的 state.* 观测不提供这些字段：joint_position, joint_effort"
+}

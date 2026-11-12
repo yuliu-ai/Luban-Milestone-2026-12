@@ -1,0 +1,123 @@
+{
+  "status": "unverified",
+  "verification_verdict": "passed",
+  "verification_reason": "每个输出掩码非空且分数达到阈值",
+  "verification_independent": false,
+  "instances": [
+    {
+      "object_id": "cutting board-1",
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_probe/masks/video.robot0_agentview_left-0-cutting_board-5.png",
+      "score": 0.9383186101913452
+    },
+    {
+      "object_id": "knife-1",
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_probe/masks/video.robot0_agentview_left-0-knife-2.png",
+      "score": 0.6711905598640442
+    },
+    {
+      "object_id": "knife-2",
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_probe/masks/video.robot0_agentview_left-0-knife-3.png",
+      "score": 0.6628521084785461
+    },
+    {
+      "object_id": "knife-3",
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_probe/masks/video.robot0_agentview_left-0-knife-4.png",
+      "score": 0.6843478679656982
+    },
+    {
+      "object_id": "knife-4",
+      "mask_ref": "file://<HISTORICAL_PROJECT_ROOT>/runs/p02_probe/masks/video.robot0_agentview_left-0-knife-8.png",
+      "score": 0.6920366883277893
+    }
+  ],
+  "signals": {
+    "done": true,
+    "environment_kind": "sam3_segment",
+    "provider": "sam3",
+    "entity_count": 19,
+    "matched": [
+      "cutting board-1",
+      "knife-1",
+      "knife-2",
+      "knife-3",
+      "knife-4"
+    ],
+    "unmatched": [],
+    "entities_without_mask": [],
+    "match_iou": 0.5,
+    "latency_ms": 268.8008248806,
+    "warnings": []
+  },
+  "model_version": "sam3",
+  "elapsed_s": 0.2816377468407154,
+  "image": "<HISTORICAL_PROJECT_ROOT>/runs/p12_probe/input_frame_agentview_left.png",
+  "queries": [
+    "cutting board",
+    "knife",
+    "bottle",
+    "bowl",
+    "stove"
+  ],
+  "detections_input": [
+    {
+      "object_id": "cutting board-1",
+      "class_name": "cutting board",
+      "bbox_xyxy": [
+        93.14856719970703,
+        142.96054077148438,
+        142.4197998046875,
+        188.02099609375
+      ],
+      "score": 0.9383186101913452
+    },
+    {
+      "object_id": "knife-1",
+      "class_name": "knife",
+      "bbox_xyxy": [
+        93.73722839355469,
+        82.2589111328125,
+        98.26934814453125,
+        104.58602905273438
+      ],
+      "score": 0.6711905598640442
+    },
+    {
+      "object_id": "knife-2",
+      "class_name": "knife",
+      "bbox_xyxy": [
+        98.77943420410156,
+        88.85624694824219,
+        102.93707275390625,
+        104.23699951171875
+      ],
+      "score": 0.6628521084785461
+    },
+    {
+      "object_id": "knife-3",
+      "class_name": "knife",
+      "bbox_xyxy": [
+        103.69384765625,
+        88.50717163085938,
+        107.91705322265625,
+        104.16693115234375
+      ],
+      "score": 0.6843478679656982
+    },
+    {
+      "object_id": "knife-4",
+      "class_name": "knife",
+      "bbox_xyxy": [
+        88.68761444091797,
+        80.36241912841797,
+        93.3486557006836,
+        103.31575775146484
+      ],
+      "score": 0.6920366883277893
+    }
+  ],
+  "provider": "sam3",
+  "gpu": "NVIDIA GeForce RTX 4090, 18658 MiB, 24564 MiB",
+  "started_at_s": 1789237377.1190958,
+  "client_requests": 2,
+  "client_failures": 0
+}

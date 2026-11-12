@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "catalog_version": "2.2.0",
+  "title": "V2.1 → V2.2 迁移账本（仅状态升级，无契约语义改动）",
+  "sources": {
+    "v2_1": "catalogs/v2.1/atomic_skills.json",
+    "v2_2": "catalogs/v2.2/atomic_skills.json",
+    "v2_2_sha256": "3c5c8b6c8fe133fdc57dbadf52cc1d42d96246d05d926fc1da87c3be70e08375"
+  },
+  "counts": {
+    "skills_total": 64,
+    "contract_semantics_changed": 0,
+    "promoted": 9,
+    "maturity_distribution": {
+      "declared": 55,
+      "backend_bound": 1,
+      "verified": 8
+    }
+  },
+  "promotions": [
+    {
+      "skill_id": "M01",
+      "maturity": "verified",
+      "executor_status": "implemented",
+      "verifier_status": "implemented",
+      "evidence_index": "catalogs/v2.2/skill_bundles/{skill_id}/evidence/index.json",
+      "note": "RoboCasa 真实执行证据（RTX 4090，2026-09-13）：闭环 EE 直线移动，20 步（1.0s 仿真时间）收敛，位置误差 0.0076m ≤ 容差 0.008m，最大横向误差 0.0011m，实测峰值速度 0.1m/s 未超上限；对照：错误坐标系 FRAME_UNRESOLVED、预算耗尽时如实报告 0.39m 残差并判 failed；独立第二来源（SAM3 视觉端点核验，independent=true）：目标投影像素处腕部片段 1945.8px^2，passed。"
+    },
+    {
+      "skill_id": "M02",
+      "maturity": "verified",
+      "executor_status": "implemented",
+      "verifier_status": "implemented",
+      "evidence_index": "catalogs/v2.2/skill_bundles/{skill_id}/evidence/index.json",
+      "note": "RoboCasa 真实执行证据（RTX 4090，2026-09-13）：闭环 EE 航点序列（2 个 7 维位姿航点、stop_at_each 停稳确认），86 步（4.3s 仿真时间）2/2 到达，实测峰值速度 0.1m/s 未超上限；未到达航点会如实停止并报告 reached 数；独立第二来源（SAM3 视觉端点核验，independent=true）：按契约拆成两次单航点调用（minItems=1），去/回两段目标投影像素处腕部片段分别为 2050.3 / 2372.8px^2，全部 passed。"
+    },
+    {
+      "skill_id": "M03",
+      "maturity": "verified",
+      "executor_status": "implemented",
+      "verifier_status": "implemented",
+      "evidence_index": "catalogs/v2.2/skill_bundles/{skill_id}/evidence/index.json",
+      "note": "RoboCasa 真实执行证据（RTX 4090，2026-09-13）：闭环 EE 原地旋转（绕 z 0.25rad），41 步（2.05s）收敛，姿态误差 0.0481rad ≤ 容差 0.05rad，位置漂移 0.0025m ≤ 0.01m，实测峰值角速度 0.4rad/s 未超上限；独立第二来源（SAM3 视觉端点核验，independent=true）：旋转后 EE 投影像素处腕部片段 3140.9px^2，位置保持通过视觉核验。"
+    },
+    {
+      "skill_id": "M04",
+      "maturity": "verified",
+      "executor_status": "implemented",
+      "verifier_status": "implemented",
+      "evidence_index": "catalogs/v2.2/skill_bundles/{skill_id}/evidence/index.json",
+      "note": "RoboCasa 真实执行证据（RTX 4090，2026-09-13）：闭环 EE 位姿移动（平移+旋转同时给目标），63 步（3.15s）收敛，位置误差 0.0062m、姿态误差 0.0475rad，均在契约容差内；独立第二来源（SAM3 视觉端点核验，independent=true）：目标位置投影像素处腕部片段 2330.4px^2，passed。"
+    },
+    {
+      "skill_id": "P01",
+      "maturity": "verified",
+      "executor_status": "implemented",
+      "verifier_status": "implemented",
+      "evidence_index": "catalogs/v2.2/skill_bundles/{skill_id}/evidence/index.json",
+      "note": "SAM3 真实推理证据（RTX 4090，2026-09-12）：28 实体 → 7 detections → 验证器 passed；Molmo2 第二 provider 交叉核验 independent=true、逐点 3/3 passed（recall 3/10 如实记录）。"
+    },
+    {
+      "skill_id": "P02",
+      "maturity": "verified",
+      "executor_status": "implemented",
+      "verifier_status": "implemented",
+      "evidence_index": "catalogs/v2.2/skill_bundles/{skill_id}/evidence/index.json",
+      "note": "SAM3 真实掩码证据（RTX 4090，2026-09-13）：真实 RoboCasa 帧上 21 实体 → 5 detections（阈值 0.3）→ 5/5 instances 携带可复核掩码 PNG（268.8ms）；验证器自行重新打开掩码核验前景非 0、尺寸一致，verdict passed；独立复核（Molmo2 pointing，independent=true）：5/5 点落入同类 SAM3 掩码并集前景（预注册 1px 下采样混叠容差；原始 0px 口径 3/5 并排如实记录）。"
+    },
+    {
+      "skill_id": "P06",
+      "maturity": "verified",
+      "executor_status": "implemented",
+      "verifier_status": "implemented",
+      "evidence_index": "catalogs/v2.2/skill_bundles/{skill_id}/evidence/index.json",
+      "note": "Molmo2 VQA 真实问答证据（RTX 4090，2026-09-13）：可答组 3/3 属性落入候选集（color=brown / cleanliness=clean / material=wood）；难题组如实暴露模型边界——temperature/weight 图像答不出仍被自信作答且恰在候选集内（候选集匹配挡不住），brand 无候选集 → 保留 raw answer + 置信度 0.0；独立复核（确定性 HSV 像素统计，independent=true）：color=brown 双源一致；cleanliness/material 无第二来源，保持单源并如实记录。"
+    },
+    {
+      "skill_id": "P09",
+      "maturity": "backend_bound",
+      "executor_status": "implemented",
+      "verifier_status": "implemented",
+      "evidence_index": "catalogs/v2.2/skill_bundles/{skill_id}/evidence/index.json",
+      "note": "Molmo2 VQA 真实状态估计证据（RTX 4090，2026-09-13）：可答组 open_state=open 落入候选集（置信度=候选集匹配 1.0）；难题组如实暴露边界——temperature_state=cold 恰在候选集内（图像答不出仍被自信作答），lid_state 无候选集保留 raw answer + 置信度 0.0。环境真值交叉核验两轮诚实失败、按纪律保持 backend_bound：v1 裁剪仅得 9px 条带；v2 定位根因——singlecabinet_1 门铰链（sim qpos 真值可用）的 body 原点投影 u≈-466 不在 agentview_left 视野内，59 个 cabinet 检测歧义致 Molmo2 答非所问（双态样本判反、passed=false），证据留档 runs/p09_groundtruth_v1/、runs/p09_groundtruth/。下一步：选投影在视野内（留 ≥30px 余量）的关节重做，或换 eye-in-hand 相机。"
+    },
+    {
+      "skill_id": "P12",
+      "maturity": "verified",
+      "executor_status": "implemented",
+      "verifier_status": "implemented",
+      "evidence_index": "catalogs/v2.2/skill_bundles/{skill_id}/evidence/index.json",
+      "note": "RoboCasa365 真实观测证据（RTX 4090，2026-09-13）：gym.make 真实环境 reset+step 后读取 ee_pose/base_pose/gripper_state，验证器 passed；三组 fail-closed 对照（不支持字段 / 错误坐标系 / 缺键）全部按设计拒绝；独立第二来源（SAM3 视觉投影核验，independent=true）：5 个采样点（跨 4 次技能执行）state 读数与 sim 重算 gap ≤ 2.2e-08m，投影像素处腕部片段 351.9–3140.9px^2 全部命中。"
+    }
+  ]
+}

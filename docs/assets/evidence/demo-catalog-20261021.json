@@ -1,0 +1,118 @@
+[
+  {
+    "id": "robot-arm",
+    "group": "manipulation",
+    "title": {
+      "zh": "真机桌面整理",
+      "en": "Real-robot table tidying"
+    },
+    "body": {
+      "zh": "机械臂连续抓取食品包装和容器，放入指定收纳区域。",
+      "en": "The arm moves food packages and containers into their designated areas."
+    },
+    "source": "RobotWorkspace/real_world_deployment.mp4",
+    "slide": null,
+    "clip": null,
+    "duration": 22.05,
+    "video": "../demos/robot-arm.mp4",
+    "poster": "../demos/robot-arm.jpg",
+    "sha256": "2320d2dd2dfd89d2b74419dc48c30930080742f92a4d9dce0e924e3c1383f2bb"
+  },
+  {
+    "id": "topic3-media5",
+    "group": "bimanual",
+    "title": {
+      "zh": "双臂协作叠衣服",
+      "en": "Bimanual garment folding"
+    },
+    "body": {
+      "zh": "双臂分别抓取衣物两侧，通过协同牵引、翻折与放置完成整理。",
+      "en": "Two arms coordinate grasping, stretching, folding and placement."
+    },
+    "source": "课题三-深圳研讨会v0.pptx",
+    "slide": 4,
+    "clip": null,
+    "duration": 86.65,
+    "video": "../demos/topic3-media5.mp4",
+    "poster": "../demos/topic3-media5.jpg",
+    "sha256": "b829296ceeccf71f41cef393c6a47c898ea60b37c5acad9b9d6282301bbea4cf"
+  },
+  {
+    "id": "topic3-media4",
+    "group": "navigation",
+    "title": {
+      "zh": "机器狗跨场景导航",
+      "en": "Quadruped navigation across spaces"
+    },
+    "body": {
+      "zh": "从室内办公区移动到开放区域，展示连续视角下的方向选择。",
+      "en": "Continuous views follow navigation from an office area to a more open space."
+    },
+    "source": "课题三-深圳研讨会v0.pptx",
+    "slide": 3,
+    "clip": null,
+    "duration": 13.0,
+    "video": "../demos/topic3-media4.mp4",
+    "poster": "../demos/topic3-media4.jpg",
+    "sha256": "c7396e09433856574f132b5d387d7e3f1887150f85b0e454b7b0b70cd7021340"
+  },
+  {
+    "id": "chemistry-titration",
+    "group": "chemistry",
+    "title": {
+      "zh": "酸碱滴定仿真",
+      "en": "Acid-base titration simulation"
+    },
+    "body": {
+      "zh": "机械臂取瓶、倾倒、放回并记录结果，烧杯由无色变为粉红色。Isaac Sim固定场景，采用脚本化技能序列。",
+      "en": "The arm picks up, pours, returns the bottle and records the result as the beaker turns pink. This fixed Isaac Sim scene uses a scripted skill sequence."
+    },
+    "source": "OmniRoboAgent GitHub 化学仿真Demo",
+    "source_url": "https://github.com/user-attachments/assets/41eb9447-0ff1-4551-b0b2-a2b8e4931c01",
+    "slide": null,
+    "clip": null,
+    "duration": 20.8,
+    "video": "../demos/chemistry-titration.mp4",
+    "poster": "../demos/chemistry-titration.jpg",
+    "sha256": "3cd42c6cd0245fbb2e3233e45d7708d27eca0a2d538f3d16202d7498a3f79045"
+  },
+  {
+    "id": "topic4-media5",
+    "group": "manufacturing",
+    "title": {
+      "zh": "三维视觉引导螺纹套装配",
+      "en": "Vision-guided threaded-insert assembly"
+    },
+    "body": {
+      "zh": "视觉引导机械臂对准工件并执行装配，观察定位与接触操作的衔接。",
+      "en": "Vision guides alignment of the workpiece and the following assembly operation."
+    },
+    "source": "课题四-面向智能制造与建造的具身智能体系.pptx",
+    "slide": 10,
+    "clip": null,
+    "duration": 25.35,
+    "video": "../demos/topic4-media5.mp4",
+    "poster": "../demos/topic4-media5.jpg",
+    "sha256": "22af376cb9fe693a1b736f90ae8ff02cc9521dda4c5b786866047b74ade5e4a1"
+  },
+  {
+    "id": "topic5-media5",
+    "group": "field",
+    "title": {
+      "zh": "隧道三维建模与巡检平台",
+      "en": "Tunnel mapping and inspection platform"
+    },
+    "body": {
+      "zh": "三维隧道轮廓、超欠挖识别与巡检记录联动展示，视频节选自原素材30至65秒。",
+      "en": "Tunnel geometry, overbreak analysis and inspection records, excerpted from source seconds 30–65."
+    },
+    "source": "课题5：面向极端环境自主探索的具身智能体.pptx",
+    "slide": 3,
+    "clip": 35,
+    "duration": 35.0,
+    "video": "../demos/topic5-media5.mp4",
+    "poster": "../demos/topic5-media5.jpg",
+    "sha256": "91309c291ceafd7023bf3b7801f90f984a81120e052cf7c26848ddc588957a39",
+    "source_start_seconds": 30
+  }
+]

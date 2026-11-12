@@ -1,0 +1,21 @@
+# Optional paid/live model call against a MOCK environment. Not robot evaluation.
+agent:
+  class_path: luban.agent_core.DefaultAgent
+planner:
+  class_path: luban.agent_core.LanguageSkillPlanner
+  init_args:
+    backend:
+      class_path: luban.backends.llm.OpenAICompatibleLLMBackend
+      init_args:
+        base_url: "${LLM_BASE_URL:-http://127.0.0.1:8000/v1}"
+        model: "${LLM_MODEL:-replace-with-your-model-id}"
+        timeout_seconds: 90
+        max_retries: 0
+    max_tokens: 1024
+    temperature: 0
+verifier:
+  class_path: luban.agent_core.EnvironmentVerifier
+memory:
+  class_path: luban.agent_core.InMemoryMemory
+skill_backend:
+  class_path: luban.backends.skills.LanguageSkillBackend

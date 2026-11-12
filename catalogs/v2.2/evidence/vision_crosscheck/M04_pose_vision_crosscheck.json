@@ -1,0 +1,126 @@
+{
+  "skill": "M04",
+  "runtime_status": "unverified",
+  "runtime_verdict": "passed",
+  "runtime_outputs": {
+    "final_pose": [
+      0.23310744762420654,
+      -0.01172825787216425,
+      0.6028493046760559,
+      -0.9884452808703355,
+      -0.012163713560724255,
+      -0.15106800181558536,
+      0.0025356705271981444
+    ],
+    "position_error_m": 0.006823880258504336,
+    "orientation_error_rad": 0.04912854790109603,
+    "duration_s": 1.05
+  },
+  "runtime_inputs": {
+    "target_pose": [
+      0.2274035918712616,
+      -0.014307162947952748,
+      0.6001325750350952,
+      -0.9883974653264544,
+      0.01210650653116722,
+      -0.1514013156180316,
+      -0.0012347732505318518
+    ],
+    "frame_id": "robot0_base",
+    "max_linear_speed_mps": 0.1,
+    "max_angular_speed_radps": 0.4,
+    "position_tolerance_m": 0.008,
+    "orientation_tolerance_rad": 0.05,
+    "verification_profile_ref": "profile://motion/pose-v1"
+  },
+  "world_ee_before": [
+    2.999943064887105,
+    -0.5747763980659387,
+    1.3098708382868502
+  ],
+  "world_ee_after": [
+    3.009795057070457,
+    -0.5947816660162333,
+    1.3028529554471084
+  ],
+  "sam3_before": {
+    "query": "white robot arm",
+    "entities": 16,
+    "attempts": [
+      {
+        "query": "white robot arm",
+        "entities": 16
+      }
+    ]
+  },
+  "sam3_after": {
+    "query": "white robot arm",
+    "entities": 17,
+    "attempts": [
+      {
+        "query": "white robot arm",
+        "entities": 17
+      }
+    ]
+  },
+  "fragment_before": {
+    "bbox_xyxy": [
+      173.34413146972656,
+      49.334815979003906,
+      214.87452697753906,
+      106.4684066772461
+    ],
+    "area_px2": 2372.7806184794754,
+    "centroid": [
+      194.1093292236328,
+      77.901611328125
+    ],
+    "containing_fragment_count": 9,
+    "containing_fragment_areas_px2": [
+      2372.8,
+      2404.9,
+      2432.8,
+      2528.6,
+      4012.1,
+      5556.2,
+      16414.8,
+      21552.5,
+      21858.5
+    ]
+  },
+  "legs": [
+    {
+      "leg": 0,
+      "target_pixel_uv": [
+        177.85,
+        118.19
+      ],
+      "wrist_fragment": {
+        "bbox_xyxy": [
+          158.37326049804688,
+          76.41157531738281,
+          212.076171875,
+          119.80625915527344
+        ],
+        "area_px2": 2330.4208603771403,
+        "centroid": [
+          185.22471618652344,
+          98.10891723632812
+        ],
+        "containing_fragment_count": 8,
+        "containing_fragment_areas_px2": [
+          2330.4,
+          2536.3,
+          4264.3,
+          5700.5,
+          5912.9,
+          15583.8,
+          20804.4,
+          20990.6
+        ]
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}

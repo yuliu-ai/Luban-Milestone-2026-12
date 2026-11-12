@@ -1,0 +1,54 @@
+agent:
+  class_path: luban.agent_core.DefaultAgent
+task_decomposer:
+  class_path: luban.agent_core.TaskDecomposer
+  init_args:
+    backend: &llm
+      class_path: luban.backends.llm.OpenAICompatibleLLMBackend
+      init_args:
+        base_url: "${LUBAN_API_BASE_URL}"
+        model: "${LUBAN_LLM_MODEL}"
+        timeout_seconds: 180
+        max_retries: 2
+        omit_temperature: true
+    camera_keys: &cameras
+      - image.front
+      - image.base
+      - image.wrist
+    max_tokens: 8192
+    max_nodes: 8
+    extra_body: &reasoning
+      reasoning_effort: xhigh
+    response_format_mode: json_object
+planner:
+  class_path: luban.agent_core.planners.policy_instruction.PolicyInstructionPlanner
+  init_args:
+    backend: *llm
+    camera_keys: *cameras
+    extra_body: *reasoning
+verifier:
+  class_path: luban.agent_core.SubtaskVerifier
+  init_args:
+    backend: *llm
+    camera_keys: *cameras
+    extra_body: *reasoning
+    response_format_mode: json_object
+    max_tokens: 8192
+    system_prompt: |
+      Evaluate the current physical instruction over the last eight action chunks.
+      Compare the before and after views against the supplied expected outcome.
+      Each time group contains front, base, and wrist views.
+      Carefully identify object types and their spatial relationships in the views.
+      Use completed when the outcome is visible, failed for a visible obstacle or
+      ineffective motion, in_progress for a feasible unfinished action, and uncertain
+      when visual evidence is insufficient. Judge physical outcomes only.
+      Return JSON with execution_status, progress_assessment, reason, confidence,
+      and evidence. Use advanced, unchanged, regressed, or unknown for progress.
+memory:
+  class_path: luban.agent_core.InMemoryMemory
+skill_backend:
+  class_path: luban.backends.skills.vlabench.VLABenchPolicyBackend
+  init_args:
+    base_url: http://127.0.0.1:19101
+    provider: xr1
+    timeout_seconds: 180

@@ -1,0 +1,151 @@
+{
+  "invocation_id": "7bffc614-6fc3-4edc-9dc4-5c5d32036140",
+  "skill_ref": "P09@2.2.0",
+  "status": "failed",
+  "success": false,
+  "started_at": "2026-09-13T08:04:16.426Z",
+  "finished_at": "2026-09-13T08:04:17.843Z",
+  "duration_s": 1.4167569316923618,
+  "outputs": {},
+  "observation": {
+    "environment_executed": false,
+    "outputs": {},
+    "post_state": {},
+    "signals": {
+      "requested_keys": [
+        "open_state"
+      ],
+      "warnings": [
+        "vqa mode: the model reports no calibrated confidence; entity confidence is 0.0 and means 'unavailable'",
+        "open_state: generation failed (OutOfMemoryError: CUDA out of memory. Tried to allocate 744.00 MiB. GPU 0 has a total capacity of 23.52 GiB of which 381.25 MiB is free. Process 46628 has 13.61 GiB memory in use. Including non-PyTorch memory, this process has 9.52 GiB memory in use. Of the allocated memory 9.05 GiB is allocated by PyTorch, and 32.79 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid frag"
+      ]
+    },
+    "trace": [],
+    "error_code": "CAPABILITY_UNAVAILABLE",
+    "error_message": "Molmo2 returned no answer for any requested state key; P09 cannot report states.",
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "not_run",
+    "reason": "Molmo2 returned no answer for any requested state key; P09 cannot report states.",
+    "verifier_key": "none",
+    "independent": false,
+    "criteria": {},
+    "metrics": {}
+  },
+  "events": [
+    {
+      "event_id": "78e924cc-01ec-480d-9cfb-4471970cb0b5",
+      "invocation_id": "7bffc614-6fc3-4edc-9dc4-5c5d32036140",
+      "occurred_at": "2026-09-13T08:04:16.426Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "P09",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "4814d4a0-c77d-422b-a687-6cfbeca50038",
+      "invocation_id": "7bffc614-6fc3-4edc-9dc4-5c5d32036140",
+      "occurred_at": "2026-09-13T08:04:16.427Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "P09@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "17656085-32b6-4d76-a0e1-727dac89e72d",
+      "invocation_id": "7bffc614-6fc3-4edc-9dc4-5c5d32036140",
+      "occurred_at": "2026-09-13T08:04:16.427Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "P09@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "f3cb7082-578e-467f-afdc-8edb54b40131",
+      "invocation_id": "7bffc614-6fc3-4edc-9dc4-5c5d32036140",
+      "occurred_at": "2026-09-13T08:04:16.427Z",
+      "event_type": "preflight_started",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "273d1c84-a671-4fa4-a788-521650bba6d5",
+      "invocation_id": "7bffc614-6fc3-4edc-9dc4-5c5d32036140",
+      "occurred_at": "2026-09-13T08:04:16.427Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "b995cc16-ef21-4441-8578-22d5a3a25633",
+      "invocation_id": "7bffc614-6fc3-4edc-9dc4-5c5d32036140",
+      "occurred_at": "2026-09-13T08:04:16.429Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "4b83ce73-509b-43bc-8b65-7282642c2fe4",
+      "invocation_id": "7bffc614-6fc3-4edc-9dc4-5c5d32036140",
+      "occurred_at": "2026-09-13T08:04:16.429Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "backend_key": "estimate_object_state"
+      }
+    },
+    {
+      "event_id": "f2d7cb36-cefe-403c-b5ba-1fa532a2f277",
+      "invocation_id": "7bffc614-6fc3-4edc-9dc4-5c5d32036140",
+      "occurred_at": "2026-09-13T08:04:16.429Z",
+      "event_type": "command_prepared",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "backend_key": "estimate_object_state",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "50cd7e00-bb93-4566-b81e-afb1d826e951",
+      "invocation_id": "7bffc614-6fc3-4edc-9dc4-5c5d32036140",
+      "occurred_at": "2026-09-13T08:04:16.429Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "environment_key": "molmo2_state"
+      }
+    },
+    {
+      "event_id": "ac382bbd-2388-462b-8f15-b937e1f970b3",
+      "invocation_id": "7bffc614-6fc3-4edc-9dc4-5c5d32036140",
+      "occurred_at": "2026-09-13T08:04:17.843Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "environment_key": "molmo2_state",
+        "environment_executed": false
+      }
+    },
+    {
+      "event_id": "e5aa085b-6f34-427d-bb3d-12e53c1dbb75",
+      "invocation_id": "7bffc614-6fc3-4edc-9dc4-5c5d32036140",
+      "occurred_at": "2026-09-13T08:04:17.843Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "P09@2.2.0",
+      "data": {
+        "status": "failed",
+        "error_code": "CAPABILITY_UNAVAILABLE"
+      }
+    }
+  ],
+  "error_code": "CAPABILITY_UNAVAILABLE",
+  "error_message": "Molmo2 returned no answer for any requested state key; P09 cannot report states."
+}

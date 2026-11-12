@@ -1,0 +1,266 @@
+{
+  "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+  "skill_ref": "P06@2.2.0",
+  "status": "unverified",
+  "success": false,
+  "started_at": "2026-09-12T18:26:48.215Z",
+  "finished_at": "2026-09-12T18:26:53.115Z",
+  "duration_s": 4.899781361222267,
+  "outputs": {
+    "object_id": "cutting-board-1",
+    "attributes": {
+      "color": "brown",
+      "cleanliness": "clean",
+      "material": "wood"
+    },
+    "confidence_by_attribute": {
+      "color": 1.0,
+      "cleanliness": 1.0,
+      "material": 1.0
+    },
+    "model_version": "molmo2"
+  },
+  "observation": {
+    "environment_executed": true,
+    "outputs": {
+      "object_id": "cutting-board-1",
+      "attributes": {
+        "color": "brown",
+        "cleanliness": "clean",
+        "material": "wood"
+      },
+      "confidence_by_attribute": {
+        "color": 1.0,
+        "cleanliness": 1.0,
+        "material": 1.0
+      },
+      "model_version": "molmo2"
+    },
+    "post_state": {
+      "crop_ref": "<HISTORICAL_PROJECT_ROOT>/runs/p06_probe/crop_cutting_board.png",
+      "camera_id": "video.robot0_eye_in_hand"
+    },
+    "signals": {
+      "done": true,
+      "environment_kind": "molmo2_attribute",
+      "provider": "molmo2",
+      "answered_keys": [
+        "cleanliness",
+        "color",
+        "material"
+      ],
+      "unknown_keys": [],
+      "raw_answers": {
+        "color": "brown",
+        "cleanliness": "clean",
+        "material": "wood"
+      },
+      "confidence_source": "candidate_set_match",
+      "latency_ms": 4892.793491482735,
+      "warnings": [
+        "vqa mode: the model reports no calibrated confidence; entity confidence is 0.0 and means 'unavailable'"
+      ]
+    },
+    "trace": [
+      {
+        "stage": "molmo2_attribute_vqa",
+        "camera_id": "video.robot0_eye_in_hand",
+        "attribute_keys": [
+          "color",
+          "cleanliness",
+          "material"
+        ],
+        "answered": 3
+      }
+    ],
+    "error_code": null,
+    "error_message": null,
+    "infrastructure_error": false,
+    "deferred": false
+  },
+  "verification": {
+    "verdict": "passed",
+    "reason": "每个请求属性有合法值或显式unknown",
+    "verifier_key": "verify_classify_object_attributes",
+    "independent": false,
+    "criteria": {
+      "evidence": {
+        "对象裁剪": "<HISTORICAL_PROJECT_ROOT>/runs/p06_probe/crop_cutting_board.png",
+        "候选值": {
+          "color": [
+            "white",
+            "brown",
+            "green",
+            "black"
+          ],
+          "cleanliness": [
+            "dirty",
+            "clean"
+          ],
+          "material": [
+            "wood",
+            "plastic",
+            "metal"
+          ]
+        },
+        "属性结果": {
+          "color": "brown",
+          "cleanliness": "clean",
+          "material": "wood"
+        },
+        "逐项置信度": {
+          "color": 1.0,
+          "cleanliness": 1.0,
+          "material": 1.0
+        }
+      }
+    },
+    "metrics": {
+      "attribute_count": 3.0,
+      "unknown_count": 0.0
+    }
+  },
+  "events": [
+    {
+      "event_id": "f3b04af0-cc26-43e9-af2a-e4e9916df5b4",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:48.215Z",
+      "event_type": "invocation_requested",
+      "skill_ref": "P06",
+      "data": {
+        "mode": "real"
+      }
+    },
+    {
+      "event_id": "7f52459f-7d5d-46ac-8283-5ab42440fda2",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:48.215Z",
+      "event_type": "contract_resolved",
+      "skill_ref": "P06@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "b8ce88d0-fa78-40a4-87c5-aba13fe4f224",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:48.216Z",
+      "event_type": "inputs_validated",
+      "skill_ref": "P06@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "3ea31de1-4bc3-46d1-b1b5-90b9623b8ee7",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:48.216Z",
+      "event_type": "preflight_started",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "guard_key": "default"
+      }
+    },
+    {
+      "event_id": "5e67caaf-e684-4cda-b125-19f2139a137b",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:48.216Z",
+      "event_type": "preflight_finished",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "passed": true,
+        "reason": "语义前置检查通过"
+      }
+    },
+    {
+      "event_id": "0bab9783-fb6b-4525-8398-e5e19a8c3666",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:48.218Z",
+      "event_type": "dependencies_resolved",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "order": []
+      }
+    },
+    {
+      "event_id": "35490bb8-ca1e-424a-bd8e-6dd044fa9390",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:48.218Z",
+      "event_type": "backend_prepare_started",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "backend_key": "classify_object_attributes"
+      }
+    },
+    {
+      "event_id": "570f9f3c-96e3-461e-a512-75435b60fde0",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:48.218Z",
+      "event_type": "command_prepared",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "backend_key": "classify_object_attributes",
+        "success_claimed": false
+      }
+    },
+    {
+      "event_id": "7070705c-b94c-475a-a02c-43e676b9d905",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:48.218Z",
+      "event_type": "environment_execution_started",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "environment_key": "molmo2_attribute"
+      }
+    },
+    {
+      "event_id": "3fd6f05f-f7fe-4c2b-b9c1-698b87009a15",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:53.114Z",
+      "event_type": "environment_execution_finished",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "environment_key": "molmo2_attribute",
+        "environment_executed": true
+      }
+    },
+    {
+      "event_id": "6f3ad817-35a9-48ca-9ad1-3669d5e8cbf8",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:53.115Z",
+      "event_type": "outputs_validated",
+      "skill_ref": "P06@2.2.0",
+      "data": {}
+    },
+    {
+      "event_id": "df127034-a9fa-4cc0-97b7-1666e7f8fb74",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:53.115Z",
+      "event_type": "verification_started",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "verifier_key": "verify_classify_object_attributes"
+      }
+    },
+    {
+      "event_id": "7c2d83de-553c-41b9-98ba-d150e247f399",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:53.115Z",
+      "event_type": "verification_finished",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "verdict": "passed",
+        "verifier_key": "verify_classify_object_attributes",
+        "independent": false
+      }
+    },
+    {
+      "event_id": "84689185-ac25-4fd6-8f55-3188d7ccca43",
+      "invocation_id": "1b9d522f-07ed-4d45-88c1-223dc72edfca",
+      "occurred_at": "2026-09-12T18:26:53.115Z",
+      "event_type": "invocation_finalized",
+      "skill_ref": "P06@2.2.0",
+      "data": {
+        "status": "unverified"
+      }
+    }
+  ],
+  "error_code": "verification_inconclusive",
+  "error_message": "每个请求属性有合法值或显式unknown"
+}
