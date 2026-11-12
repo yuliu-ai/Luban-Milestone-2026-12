@@ -13,6 +13,13 @@
 | 6.1 平台调用与耗时 | TC-601-B | `luban serve` + `scripts/milestone/platform_check.py latency` | `latency.md` |
 | 6.1 连续运行与异常 | TC-601-C | `scripts/milestone/platform_check.py soak / faults` | `soak.md`、`faults.md` |
 
+公开源码位于 [Luban-Milestone-2026-12](https://github.com/yuliu-ai/Luban-Milestone-2026-12)，使用独立仓库的 `main` 分支。先获取源码，再执行下方部署和测试命令：
+
+```bash
+git clone https://github.com/yuliu-ai/Luban-Milestone-2026-12.git
+cd Luban-Milestone-2026-12
+```
+
 ## 核心服务依赖安装
 
 使用Python 3.11，在仓库根目录执行以下命令。`requirements.txt`固定框架核心依赖，`requirement.txt`提供相同安装入口。模型权重与仿真后端按[环境安装与资源](installation.zh-CN.md)分别准备。
@@ -126,7 +133,7 @@ python scripts/milestone/recovery_check.py --output runs/recovery_four
 ### 开源匿名拉取（TC-107-B 第 3 项）
 
 ```bash
-bash scripts/milestone/deploy_check.sh https://gitee.com/<组织>/<仓库>.git /tmp/luban_deploy main
+bash scripts/milestone/deploy_check.sh https://github.com/yuliu-ai/Luban-Milestone-2026-12.git /tmp/luban_deploy main
 ```
 
 脚本禁用凭据提示后匿名克隆，执行 `uv sync --frozen`、离线最小入口、健康检查、核心单元测试和服务调用，输出 `deploy_result.json`。
@@ -185,7 +192,7 @@ python scripts/milestone/platform_check.py soak --url http://<平台地址> --se
 python scripts/milestone/platform_check.py faults --url http://<直连地址>:8765
 ```
 
-判据：`SR_call ≥ 95%`、平台接入增加耗时 P95 ≤ 1 s；连续运行期间进程不重启、成功率 ≥ 95%；空请求、非 JSON、未知字段、类型错误、超范围参数、超大请求体、畸形与有环任务图、未知路径均返回 4xx，且之后服务仍可正常调用。本次按已确认方案在同一Linux服务器建立两套独立源码目录及虚拟环境，分别记录部署结果。匿名拉取在发布仓库可访问后单独验证。
+判据：`SR_call ≥ 95%`、平台接入增加耗时 P95 ≤ 1 s；连续运行期间进程不重启、成功率 ≥ 95%；空请求、非 JSON、未知字段、类型错误、超范围参数、超大请求体、畸形与有环任务图、未知路径均返回 4xx，且之后服务仍可正常调用。本次按已确认方案在同一Linux服务器建立两套独立源码目录及虚拟环境，分别记录部署结果。公开GitHub仓库已在服务器匿名下载并安装原生环境，完整六环境复现正在执行。
 
 ### 通过HTTP执行已登记任务
 
@@ -259,11 +266,11 @@ python3.11 -m venv .venv-native
 
 G01的目标开口为78毫米，初始约70毫米，执行器与独立验证均检查张开方向。I06限定重力反方向抬升。A05采用MuJoCo旋转拨杆及被动双稳态档位，通过接触移动至目标档位，输入`speed_scale`控制速度比例。其余原生物理适配器来自本项目AtomicSkillSoftware64归档版本，依赖置于可选安装文件，框架核心不导入仿真器。
 
-75次批量结果使用Linux既有原生依赖环境运行当前源码。另新建Python 3.11独立环境，按requirements/atomic-native.txt安装后，M08、G01、G04、A05和T03五项代表调用全部通过。两节点匿名部署仍待Gitee发布后执行。macOS测试中T03实际接收6克，按原8克判据记录为失败，当前定量倾倒结果仅对已测Linux环境成立。
+75次批量结果使用Linux既有原生依赖环境运行当前源码。另新建Python 3.11独立环境，按requirements/atomic-native.txt安装后，M08、G01、G04、A05和T03五项代表调用全部通过。两套独立源码与虚拟环境部署已完成，公开仓库源码的完整复现另行记录。macOS测试中T03实际接收6克，按原8克判据记录为失败，当前定量倾倒结果仅对已测Linux环境成立。
 
 ### 完整32项统一入口
 
-原生环境按requirements/atomic-native.txt安装，RoboCasa环境按[环境安装与资源](installation.zh-CN.md)准备。感知服务需要Qwen3-VL-8B-Instruct、SAM3及Depth Anything V2 Metric Small的权重和对应模型运行环境。当前服务已在Linux既有模型环境验证，模型环境的一键安装仍待封装。
+原生环境按requirements/atomic-native.txt安装，RoboCasa环境按[环境安装与资源](installation.zh-CN.md)准备。感知服务需要Qwen3-VL-8B-Instruct、SAM3及Depth Anything V2 Metric Small的权重和对应模型运行环境。当前服务已在Linux既有模型环境验证，模型环境的一键安装由本文的bootstrap.py提供，完整隔离复现正在进行。
 
 启动三种感知服务。下面每条服务命令分别在一个终端执行，模型路径和解释器由部署环境填写。GPU编号按机器资源选择，本次验证使用物理GPU1。
 

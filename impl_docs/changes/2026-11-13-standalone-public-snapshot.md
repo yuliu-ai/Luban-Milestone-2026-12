@@ -9,11 +9,11 @@ Published the milestone delivery as a standalone repository under yuliu-ai, as r
 
 ## Files
 
-.github/workflow-templates/ci.yml, README.md, README.zh-CN.md and docs/development language pair.
+.github/workflow-templates/ci.yml, README.md, README.zh-CN.md, docs/development language pair, docs/milestone-2026-12.zh-CN.md, impl_docs/TODO.md and the milestone plan.
 
 ## Verification
 
-The preceding runtime snapshot passed1072 CPU tests without skips. This change only moves the CI template and updates its documentation. Markdown targets and applicable workflow references are checked before publication.
+The preceding runtime snapshot passed1072 CPU tests without skips. This change only moves the CI template and updates its documentation. The snapshot passed the Markdown check for378 pages. The server anonymously downloaded the new public repository, installed its native package, and passed unseen30 and all four recovery cases. HTTP stability and the GPU suites remain in progress. The detached supervisor and resource monitor have PPID1 and independent sessions, so local network loss does not stop the queue.
 
 ## Remaining Work
 
