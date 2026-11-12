@@ -51,7 +51,7 @@ curl --fail -H 'Content-Type: application/json' \
 python3 scripts/milestone/bootstrap.py --root /data/luban-eval
 ```
 
-部署程序逐阶段创建六套独立环境，分别用于原生技能、RoboCasa、VLABench、XR-1、OpenVLA及感知模型。依赖文件位于 `requirements/milestone-*.txt`，原生环境使用 `requirements/atomic-native-lock.txt`。模型版本的Torch与Transformers相互隔离。程序获取SDK、仿真资产和六项模型资源，打印阶段进度并保存安装日志，完成后生成 `/data/luban-eval/deployment.json`。仅准备CPU原生路径时可追加 `--profiles native`。完整新机器部署入口正在进行隔离验证。
+部署程序逐阶段创建六套独立环境，分别用于原生技能、RoboCasa、VLABench、XR-1、OpenVLA及感知模型。依赖文件位于 `requirements/milestone-*.txt`，原生环境使用 `requirements/atomic-native-lock.txt`。模型版本的Torch与Transformers相互隔离。程序获取SDK、仿真资产和六项模型资源，打印阶段进度并保存安装日志，完成后生成 `/data/luban-eval/deployment.json`。仅准备CPU原生路径时可追加 `--profiles native`。六环境部署与完整测试入口已通过下文所列Linux隔离复现。
 
 RoboCasa当前上游主分支的包版本为1.0.1，v1.0标签仍是1.0.0。部署采用主分支源码，robosuite采用v1.5.2。VLABench、SAM3与RRT仓库没有可用发布标签，下载入口分别使用main、main和develop。源码保留在部署目录的 `sdk/` 中，不会在测试时自动更新。模型来源固定为XiaomiRobotics的RoboCasa365与VLABench权重、VLABench的OpenVLA参考权重、Qwen3-VL-8B-Instruct、SAM3和Depth-Anything-V2-Metric-Indoor-Small-hf。
 
@@ -128,7 +128,7 @@ python scripts/milestone/recovery_check.py --output runs/recovery_four
 
 四类注入分别为目标真实位移25毫米、末端受200牛顿外力0.2仿真秒、RGB-D遮挡0.3仿真秒，以及幅值20毫米、频率3Hz、持续0.5仿真秒的执行目标抖动。注入前先完成稳定跟踪。恢复要求位置误差不超过4毫米、姿态误差不超过0.07弧度、末端速度不超过0.015米/秒，并持续稳定0.5仿真秒，且无外部机械臂碰撞。恢复耗时用单调时钟从实际注入开始测量，另检查扰动确实造成了超容差偏移或触发遮挡保持。
 
-当前Linux四类结果依次为1.71、7.05、1.36、1.93秒，均小于10秒。命令逐类输出进度，保存 `summary.json`、各类的 `physics/recovery.json`、物理轨迹和图像。旧 `fast_recovery.py` 与 `evals/disturbance.py` 中的滑落、运动受阻、通信丢包命令属于另一组用例。
+本轮公开源码Linux复现的四类结果依次为1.728、6.684、1.308、1.835秒，均小于10秒。命令逐类输出进度，保存 `summary.json`、各类的 `physics/recovery.json`、物理轨迹和图像。旧 `fast_recovery.py` 与 `evals/disturbance.py` 中的滑落、运动受阻、通信丢包命令属于另一组用例。
 
 ### 开源匿名拉取（TC-107-B 第 3 项）
 
@@ -142,7 +142,7 @@ bash scripts/milestone/deploy_check.sh https://github.com/yuliu-ai/Luban-Milesto
 
 采用VLABench比较Luban + XR-1与OpenVLA，固定50个回合。当前 [`vlabench50.json`](../configs/milestone/vlabench50.json) 包含官方第一轨道的46个书籍选择回合与4个水果选择回合，每回合200步。两个方法使用相同清单、初态和步数限制，程序按清单实际执行50个回合。
 
-指定复现集合的已有记录为Luban 50/50、OpenVLA 0/50。开发批次的60个回合则为Luban54成功、5失败、1仿真异常，OpenVLA1成功、59失败。对照权重为 [VLABench/openvla-lora](https://huggingface.co/VLABench/openvla-lora)，官方模型卡注明这版参考权重的成功率接近零。固定集合及该权重的结果不用于估计OpenVLA整体能力。原异常回合保留分类与日志，未混入正常失败。
+公开源码隔离复现中，Luban成功44/50（88%），OpenVLA成功0/50（0%），双方各50个回合完整，运行异常为0。对照权重为 [VLABench/openvla-lora](https://huggingface.co/VLABench/openvla-lora)，官方模型卡注明这版参考权重的成功率接近零。结果对应本文固定50回合及所用权重。
 
 在准备好VLABench SDK、资源、两个模型的推理服务和语言模型环境变量后，可执行以下命令。`--sdk-root`填写SDK所在目录。示例中XR-1服务在GPU1，两个相同OpenVLA服务分别在GPU2、GPU0，三个服务各5个回合worker，总计15个。模型权重由服务共享，Luban每个回合worker内部保留两个Agent分支。
 
@@ -192,7 +192,7 @@ python scripts/milestone/platform_check.py soak --url http://<平台地址> --se
 python scripts/milestone/platform_check.py faults --url http://<直连地址>:8765
 ```
 
-判据：`SR_call ≥ 95%`、平台接入增加耗时 P95 ≤ 1 s；连续运行期间进程不重启、成功率 ≥ 95%；空请求、非 JSON、未知字段、类型错误、超范围参数、超大请求体、畸形与有环任务图、未知路径均返回 4xx，且之后服务仍可正常调用。本次按已确认方案在同一Linux服务器建立两套独立源码目录及虚拟环境，分别记录部署结果。公开GitHub仓库已在服务器匿名下载并安装原生环境，完整六环境复现正在执行。
+判据：`SR_call ≥ 95%`、平台接入增加耗时 P95 ≤ 1 s；连续运行期间进程不重启、成功率 ≥ 95%；空请求、非 JSON、未知字段、类型错误、超范围参数、超大请求体、畸形与有环任务图、未知路径均返回 4xx，且之后服务仍可正常调用。本次按已确认方案在同一Linux服务器建立两套独立源码目录及虚拟环境，分别记录部署结果。公开GitHub仓库已在服务器匿名下载，两套六环境安装与全部六组复现均已通过。
 
 ### 通过HTTP执行已登记任务
 
@@ -270,7 +270,7 @@ G01的目标开口为78毫米，初始约70毫米，执行器与独立验证均�
 
 ### 完整32项统一入口
 
-原生环境按requirements/atomic-native.txt安装，RoboCasa环境按[环境安装与资源](installation.zh-CN.md)准备。感知服务需要Qwen3-VL-8B-Instruct、SAM3及Depth Anything V2 Metric Small的权重和对应模型运行环境。当前服务已在Linux既有模型环境验证，模型环境的一键安装由本文的bootstrap.py提供，完整隔离复现正在进行。
+原生环境按requirements/atomic-native.txt安装，RoboCasa环境按[环境安装与资源](installation.zh-CN.md)准备。感知服务需要Qwen3-VL-8B-Instruct、SAM3及Depth Anything V2 Metric Small的权重和对应模型运行环境。模型环境的一键安装由本文的bootstrap.py提供，三种服务已在新建隔离环境中完成加载和96次统一技能调用。
 
 启动三种感知服务。下面每条服务命令分别在一个终端执行，模型路径和解释器由部署环境填写。GPU编号按机器资源选择，本次验证使用物理GPU1。
 
@@ -303,7 +303,7 @@ P01采用Qwen3-VL定位与SAM3区域处理，P02在给定检测框条件下验�
 
 ### 已完成的两次独立部署和服务记录
 
-两套新源码目录及Python虚拟环境分别完成依赖安装、核心闭环、接口检查与真实物理恢复任务，每套5/5阶段通过。新建环境可按以下命令安装，`--venv`和`--output`分别使用未占用目录：
+两套独立源码目录各自完成六类环境安装，均未启用系统共享site-packages。安装复用已下载的SDK、模型权重、仿真资产和包缓存。第一套完成全部六组评测，第二套完成核心闭环、健康检查、真实物理恢复任务及五类模型或仿真环境导入检查。完整安装使用本文前面的bootstrap.py。仅执行原生核心部署验收时可用以下命令，`--venv`和`--output`分别使用未占用目录：
 
 ```bash
 python3.11 scripts/milestone/install.py \
@@ -311,7 +311,7 @@ python3.11 scripts/milestone/install.py \
   --output runs/independent-a
 ```
 
-真实物理配置通过 `--run-config physical=configs/runs/recovery_service.yaml` 登记。100次跨网络调用全部成功，往返耗时减去同次核心函数执行时长后的P95为0.506秒，最大值0.563秒，实测传输路径为SSH隧道。服务器本机连续运行3721.39秒，153/153次真实任务调用成功，期间无重启或连接失败。17项关键异常测试全部通过，注入后正常物理调用成功。此前服务器重启中断的测试保留原始失败记录，未计入这次完整测试。
+真实物理配置通过 `--run-config physical=configs/runs/recovery_service.yaml` 登记。100次跨网络调用全部成功，往返耗时减去同次核心函数执行时长后的P95为0.506秒，最大值0.563秒，实测传输路径为SSH隧道。本轮公开源码在服务器本机连续运行3706.04秒，153/153次真实任务调用成功，期间无重启或连接失败。17项关键异常测试全部通过，注入后正常物理调用成功。本轮本机100次调用也全部成功，本机接入额外耗时P95为0.005804秒。
 
 ```bash
 /data/luban-independent-a/venv/bin/luban serve --host 0.0.0.0 --port 8765 \

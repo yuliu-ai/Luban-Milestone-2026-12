@@ -5,20 +5,24 @@ Related plan: ../plans/2026-11-12-luban-milestone-release.md
 
 ## Changed
 
-Published the milestone delivery as a standalone repository under yuliu-ai, as requested. Runtime source, manifests and test commands are the reviewed milestone snapshot. GitHub rejected active workflow files because the existing OAuth authorization lacks workflow scope. Preserved the CI configuration under .github/workflow-templates rather than enabling Actions. Local/server validation remains available through scripts/ci.sh and scripts/milestone/run_suite.py.
+Published the milestone delivery in the new public yuliu-ai/Luban-Milestone-2026-12 repository. All onboarding commands and package URLs use its main branch. The old Luban repository default branch was not modified. The user accepted GitHub publication with Gitee push commands. The CI configuration is preserved as a template because the publishing OAuth authorization lacks workflow scope.
 
-Generic clone/install guides and package URLs now point to the standalone public main branch. Anonymous readers no longer receive instructions for the old private repository.
+Completed anonymous source acquisition, two independent six-environment installations, and all six public-source evaluation groups. Final Word forms use the actual complete results. Runtime behavior was frozen during the final reproduction.
 
 ## Files
 
-.github/workflow-templates/ci.yml, README.md, README.zh-CN.md, docs/development language pair, docs/milestone-2026-12.zh-CN.md, impl_docs/TODO.md the milestone plan, bilingual quickstart/access/new-machine guides, and pyproject.toml project URLs.
+README language pair, docs/milestone-2026-12.zh-CN.md, bilingual access/quickstart/new-machine/development guides, pyproject.toml project URLs, .github/workflow-templates/ci.yml, impl_docs/architecture/overview.md, impl_docs/TODO.md and the milestone plan.
 
 ## Verification
 
-The preceding runtime snapshot passed1072 CPU tests without skips. This change only moves the CI template and updates its documentation. The snapshot passed the Markdown check for378 pages. The server anonymously downloaded the new public repository, installed its native package, and passed unseen30 and all four recovery cases. The first six environments are installed with system-site-packages disabled. Public-source atomic32 passed96/96, including3/3 for each of the four replacement skills. RoboCasa100 is now running with five workers on each of GPUs0,1,2; VLABench50 follows. The second six-environment deployment completed all six profiles and all nine installation/function/import stages, with system-site-packages disabled. The public-source HTTP suite passed100/100 normal calls,17 fault cases and153/153 physical calls over3706.041383 seconds with zero restarts/unreachable events. Its local-loopback overhead P95 is0.005804 seconds; the earlier SSH network measurement remains separate. Public-source RoboCasa100 passed with43 baseline successes,53 Luban successes, zero error pairs and23.255814% relative gain over6966.170518 seconds. No non-cancellation branch exceptions were found. VLABench50 is now running. The detached supervisor and resource monitor have PPID1 and independent sessions, so local network loss does not stop the queue.
+The preceding runtime checks passed 1,072 CPU tests without skips, strict mypy for 216 source files, 40 configuration checks and skill catalog checks. The final documentation passed the 378-page Markdown target check, uv lock --check --offline and uv build. Final changes only update documentation and package URLs.
+
+Public-source atomic32 passed 96/96, including 3/3 for each replacement skill and three exact 8 g pours with zero spill. Unseen compositions passed 30/30. Four physical recovery cases took 1.728, 6.684, 1.308 and 1.835 seconds. RoboCasa100 completed with 43 baseline and 53 Luban successes, zero error pairs and 23.255814% relative gain. VLABench50 completed with 44 Luban and zero OpenVLA successes, no incomplete/error episodes, and no non-cancellation branch exceptions.
+
+Both six-environment installations disable system-site-packages. The second installation passed all six profiles and nine installation/function/import stages. Public-source HTTP tests passed 100/100 normal calls, 17 fault cases and 153/153 physical calls over 3706.041383 seconds with zero restarts or unreachable events. Local overhead P95 was 0.005804 seconds. The separate SSH network measurement was 0.506298 seconds.
+
+The detached server queue finished all six groups with exit code zero. Resource monitoring recorded peak CPU 18.75%, peak memory 56.14% and zero high-pressure samples. Owned model services closed after evaluation. Both eight-page milestone forms passed visual review, and the separate arXiv division document and deployment message were delivered.
 
 ## Remaining Work
 
-The standalone snapshot was rebuilt with uv build, producing the source distribution and wheel. A second detached six-environment installation queue is scheduled after the first installer. Its environments and source directory are separate, while downloaded resources are reused.
-
-Complete anonymous server reproduction and both server-owned queues. Provide Gitee push commands for the same standalone snapshot.
+None within the requested milestone delivery.
