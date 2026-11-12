@@ -193,12 +193,14 @@ RoboSynChallenge 在 10 类任务、1,000 个未过滤种子回合中完成 412 
 
 ## CPU 安装与首次运行
 
+本次12月里程碑测评请使用[完整部署与测试说明](docs/milestone-2026-12.zh-CN.md)，其中提供六环境一键部署，以及固定32项技能、RoboCasa100回合和VLABench50回合的测试入口。
+
 需要 Python **3.11**、[uv](https://docs.astral.sh/uv/getting-started/installation/)
-和仓库访问权限。已验证 Ubuntu 22.04.5。
+和Git。公开仓库支持匿名克隆，已验证Ubuntu 22.04.5。
 
 ```bash
-git clone --branch codex/private-readiness --single-branch https://github.com/Luban-Agents/Luban.git
-cd Luban
+git clone --branch main --single-branch https://github.com/yuliu-ai/Luban-Milestone-2026-12.git
+cd Luban-Milestone-2026-12
 uv sync --frozen --no-dev --python 3.11
 uv run --frozen --no-dev python -m luban.examples.offline
 uv run --frozen --no-dev luban run --config configs/runs/offline.yaml
@@ -225,9 +227,9 @@ REQUIRE_NO_SKIPS=1 bash scripts/ci.sh
 .venv/bin/python scripts/check_distribution.py
 ```
 
-[新机器指南](docs/new-machine.zh-CN.md)包含仓库认证、系统工具、预期输出，以及软件
+[新机器指南](docs/new-machine.zh-CN.md)包含匿名克隆、系统工具、预期输出，以及软件
 检查与真实仿真的区别。[CI配置模板](.github/workflow-templates/ci.yml)在全新 Ubuntu runner
-上执行，只具有仓库读取权限，不使用模型密钥或私有服务。
+上执行，只具有仓库读取权限，不使用模型密钥或私有服务。当前仓库保留该模板，默认未启用GitHub Actions，可在本机执行scripts/ci.sh。
 
 ## GPU 仿真与策略运行
 

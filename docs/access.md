@@ -2,23 +2,16 @@
 
 # Access and editing
 
-The repository is `Luban-Agents/Luban`; the default branch is `codex/private-readiness`.
-The organization owner manages access. Invitees accept the invitation while signed
-in to the invited GitHub account. Read permits browsing, cloning and editing a
-local copy; pushing or inviting others requires additional permissions.
+The public repository is `yuliu-ai/Luban-Milestone-2026-12`, with `main` as its default branch. Browsing and cloning require no GitHub account. Pushing changes requires write permission from the repository owner.
 
 ```bash
-gh auth login --hostname github.com --git-protocol https
-gh auth setup-git --hostname github.com
-git clone --branch codex/private-readiness --single-branch https://github.com/Luban-Agents/Luban.git
-cd Luban
+git clone --branch main --single-branch https://github.com/yuliu-ai/Luban-Milestone-2026-12.git
+cd Luban-Milestone-2026-12
 uv sync --frozen --no-dev --python 3.11
 uv run --frozen --no-dev python -m luban.examples.offline
 ```
 
-Use existing credentials. Never put a token in a URL, YAML or documentation.
-If GitHub returns `Repository not found`, check the account in `gh auth status`
-and whether its invitation has been accepted.
+When publishing changes, use your existing credential manager. Keep tokens out of URLs, YAML and documentation.
 
 | Edit goal | Entry |
 | --- | --- |

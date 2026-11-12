@@ -189,12 +189,14 @@ The separate [complete atomic-skill evaluator](https://github.com/yuliu-ai/atomi
 
 ## Install and run on CPU
 
+For the December milestone suites, follow the [full deployment and evaluation guide](docs/milestone-2026-12.zh-CN.md). It prepares the six environments and runs the fixed32, RoboCasa100 and VLABench50 suites.
+
 Prerequisites: Python **3.11**, [uv](https://docs.astral.sh/uv/getting-started/installation/)
-and repository access. The tested host is Ubuntu 22.04.5.
+and Git. The public repository supports anonymous cloning. The tested host is Ubuntu 22.04.5.
 
 ```bash
-git clone --branch codex/private-readiness --single-branch https://github.com/Luban-Agents/Luban.git
-cd Luban
+git clone --branch main --single-branch https://github.com/yuliu-ai/Luban-Milestone-2026-12.git
+cd Luban-Milestone-2026-12
 uv sync --frozen --no-dev --python 3.11
 uv run --frozen --no-dev python -m luban.examples.offline
 uv run --frozen --no-dev luban run --config configs/runs/offline.yaml
@@ -222,7 +224,7 @@ REQUIRE_NO_SKIPS=1 bash scripts/ci.sh
 .venv/bin/python scripts/check_distribution.py
 ```
 
-[New-machine instructions](docs/new-machine.md) cover repository authentication,
+[New-machine instructions](docs/new-machine.md) cover anonymous cloning,
 prerequisites, expected outputs and the difference between software checks and a
 real simulation. The [CI workflow template](.github/workflow-templates/ci.yml) uses a fresh Ubuntu
 runner, read-only repository permissions and no private service credentials. This milestone repository keeps it as a template because the publishing authorization does not include workflow updates; run scripts/ci.sh for validation.

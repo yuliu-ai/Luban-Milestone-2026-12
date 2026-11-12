@@ -2,18 +2,13 @@
 
 # 快速开始
 
-安装 Python 3.11、Git 和 uv。如果 clone 需要认证，使用已有 HTTPS 凭据管理器，或先配置 GitHub CLI：
-
-```bash
-gh auth login --hostname github.com --git-protocol https
-gh auth setup-git --hostname github.com
-```
+安装Python 3.11、Git和uv。公开里程碑仓库支持匿名克隆。
 
 获取代码并安装：
 
 ```bash
-git clone --branch codex/private-readiness --single-branch https://github.com/Luban-Agents/Luban.git
-cd Luban
+git clone --branch main --single-branch https://github.com/yuliu-ai/Luban-Milestone-2026-12.git
+cd Luban-Milestone-2026-12
 uv sync --frozen --no-dev --python 3.11
 uv run --frozen --no-dev luban --help
 uv run --frozen --no-dev python -m luban.examples.offline

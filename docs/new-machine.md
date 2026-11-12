@@ -9,19 +9,12 @@ The separate real-simulation procedure follows at the end.
 
 ## 1. Access and prerequisites
 
-Use an account that has access to `Luban-Agents/Luban`. Authenticate Git
-with your existing GitHub CLI/credential manager or registered SSH key; do not put
-tokens in clone URLs, scripts or YAML. For GitHub CLI users:
+Clone the public milestone repository anonymously:
 
 ```bash
-gh auth status
-gh repo clone Luban-Agents/Luban -- --branch codex/private-readiness --single-branch
-cd Luban
+git clone --branch main --single-branch https://github.com/yuliu-ai/Luban-Milestone-2026-12.git
+cd Luban-Milestone-2026-12
 ```
-
-Alternatively use the HTTPS clone command in the root README. Without access,
-GitHub may show `Repository not found` for a private repo. Check your active account.
-The repository must remain Private; there is no need to change visibility.
 
 Install Git, Python 3.11 and [uv](https://docs.astral.sh/uv/getting-started/installation/).
 `uv` can obtain Python 3.11 if it is absent. On Ubuntu, video checks require
@@ -35,8 +28,8 @@ ffmpeg -version
 ffprobe -version
 ```
 
-Validated local stack: Ubuntu 22.04.5, Python 3.11.16, uv 0.12.18. The CI workflow
-pins the same Python/uv versions and does not restore a pre-existing dependency cache.
+Validated local stack: Ubuntu 22.04.5, Python 3.11.16, uv 0.12.18. The CI template
+pins the same Python/uv versions. Run scripts/ci.sh locally; this repository does not enable GitHub Actions by default.
 No shared environment is needed. Windows/macOS execution is not acceptance-tested.
 
 ## 2. First output

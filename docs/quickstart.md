@@ -2,19 +2,13 @@
 
 # Quickstart
 
-Install Python 3.11, Git and uv. If cloning requires authentication, use your
-existing HTTPS credential manager or configure your GitHub CLI account first:
-
-```bash
-gh auth login --hostname github.com --git-protocol https
-gh auth setup-git --hostname github.com
-```
+Install Python 3.11, Git and uv. The public milestone repository supports anonymous cloning.
 
 Then clone and install:
 
 ```bash
-git clone --branch codex/private-readiness --single-branch https://github.com/Luban-Agents/Luban.git
-cd Luban
+git clone --branch main --single-branch https://github.com/yuliu-ai/Luban-Milestone-2026-12.git
+cd Luban-Milestone-2026-12
 uv sync --frozen --no-dev --python 3.11
 uv run --frozen --no-dev luban --help
 uv run --frozen --no-dev python -m luban.examples.offline

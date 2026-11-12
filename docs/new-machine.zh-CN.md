@@ -7,17 +7,12 @@
 
 ## 1. 访问与前提
 
-使用获授权的 GitHub 账号，以已有 CLI、凭据管理器或登记的 SSH key 认证。
-不要把 token 放入 URL、脚本或 YAML。GitHub CLI 示例：
+匿名克隆公开里程碑仓库：
 
 ```bash
-gh auth status
-gh repo clone Luban-Agents/Luban -- --branch codex/private-readiness --single-branch
-cd Luban
+git clone --branch main --single-branch https://github.com/yuliu-ai/Luban-Milestone-2026-12.git
+cd Luban-Milestone-2026-12
 ```
-
-也可使用首页 HTTPS clone 命令。私密仓库显示 `Repository not found` 时，检查当前账号与邀请。
-无需改变仓库可见性。
 
 安装 Git、Python 3.11、[uv](https://docs.astral.sh/uv/getting-started/installation/)。
 缺少解释器时 uv 可获取 Python 3.11。视频检查需要 FFmpeg／ffprobe 和 libx264。
@@ -31,7 +26,7 @@ ffmpeg -version
 ffprobe -version
 ```
 
-已验证 Ubuntu 22.04.5、Python 3.11.16、uv 0.12.18。CI 固定相同版本，不恢复旧依赖缓存。
+已验证 Ubuntu 22.04.5、Python 3.11.16、uv 0.12.18。CI模板固定相同版本，仓库默认未启用GitHub Actions，可在本机执行scripts/ci.sh。
 不要求共享环境；Windows／macOS 未完成同等验收。
 
 ## 2. 第一个输出

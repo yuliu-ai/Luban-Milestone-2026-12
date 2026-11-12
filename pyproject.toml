@@ -26,9 +26,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Luban-Agents/Luban"
-Repository = "https://github.com/Luban-Agents/Luban"
-Issues = "https://github.com/Luban-Agents/Luban/issues"
+Homepage = "https://github.com/yuliu-ai/Luban-Milestone-2026-12"
+Repository = "https://github.com/yuliu-ai/Luban-Milestone-2026-12"
+Issues = "https://github.com/yuliu-ai/Luban-Milestone-2026-12/issues"
 
 [project.optional-dependencies]
 chemistry_bench = [

@@ -2,21 +2,16 @@
 
 # 访问与编辑
 
-仓库为 `Luban-Agents/Luban`，默认分支 `codex/private-readiness`。
-组织所有者管理访问。邀请接收者须登录受邀账号并接受邀请。
-Read 允许网页查看、clone 和编辑自己的本地副本；不能 push 或邀请别人。
+公开仓库为 `yuliu-ai/Luban-Milestone-2026-12`，默认分支为 `main`。网页查看与克隆无需GitHub账号，推送修改需要仓库所有者授予写入权限。
 
 ```bash
-gh auth login --hostname github.com --git-protocol https
-gh auth setup-git --hostname github.com
-git clone --branch codex/private-readiness --single-branch https://github.com/Luban-Agents/Luban.git
-cd Luban
+git clone --branch main --single-branch https://github.com/yuliu-ai/Luban-Milestone-2026-12.git
+cd Luban-Milestone-2026-12
 uv sync --frozen --no-dev --python 3.11
 uv run --frozen --no-dev python -m luban.examples.offline
 ```
 
-使用已有凭据，不把 token 写入 URL、YAML 或文档。出现 `Repository not found`，
-先检查 `gh auth status` 的账号和邀请接受状态。
+推送修改时使用已有凭据管理器，不把token写入URL、YAML或文档。
 
 | 修改目标 | 入口 |
 | --- | --- |
