@@ -1,6 +1,6 @@
 # Tasks
 
-- [x] `DONE` 固定表9-13送测发布：独立公开仓库已发布，原子技能96/96、组合30/30、四类恢复均小于10秒。RoboCasa基座43/100、Luban53/100，相对增益23.26%。新版VLABench为Luban46/50、OpenVLA12/50，双方完整且无异常回合。两套六环境部署和HTTP检查均通过，两份8页测评Word、arXiv中文分工及部署测试说明已交付。首页新增从服务器连接到全套运行及结果查看的新手操作指南（[计划](plans/2026-11-12-luban-milestone-release.md)）。
+- [x] `DONE` 固定表9-13送测发布：独立公开仓库已发布，原子技能96/96、组合30/30、四类恢复均小于10秒。RoboCasa基座43/100、Luban53/100，相对增益23.26%。新版VLABench为Luban46/50、OpenVLA12/50，双方完整且无异常回合。两套六环境部署和HTTP检查均通过，两份8页测评Word、arXiv中文分工及部署测试说明已交付。首页新增从服务器连接到全套运行及结果查看的分步测试方案（[计划](plans/2026-11-12-luban-milestone-release.md)）。
 
 - [ ] `IN_PROGRESS` Configurable one- and two-branch execution and a simulator-informed single-agent evaluation ([plan](plans/2026-11-10-single-branch-simulator-info.md)).
 

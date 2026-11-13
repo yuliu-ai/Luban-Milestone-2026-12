@@ -14,27 +14,27 @@
   <!-- project-links:end -->
 </div>
 
-## 新手从这里开始：在新服务器上运行完整里程碑测试
+## 完整测试方案
 
-第一次打开本仓库，请按本节从第1步执行到第7步，即可完成本次12月里程碑的安装、测试和结果查看。后面的CPU安装、软件验证和单回合GPU示例分别用于其他用途，不是本节的前置步骤。本节覆盖32项技能、30项组合、四类扰动、RoboCasa100个配对回合、VLABench50个配对回合和HTTP服务测试。首页其他历史实验的复现入口另见对应文档。
+本方案用于在新服务器上部署并执行2026年12月里程碑测试，按以下七个步骤依次完成环境准备、安装部署、测试执行和结果记录。测试范围包括32项技能、30项组合、四类扰动、RoboCasa100个配对回合、VLABench50个配对回合和HTTP服务测试。后文的CPU安装、软件验证和单回合GPU示例可按需查阅，完整测试直接采用本节流程。首页其他历史实验的复现入口见对应文档。
 
-### 第1步：准备服务器和两个账号授权
+### 步骤一：准备测试环境与访问授权
 
-请向服务器管理员确认：服务器运行Ubuntu 22.04，已安装可兼容CUDA 13.0的NVIDIA驱动，有三张可供本次测试使用的GPU，以及可存放模型、仿真资产和结果的数据盘。当前完整入口需要三个GPU编号，第一张指定GPU运行感知模型时需要约40 GB空闲显存。已有部署使用48 GB级显存GPU，普通24 GB显存卡无法直接照搬这套完整配置。数据盘请预留数百GB，当前没有测定统一的最低磁盘、CPU或内存配置。
+测试前由服务器管理员确认：服务器运行Ubuntu 22.04，已安装可兼容CUDA 13.0的NVIDIA驱动，有三张可供本次测试使用的GPU，以及可存放模型、仿真资产和结果的数据盘。当前完整入口需要三个GPU编号，第一张指定GPU运行感知模型时需要约40 GB空闲显存。已有部署使用48 GB级显存GPU，普通24 GB显存卡无法直接照搬这套完整配置。数据盘请预留数百GB，当前没有测定统一的最低磁盘、CPU或内存配置。
 
-你需要管理员提供服务器登录地址、用户名和登录方式，并允许安装下文的系统依赖。另需准备两个授权：在[Hugging Face的SAM3模型页](https://huggingface.co/facebook/sam3)获得权重访问权限，然后在[Access Tokens页面](https://huggingface.co/settings/tokens)创建可读取该模型的令牌；向语言模型服务提供方获取API地址、模型名称和API密钥，模型需支持图像输入及本入口使用的OpenAI兼容接口。模型API调用会使用该服务的额度。
+测试人员需取得服务器登录地址、用户名和登录方式，并具备安装下述系统依赖的权限。另需准备两个授权：在[Hugging Face的SAM3模型页](https://huggingface.co/facebook/sam3)获得权重访问权限，然后在[Access Tokens页面](https://huggingface.co/settings/tokens)创建可读取该模型的令牌；向语言模型服务提供方获取API地址、模型名称和API密钥，模型需支持图像输入及本入口使用的OpenAI兼容接口。模型API调用会使用该服务的额度。
 
-### 第2步：打开终端并连接服务器
+### 步骤二：连接测试服务器
 
-Windows打开PowerShell或Windows Terminal，macOS打开终端。如果管理员提供了网页终端，也可以直接打开它。通过SSH连接时，把下例的用户名、地址和端口换成管理员给你的实际值，不要原样复制中文占位内容：
+Windows打开PowerShell或Windows Terminal，macOS打开终端。也可使用管理员提供的网页终端。通过SSH连接时，把下例的用户名、地址和端口替换为管理员提供的实际值：
 
 ```bash
 ssh -p 端口号 用户名@服务器地址
 ```
 
-按提示使用管理员提供的登录方式。登录后，以下命令全部在服务器终端执行，不是在GitHub网页或你自己电脑的本地终端执行。GitHub页面负责展示和下载代码，测试进程运行在服务器上。
+按提示使用管理员提供的登录方式。登录后，以下命令全部在服务器终端执行，本地终端仅用于建立SSH连接。GitHub页面负责展示和下载代码，测试进程运行在服务器上。
 
-### 第3步：安装系统工具并下载代码
+### 步骤三：安装系统依赖并获取测试代码
 
 下面按Ubuntu服务器编写。逐段复制命令，等待上一段结束后再执行下一段。`sudo`如提示输入密码，填写服务器账号密码，输入时不显示字符是正常现象。没有`sudo`权限时，请管理员执行前两条安装命令。
 
@@ -50,7 +50,7 @@ nvidia-smi
 tmux new -s luban-reproduce
 ```
 
-选择一个可写、容量足够的工作目录。下面默认使用账号主目录下的`luban-work`。如果主目录位于较小的系统盘，请把第一行的`"$HOME/luban-work"`替换为管理员提供的数据盘目录，例如`"/data/luban-work"`。后续命令会自动使用你设置的目录。
+选择一个可写、容量足够的工作目录。下例使用账号主目录下的`luban-work`。如果主目录位于较小的系统盘，请把第一行的`"$HOME/luban-work"`替换为管理员提供的数据盘目录，例如`"/data/luban-work"`。后续命令沿用该目录变量。
 
 ```bash
 export LUBAN_WORK_ROOT="$HOME/luban-work"
@@ -62,9 +62,9 @@ cd Luban-Milestone-2026-12
 
 公开仓库可以直接下载，无须GitHub账号或令牌。后续保持在这个仓库目录，并使用当前后台会话。
 
-### 第4步：安装全部环境和下载模型
+### 步骤四：部署运行环境与模型资源
 
-先输入第1步准备的Hugging Face令牌。执行第一行后，终端会等待你粘贴令牌，按回车继续，令牌不会显示在屏幕上。
+输入步骤一准备的Hugging Face令牌。执行第一行后，在终端粘贴令牌并按回车继续，输入内容不回显。
 
 ```bash
 read -rsp "Hugging Face token: " HF_TOKEN
@@ -73,11 +73,11 @@ export HF_TOKEN
 python3 scripts/milestone/bootstrap.py --root "$LUBAN_WORK_ROOT/deployment"
 ```
 
-程序自动准备所需Python版本、六套独立环境、SDK、仿真资产和模型权重。你不需要逐个创建环境，也不需要另外运行`pip install -r requirements.txt`。首次下载时间取决于网络和资源体积，请等待终端出现`[部署汇总] 6/6`。只有六个阶段全部安装成功后，才进入下一步。下载权限错误通常需要回到SAM3页面确认授权，其他安装错误可查看`$LUBAN_WORK_ROOT/deployment/installation/`中的对应日志。
+程序自动准备所需Python版本、六套独立环境、SDK、仿真资产和模型权重。部署脚本统一完成环境创建和依赖安装。首次下载时间取决于网络和资源体积，请等待终端出现`[部署汇总] 6/6`。只有六个阶段全部安装成功后，才进入下一步。下载权限错误通常需要回到SAM3页面确认授权，其他安装错误可查看`$LUBAN_WORK_ROOT/deployment/installation/`中的对应日志。
 
 环境安装在`deployment/envs/`，模型放在`deployment/models/`，SDK放在`deployment/sdk/`。程序生成的`deployment/deployment.json`记录这些实际路径，下一步直接使用它。旧服务器已有资源的迁移方法，以及上游源码版本选择，见[资源复用说明](docs/milestone-2026-12.zh-CN.md#全套环境部署和一键测试)。此前独立环境部署复用了已下载资源，首次从网络下载还取决于上游资源的可用性。
 
-### 第5步：填写语言模型接口并开始测试
+### 步骤五：配置模型接口并执行全套测试
 
 在同一个终端中执行下面的命令。第一行会等待输入API密钥，输入后按回车。把后两行中的中文内容替换为服务提供方给你的实际API地址和模型名称，保留英文双引号。这里填写语言模型的名称，XR-1和OpenVLA等本地模型已经由部署程序准备。
 
@@ -89,7 +89,7 @@ export LUBAN_API_BASE_URL="填写实际API地址"
 export LUBAN_LLM_MODEL="填写实际模型名称"
 ```
 
-启动全套测试。`--gpus 0,1,2`表示使用服务器上的GPU 0、1、2，可以换成管理员分配的三个编号。`--workers-per-gpu 5`沿用每卡五个worker的批量运行设置。
+启动全套测试。`--gpus 0,1,2`表示使用服务器上的GPU 0、1、2，应按管理员分配的三个编号填写。`--workers-per-gpu 5`沿用每卡五个worker的批量运行设置。
 
 ```bash
 "$LUBAN_WORK_ROOT/deployment/envs/native/bin/python" scripts/milestone/run_suite.py \
@@ -100,9 +100,9 @@ export LUBAN_LLM_MODEL="填写实际模型名称"
 
 程序会自动启动当前阶段需要的模型服务，依次完成六组测试，输出逐项进度，并在阶段结束后关闭自己启动的服务。RoboCasa是双方各100个回合，VLABench是双方各50个回合。服务测试包含3700秒的稳定性运行，该阶段超过一小时属于正常执行过程。
 
-### 第6步：断开电脑后继续运行，回来查看进度
+### 步骤六：保持后台运行并查看测试进度
 
-需要离开时，按`Ctrl+B`，松开后按`D`，退出后台会话的显示界面。不要按`Ctrl+C`，它会中断当前程序。此时你可以关闭本地终端，服务器保持开机联网即可继续运行。下次重新登录服务器后，执行：
+需要离开时，按`Ctrl+B`，松开后按`D`，退出后台会话的显示界面。不要按`Ctrl+C`，它会中断当前程序。分离会话后可关闭本地终端，服务器保持开机联网即可继续运行。下次重新登录服务器后，执行：
 
 ```bash
 tmux attach -t luban-reproduce
@@ -110,7 +110,7 @@ tmux attach -t luban-reproduce
 
 这会返回原来的安装或测试终端，之前配置的目录和API环境变量也保留在该会话中。如果服务器重启，后台会话和运行中的任务会结束。
 
-### 第7步：找到本次结果
+### 步骤七：查看测试结果并按需补跑
 
 测试结束后，终端显示`[全部汇总]`，列出通过的组数及结果目录。`6/6`表示六组均通过入口中的判据。运行期间的汇总只包含已经结束的组，最终还需确认六组全部执行完成。
 
@@ -121,7 +121,7 @@ tmux attach -t luban-reproduce
   "$LUBAN_WORK_ROOT/results/milestone_01/summary.json"
 ```
 
-所有新结果都在你设置的工作目录下的`results/milestone_01/`中。`atomic32/results/`保存96次技能调用，`unseen30/results/`保存组合结果，`recovery/results/`保存扰动恢复记录，`robocasa100/results/summary.json`记录RoboCasa统计，`vlabench50/results/summary.json`和`vlabench50/collected/`保存VLABench统计与对比，`service/`保存接口与稳定性记录。各组还有运行日志和轨迹。GitHub首页已有数字属于历史运行，本次结果以这些新生成的文件为准。
+所有新结果保存在工作目录下的`results/milestone_01/`中。`atomic32/results/`保存96次技能调用，`unseen30/results/`保存组合结果，`recovery/results/`保存扰动恢复记录，`robocasa100/results/summary.json`记录RoboCasa统计，`vlabench50/results/summary.json`和`vlabench50/collected/`保存VLABench统计与对比，`service/`保存接口与稳定性记录。各组还有运行日志和轨迹。GitHub首页已有数字属于历史运行，本次结果以这些新生成的文件为准。
 
 如果一组报错，先查看该组的`run.log`、`services/`或顶层汇总中的错误。处理后可只补跑这一组。例如补跑VLABench：
 

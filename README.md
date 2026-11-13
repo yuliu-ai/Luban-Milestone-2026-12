@@ -14,9 +14,9 @@
   <!-- project-links:end -->
 </div>
 
-## First visit: run the milestone evaluation on a new server
+## Complete test procedure
 
-New users can follow the complete [中文新手操作指南](README.zh-CN.md#新手从这里开始在新服务器上运行完整里程碑测试) at the top of the Chinese README. It explains where to enter commands, how to connect to a Linux server, prepare permissions, download this repository, install all six environments, configure the model API, run the six milestone suites, keep the job running after disconnecting, and locate results. The CPU installation, developer verification and single-episode GPU sections below serve separate purposes and are not prerequisites for that workflow.
+Follow the seven steps in the [完整测试方案](README.zh-CN.md#完整测试方案) to prepare a Linux server and access permissions, obtain the source code, deploy all six environments and model resources, configure the model API, execute the six milestone suites, monitor background execution, and inspect results. The CPU installation, developer verification and single-episode GPU sections below serve separate purposes and are not prerequisites for this procedure.
 
 ## Abstract
 
