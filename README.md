@@ -14,6 +14,10 @@
   <!-- project-links:end -->
 </div>
 
+## First visit: run the milestone evaluation on a new server
+
+New users can follow the complete [中文新手操作指南](README.zh-CN.md#新手从这里开始在新服务器上运行完整里程碑测试) at the top of the Chinese README. It explains where to enter commands, how to connect to a Linux server, prepare permissions, download this repository, install all six environments, configure the model API, run the six milestone suites, keep the job running after disconnecting, and locate results. The CPU installation, developer verification and single-episode GPU sections below serve separate purposes and are not prerequisites for that workflow.
+
 ## Abstract
 
 Luban connects planning, atomic-skill execution, independent verification, memory and experience updates through a task graph. Instructions, multiview observations and available skills define each node's goal, dependencies and completion criteria. Policies produce actions, and a verifier checks subsequent observations and environment feedback. Retries, replanning within a node and selective branch revision preserve progress after local failures. Multiscale memory retains observations, spatial relations and completed-node facts. Experience is evaluated through paired trials and retrieved by task, skill and embodiment conditions, supporting kitchen, tabletop, dual-arm, laboratory and navigation tasks.
