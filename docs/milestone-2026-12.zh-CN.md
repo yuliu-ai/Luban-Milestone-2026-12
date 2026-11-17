@@ -2,7 +2,9 @@
 
 按首页的[完整测试方案](../README.zh-CN.md#完整测试方案)依次完成环境准备、服务器连接、安装部署、模型接口配置、全套测试和结果记录。本页提供资源复用、单项命令和判定细节。
 
-[Luban独立测试方案](milestone-forms/Luban里程碑测试方案_独立版.docx)补充50个VLABench回合目标、32项技能执行细则、零样本组合记录表和本次拟执行的四类扰动。新拟视觉遮挡、抓取滑落、动态障碍和多机丢包样本尚待接入并测量，不能将下文既有M12四类恢复结果直接视为新样本结果。
+[Luban独立测试方案](milestone-forms/Luban里程碑测试方案_独立版.docx)补充50个VLABench回合目标、32项技能执行细则、零样本组合记录表和 12 个扰动样本。新增的 `scene_recovery` 组随默认全套运行，也可通过 `--suite scene_recovery` 单独复测。按下文实时画面步骤启动服务后，在测试终端设置 `LUBAN_LIVE_VIEW_URL`。
+
+2026 年 11 月 17 日开启实时画面后连续复测 12 个样本，全部在 10 秒内恢复，最长 5.039 秒。使用 PyBullet Panda 仿真及确定性控制器，通信场景使用同一主机上的双进程 UDP 链路，稳定窗口为连续 0.5 秒墙钟时间。每例的参数、时间和状态可查阅[逐样本汇总](milestone-forms/scene-recovery-20261117.json)和[逐步轨迹](milestone-forms/scene-recovery-traces-20261117.tar.gz)。
 
 本文对应《具有环境任务泛化能力的通才智能体 2026 年 12 月里程碑第三方测试方案》中由本仓库承担的四项指标：1.2（原子技能库）、1.7（Planner-Verifier-Actor 通才框架）、1.8（对标 OpenVLA）和 6.1（开源发布与平台集成）。每项给出被测对象、判定口径、执行命令和结果文件。命令均在仓库根目录执行。
 
@@ -72,7 +74,7 @@ RoboCasa当前上游主分支的包版本为1.0.1，v1.0标签仍是1.0.0。部�
 
 程序依次执行固定32项技能的96次调用、30项新组合、四类扰动、RoboCasa100个配对回合、VLABench50个配对回合及HTTP服务测试。每组会输出逐项进度和最终判定，顶层 `summary.json` 汇总各组结果。模型服务按阶段启动与关闭，只清理该命令创建的进程。长程对比每卡5个回合worker，VLABench三个策略服务各5个worker，Luban回合内部使用两个Agent分支。资源监测记录CPU、负载及可用内存。
 
-可通过 `--suite recovery`、`--suite robocasa100` 等选项单独执行一组，也可一次指定多组。允许值为 `atomic32 unseen30 recovery robocasa100 vlabench50 service`。输出目录每次使用新路径。服务组执行100次调用、异常用例及3700秒稳定性测试。默认全套测试的服务调用来自本机，跨机器接入耗时应另外指定真实调用地址。
+可通过 `--suite recovery`、`--suite robocasa100` 等选项单独执行一组，也可一次指定多组。允许值为 `atomic32 unseen30 recovery scene_recovery robocasa100 vlabench50 service`。输出目录每次使用新路径。服务组执行100次调用、异常用例及3700秒稳定性测试。默认全套测试的服务调用来自本机，跨机器接入耗时应另外指定真实调用地址。
 
 ### 实时画面
 

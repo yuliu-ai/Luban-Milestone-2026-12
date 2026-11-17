@@ -161,11 +161,18 @@ def execute_suite(name, config, args, env, output):
             env,
             output / "run.log",
         )
-    if name == "recovery":
+    if name in {"recovery", "scene_recovery"}:
         return run(
             [
                 py["native"],
-                str(SCRIPTS / "recovery_check.py"),
+                str(
+                    SCRIPTS
+                    / (
+                        "scene_recovery.py"
+                        if name == "scene_recovery"
+                        else "recovery_check.py"
+                    )
+                ),
                 "--output",
                 str(output / "results"),
             ],
@@ -367,6 +374,7 @@ def main():
             "atomic32",
             "unseen30",
             "recovery",
+            "scene_recovery",
             "robocasa100",
             "vlabench50",
             "service",
@@ -375,6 +383,7 @@ def main():
             "atomic32",
             "unseen30",
             "recovery",
+            "scene_recovery",
             "robocasa100",
             "vlabench50",
             "service",

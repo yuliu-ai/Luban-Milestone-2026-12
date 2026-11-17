@@ -16,7 +16,7 @@
 
 ## 完整测试方案
 
-本方案用于在新服务器上部署并执行2026年12月里程碑测试，按以下七个步骤依次完成环境准备、安装部署、测试执行和结果记录。测试范围包括32项技能、30项组合、四类扰动、RoboCasa100个配对回合、VLABench50个配对回合和HTTP服务测试。入口中的扰动为既有M12四类用例，新增的遮挡、抓取滑落、动态障碍和多机丢包样本尚待接入和实测，具体方案见[Luban独立测试方案](docs/milestone-forms/Luban里程碑测试方案_独立版.docx)。后文的CPU安装、软件验证和单回合GPU示例可按需查阅。首页其他历史实验的复现入口见对应文档。
+本方案用于在新服务器上部署并执行2026年12月里程碑测试，按以下七个步骤依次完成环境准备、安装部署、测试执行和结果记录。测试范围包括32项技能、30项组合、四类扰动、RoboCasa100个配对回合、VLABench50个配对回合和HTTP服务测试。入口包含末尾汇总表四类扰动及本次新增的遮挡、抓取滑落、动态障碍和 UDP 丢包测试。具体方案见[Luban独立测试方案](docs/milestone-forms/Luban里程碑测试方案_独立版.docx)。后文的CPU安装、软件验证和单回合GPU示例可按需查阅。首页其他历史实验的复现入口见对应文档。
 
 ### 步骤一：准备测试环境与访问授权
 
@@ -98,7 +98,7 @@ export LUBAN_LLM_MODEL="填写实际模型名称"
   --gpus 0,1,2 --workers-per-gpu 5
 ```
 
-程序会自动启动当前阶段需要的模型服务，依次完成六组测试，输出逐项进度，并在阶段结束后关闭自己启动的服务。RoboCasa是双方各100个回合，VLABench是双方各50个回合。服务测试包含3700秒的稳定性运行，该阶段超过一小时属于正常执行过程。
+程序会自动启动当前阶段需要的模型服务，依次完成七组测试，输出逐项进度，并在阶段结束后关闭自己启动的服务。RoboCasa是双方各100个回合，VLABench是双方各50个回合。服务测试包含3700秒的稳定性运行，该阶段超过一小时属于正常执行过程。
 
 ### 步骤六：保持后台运行并查看测试进度
 
@@ -112,7 +112,7 @@ tmux attach -t luban-reproduce
 
 ### 步骤七：查看测试结果并按需补跑
 
-测试结束后，终端显示`[全部汇总]`，列出通过的组数及结果目录。`6/6`表示六组均通过入口中的判据。运行期间的汇总只包含已经结束的组，最终还需确认六组全部执行完成。
+测试结束后，终端显示`[全部汇总]`，列出通过的组数及结果目录。`7/7`表示七组均通过入口中的判据。运行期间的汇总只包含已经结束的组，最终还需确认七组全部执行完成。
 
 在原后台会话中查看汇总：
 
@@ -121,7 +121,7 @@ tmux attach -t luban-reproduce
   "$LUBAN_WORK_ROOT/results/milestone_01/summary.json"
 ```
 
-所有新结果保存在工作目录下的`results/milestone_01/`中。`atomic32/results/`保存96次技能调用，`unseen30/results/`保存组合结果，`recovery/results/`保存扰动恢复记录，`robocasa100/results/summary.json`记录RoboCasa统计，`vlabench50/results/summary.json`和`vlabench50/collected/`保存VLABench统计与对比，`service/`保存接口与稳定性记录。各组还有运行日志和轨迹。GitHub首页已有数字属于历史运行，本次结果以这些新生成的文件为准。
+所有新结果保存在工作目录下的`results/milestone_01/`中。`atomic32/results/`保存96次技能调用，`unseen30/results/`保存组合结果，`recovery/results/`保存原汇总表扰动记录，`scene_recovery/results/`保存本次四类场景的 12 个恢复时间及轨迹，`robocasa100/results/summary.json`记录RoboCasa统计，`vlabench50/results/summary.json`和`vlabench50/collected/`保存VLABench统计与对比，`service/`保存接口与稳定性记录。各组还有运行日志和轨迹。GitHub首页已有数字属于历史运行，本次结果以这些新生成的文件为准。
 
 如果一组报错，先查看该组的`run.log`、`services/`或顶层汇总中的错误。处理后可只补跑这一组。例如补跑VLABench：
 
@@ -132,7 +132,7 @@ tmux attach -t luban-reproduce
   --gpus 0,1,2 --workers-per-gpu 5 --suite vlabench50
 ```
 
-完整入口要求每次使用新的输出目录，已有目录报错时换成`milestone_02`或其他新名称。不要删除旧结果来重跑。单组名称可使用`atomic32`、`unseen30`、`recovery`、`robocasa100`、`vlabench50`或`service`。当前全套入口没有自动断点续跑功能。需要两次独立部署、跨机器服务接入或逐项判定细节时，再查看[里程碑详细说明](docs/milestone-2026-12.zh-CN.md)。
+完整入口要求每次使用新的输出目录，已有目录报错时换成`milestone_02`或其他新名称。不要删除旧结果来重跑。单组名称可使用`atomic32`、`unseen30`、`recovery`、`scene_recovery`、`robocasa100`、`vlabench50`或`service`。当前全套入口没有自动断点续跑功能。需要两次独立部署、跨机器服务接入或逐项判定细节时，再查看[里程碑详细说明](docs/milestone-2026-12.zh-CN.md)。
 
 ### 实时查看仿真画面
 
@@ -394,7 +394,7 @@ CLI exit 0 不等于任务成功，还要检查 `result.json`。
 
 ## 里程碑送测与平台集成
 
-2026年12月里程碑指标1.2、1.7、1.8和6.1的判定口径、部署命令与结果文件见[里程碑送测说明](docs/milestone-2026-12.zh-CN.md)。`scripts/milestone/bootstrap.py`准备六套独立环境及资源，`run_suite.py`依次执行固定技能、组合、四类扰动、RoboCasa100回合、VLABench50回合和HTTP服务检查。长程对比使用Luban双分支与XR-1，四类扰动采用M12视觉伺服物理配置。`luban serve`提供核心回合、任务图校验及已登记任务执行接口。
+2026年12月里程碑指标1.2、1.7、1.8和6.1的判定口径、部署命令与结果文件见[里程碑送测说明](docs/milestone-2026-12.zh-CN.md)。`scripts/milestone/bootstrap.py`准备六套独立环境及资源，`run_suite.py`依次执行固定技能、组合、四类扰动、RoboCasa100回合、VLABench50回合和HTTP服务检查。长程对比使用Luban双分支与XR-1，原汇总表四类扰动采用M12视觉伺服物理配置，新增场景使用确定性反馈控制器。`luban serve`提供核心回合、任务图校验及已登记任务执行接口。
 
 ## 配置与输出
 

@@ -1,0 +1,122 @@
+[
+  {
+    "sample": "D1-01",
+    "kind": "occlusion",
+    "parameter": 0.3,
+    "t0": 398215.574282974,
+    "t1": 398216.537658214,
+    "effect": true,
+    "seconds": 0.9633752399822697,
+    "passed": true
+  },
+  {
+    "sample": "D1-02",
+    "kind": "occlusion",
+    "parameter": 0.6,
+    "t0": 398218.37452618,
+    "t1": 398219.631311418,
+    "effect": true,
+    "seconds": 1.2567852380452678,
+    "passed": true
+  },
+  {
+    "sample": "D1-03",
+    "kind": "occlusion",
+    "parameter": 1.0,
+    "t0": 398221.476374896,
+    "t1": 398223.082783488,
+    "effect": true,
+    "seconds": 1.606408591964282,
+    "passed": true
+  },
+  {
+    "sample": "D2-01",
+    "kind": "slip",
+    "parameter": 0.35,
+    "t0": 398224.30086348,
+    "t1": 398225.924670688,
+    "effect": true,
+    "seconds": 1.623807207972277,
+    "passed": true
+  },
+  {
+    "sample": "D2-02",
+    "kind": "slip",
+    "parameter": 0.45,
+    "t0": 398227.146244988,
+    "t1": 398228.769280369,
+    "effect": true,
+    "seconds": 1.62303538096603,
+    "passed": true
+  },
+  {
+    "sample": "D2-03",
+    "kind": "slip",
+    "parameter": 0.55,
+    "t0": 398229.992289237,
+    "t1": 398231.619266149,
+    "effect": true,
+    "seconds": 1.6269769120262936,
+    "passed": true
+  },
+  {
+    "sample": "D3-01",
+    "kind": "obstacle",
+    "parameter": 0.4,
+    "t0": 398232.392809594,
+    "t1": 398236.637665909,
+    "effect": true,
+    "seconds": 4.244856315024663,
+    "passed": true
+  },
+  {
+    "sample": "D3-02",
+    "kind": "obstacle",
+    "parameter": 0.8,
+    "t0": 398237.413105707,
+    "t1": 398242.112919312,
+    "effect": true,
+    "seconds": 4.69981360505335,
+    "passed": true
+  },
+  {
+    "sample": "D3-03",
+    "kind": "obstacle",
+    "parameter": 1.2,
+    "t0": 398242.915573462,
+    "t1": 398247.954858893,
+    "effect": true,
+    "seconds": 5.039285430975724,
+    "passed": true
+  },
+  {
+    "sample": "D4-01",
+    "kind": "udp_loss",
+    "parameter": 0.3,
+    "t0": 398249.112212331,
+    "t1": 398250.015494294,
+    "effect": true,
+    "seconds": 0.9032819630228914,
+    "passed": true
+  },
+  {
+    "sample": "D4-02",
+    "kind": "udp_loss",
+    "parameter": 0.6,
+    "t0": 398250.908660469,
+    "t1": 398252.080318191,
+    "effect": true,
+    "seconds": 1.171657721977681,
+    "passed": true
+  },
+  {
+    "sample": "D4-03",
+    "kind": "udp_loss",
+    "parameter": 1.0,
+    "t0": 398252.972447825,
+    "t1": 398254.617244493,
+    "effect": true,
+    "seconds": 1.6447966679697856,
+    "passed": true
+  }
+]

@@ -1,5 +1,7 @@
 # Tasks
 
+- [x] 完成四类场景恢复实测，开启实时画面，12/12 个样本均小于 10 秒，最大值 5.039 秒。见[变更记录](changes/2026-11-17-scene-recovery.md)。
+
 - [x] `DONE` 仿真实时画面输出与浏览器查看，已在 VLABench 场景验证（[计划](plans/2026-11-17-live-simulation-view.md)）。
 
 - [x] `DONE` 固定表9-13送测发布：独立公开仓库已发布，原子技能96/96、组合30/30、四类恢复均小于10秒。RoboCasa基座43/100、Luban53/100，相对增益23.26%。新版VLABench为Luban46/50、OpenVLA12/50，双方完整且无异常回合。两套六环境部署和HTTP检查均通过，两份8页测评Word、arXiv中文分工及部署测试说明已交付。首页新增从服务器连接到全套运行及结果查看的分步测试方案（[计划](plans/2026-11-12-luban-milestone-release.md)）。
