@@ -13,6 +13,7 @@ from luban.agent_core.agents.base import BaseAgent
 from luban.environments.base import Environment
 from luban.exceptions import ActionRangeError
 from luban.observability.base import EpisodeRecorder
+from luban.observability.live_view import LiveViewPublisher
 from luban.pipelines.base import Pipeline
 from luban.runtimes.base import Runtime
 from luban.serialization import (
@@ -348,6 +349,7 @@ class SyncRuntime(Runtime):
         recorder_active = False
         agent_episode_started = False
         interrupted: KeyboardInterrupt | None = None
+        live_view = LiveViewPublisher.from_environment(task, session_id)
 
         try:
             if self.observability is not None:
@@ -364,6 +366,8 @@ class SyncRuntime(Runtime):
 
             agent.reset(session_id)
             state["observation"] = environment.reset(task)
+            if live_view is not None:
+                live_view.publish(state["observation"], 0)
             if recorder_active and self.observability is not None:
                 try:
                     self.observability.record_observation(
@@ -468,6 +472,8 @@ class SyncRuntime(Runtime):
                 last_output = pipeline.step(agent, environment, state)
                 state["pipeline_iterations"] += 1
                 state["step"] = state["pipeline_iterations"]
+                if live_view is not None:
+                    live_view.publish(state.get("observation"), state["step"])
                 task_progress = float(state.get("task_progress", 0.0))
                 if not math.isfinite(task_progress):
                     raise ValueError("Runtime state.task_progress must be finite")
@@ -768,6 +774,8 @@ class SyncRuntime(Runtime):
                         f"{type(recorder_error).__name__}: {recorder_error}"
                     )
         finally:
+            if live_view is not None:
+                live_view.close()
             if close_resources:
                 try:
                     pipeline.close()

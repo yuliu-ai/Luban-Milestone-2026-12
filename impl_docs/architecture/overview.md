@@ -42,6 +42,13 @@ XR-1 action backend continues to consume its normal observation and instruction.
   no planning policy. Runtime owns mutable state with task/observation/step.
 - `observability`: optional compact trace, FFmpeg video and artifact manifest;
   recorder errors do not replace episode outcome.
+
+The optional local live-view service receives simulator observations from the
+synchronous runtime and the VLABench OpenVLA actor entry. A bounded background
+sender publishes sampled camera frames without waiting for a browser. It is
+enabled only by `LUBAN_LIVE_VIEW_URL`; otherwise the normal execution path is
+unchanged. The service listens on loopback and presents independent task and
+branch streams. Standalone fixtures without image observations are not covered.
 - `evals/benchmarks`: task enumeration and aggregation, independent of core.
 
 ## Contracts and lifecycle

@@ -40,6 +40,8 @@ def main():
         quaternion_to_euler,
     )
 
+    from luban.observability.live_view import LiveViewPublisher
+
     args.output.mkdir(parents=True, exist_ok=False)
     track_path = sdk / "VLABench/configs/evaluation/tracks/track_1_in_distribution.json"
     episode = json.loads(track_path.read_text())[args.task][args.episode]
@@ -63,6 +65,9 @@ def main():
         "error": None,
     }
     env = None
+    live_view = LiveViewPublisher.from_environment(
+        {"name": args.task, "episode_index": args.episode}, "OpenVLA"
+    )
     started = time.monotonic()
     try:
         with urllib.request.urlopen(args.url + "/health", timeout=10) as response:
@@ -80,6 +85,8 @@ def main():
             run_mode="eval",
         )
         observation = env.get_observation(require_pcd=False)
+        if live_view is not None:
+            live_view.publish({"image.base": observation["rgb"][0]}, 0)
         instruction = env.task.get_instruction()
         (args.output / "input.json").write_text(
             json.dumps(
@@ -102,6 +109,8 @@ def main():
         with (args.output / "steps.jsonl").open("w") as trace:
             for step in range(step_limit):
                 observation = env.get_observation(require_pcd=False)
+                if live_view is not None:
+                    live_view.publish({"image.base": observation["rgb"][0]}, step)
                 ee = np.asarray(observation["ee_state"], dtype=float)
                 current = np.concatenate(
                     [ee[:3], quaternion_to_euler(ee[3:7]), [ee[7]]]
@@ -194,6 +203,8 @@ def main():
             termination_reason="infrastructure_error",
         )
     finally:
+        if live_view is not None:
+            live_view.close()
         if env is not None:
             physics = env.physics
             env.close()

@@ -16,7 +16,7 @@
 
 ## Complete test procedure
 
-Follow the seven steps in the [完整测试方案](README.zh-CN.md#完整测试方案) to prepare a Linux server and access permissions, obtain the source code, deploy all six environments and model resources, configure the model API, execute the six milestone suites, monitor background execution, and inspect results. The CPU installation, developer verification and single-episode GPU sections below serve separate purposes and are not prerequisites for this procedure.
+Follow the seven steps in the [完整测试方案](README.zh-CN.md#完整测试方案) to prepare a Linux server and access permissions, obtain the source code, deploy all six environments and model resources, configure the model API, execute the six milestone suites, monitor background execution, and inspect results. The same section explains optional live simulation viewing through a browser and SSH forwarding. The CPU installation, developer verification and single-episode GPU sections below serve separate purposes and are not prerequisites for this procedure.
 
 ## Abstract
 
