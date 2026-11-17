@@ -16,6 +16,8 @@
 
 ## Complete test procedure
 
+Download the [complete Chinese test manual](docs/milestone-forms/Luban里程碑全指标测试操作手册.docx) for indicators 1.2, 1.7, 1.8 and 6.1.
+
 Follow the seven steps in the [完整测试方案](README.zh-CN.md#完整测试方案) to prepare a Linux server and access permissions, obtain the source code, deploy all six environments and model resources, configure the model API, execute the seven milestone suites, monitor background execution, and inspect results. The same section explains optional live simulation viewing through a browser and SSH forwarding. The CPU installation, developer verification and single-episode GPU sections below serve separate purposes and are not prerequisites for this procedure.
 
 For the four recovery scenes, see the [HD recording procedure](docs/milestone-forms/Luban四类扰动恢复测试操作手册.docx) and [twelve recorded episodes](docs/evidence/scene-recovery-hd/videos).
