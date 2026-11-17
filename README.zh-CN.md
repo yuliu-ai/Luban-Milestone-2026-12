@@ -24,7 +24,7 @@
 
 测试前由服务器管理员确认：服务器运行Ubuntu 22.04，已安装可兼容CUDA 13.0的NVIDIA驱动，有三张可供本次测试使用的GPU，以及可存放模型、仿真资产和结果的数据盘。当前完整入口需要三个GPU编号，第一张指定GPU运行感知模型时需要约40 GB空闲显存。已有部署使用48 GB级显存GPU，普通24 GB显存卡无法直接照搬这套完整配置。数据盘请预留数百GB，当前没有测定统一的最低磁盘、CPU或内存配置。
 
-测试人员需取得服务器登录地址、用户名和登录方式，并具备安装下述系统依赖的权限。另需准备两个授权：在[Hugging Face的SAM3模型页](https://huggingface.co/facebook/sam3)获得权重访问权限，然后在[Access Tokens页面](https://huggingface.co/settings/tokens)创建可读取该模型的令牌；向语言模型服务提供方获取API地址、模型名称和API密钥，模型需支持图像输入及本入口使用的OpenAI兼容接口。模型API调用会使用该服务的额度。
+测试人员需取得服务器登录地址、用户名和登录方式，并具备工作目录写权限。另需准备两个授权：在[Hugging Face的SAM3模型页](https://huggingface.co/facebook/sam3)获得权重访问权限，然后在[Access Tokens页面](https://huggingface.co/settings/tokens)创建可读取该模型的令牌；向语言模型服务提供方获取API地址、模型名称和API密钥，模型需支持图像输入及本入口使用的OpenAI兼容接口。模型API调用会使用该服务的额度。
 
 ### 步骤二：连接测试服务器
 
@@ -36,17 +36,17 @@ ssh -p 端口号 用户名@服务器地址
 
 按提示使用管理员提供的登录方式。登录后，以下命令全部在服务器终端执行，本地终端仅用于建立SSH连接。GitHub页面负责展示和下载代码，测试进程运行在服务器上。
 
-### 步骤三：安装系统依赖并获取测试代码
+### 步骤三：检查运行环境并获取测试代码
 
-下面按Ubuntu服务器编写。逐段复制命令，等待上一段结束后再执行下一段。`sudo`如提示输入密码，填写服务器账号密码，输入时不显示字符是正常现象。没有`sudo`权限时，请管理员执行前两条安装命令。
+使用已配好 NVIDIA 驱动、EGL、OpenGL 和 OSMesa 的 Ubuntu 服务器。在普通账户下执行：
 
 ```bash
-sudo apt-get update
-sudo apt-get install -y git python3 python3-venv libegl1 libosmesa6 libgl1 libglib2.0-0 ffmpeg tmux
+command -v git python3 tmux ffmpeg ffprobe
+python3 -m venv --help >/dev/null
 nvidia-smi
 ```
 
-`nvidia-smi`应显示GPU和驱动信息。若命令不存在或无法连接驱动，先请管理员配置驱动。接下来创建后台会话，安装和测试都留在这个会话里运行：
+预期显示各工具的位置和 GPU 列表。若缺少命令行工具，可在已有 Conda 中执行 `conda create -n luban-tools -c conda-forge python=3.11 git tmux ffmpeg uv`，再执行 `conda activate luban-tools`。接下来创建后台会话，安装和测试都留在这个会话里运行：
 
 ```bash
 tmux new -s luban-reproduce
