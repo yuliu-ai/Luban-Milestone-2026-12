@@ -15,6 +15,7 @@ class BulletManipulationPlant:
     def __init__(
         self,
         *,
+        egl_observer: bool = False,
         bimanual: bool = False,
         object_between_fingers: bool = False,
         push_setup: bool = False,
@@ -31,6 +32,16 @@ class BulletManipulationPlant:
         ).BulletClient
 
         self.sim = BulletClient(connection_mode=bullet.DIRECT)
+        if egl_observer:
+            from importlib.util import find_spec
+
+            plugin = find_spec("eglRenderer")
+            if (
+                plugin is None
+                or self.sim.loadPlugin(plugin.origin, "_eglRendererPlugin") < 0
+            ):
+                self.sim.disconnect()
+                raise RuntimeError("HD observation requires PyBullet EGL")
         self.asset_root = Path(pybullet_data.getDataPath())
         self.urdf = self.asset_root / "franka_panda/panda.urdf"
         self.sim.setAdditionalSearchPath(str(self.asset_root))

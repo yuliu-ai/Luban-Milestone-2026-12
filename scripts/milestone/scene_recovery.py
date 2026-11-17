@@ -3,12 +3,14 @@
 import argparse
 import json
 import multiprocessing as mp
+import shutil
 import socket
+import subprocess
 import time
 from pathlib import Path
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 
 from luban.backends.skills.visual_servo import VisualServoSkillBackend
 from luban.environments.atomic.native.bullet_manipulation_plant import (
@@ -36,11 +38,63 @@ def coordinator(sock):
         sock.sendto(json.dumps([seq, measured_x + 0.002]).encode(), addr)
 
 
-def measure(kind, parameter, label, path):
+def save_video(frames, output):
+    # Repeat the last observed camera frame on a 25 Hz presentation clock.
+    width, height = frames[0][1].size
+    cmd = [
+        "ffmpeg",
+        "-loglevel",
+        "error",
+        "-f",
+        "rawvideo",
+        "-pix_fmt",
+        "rgb24",
+        "-s",
+        f"{width}x{height}",
+        "-r",
+        "25",
+        "-i",
+        "pipe:0",
+        "-c:v",
+        "libx264",
+        "-pix_fmt",
+        "yuv420p",
+        "-movflags",
+        "+faststart",
+        str(output),
+    ]
+    with subprocess.Popen(cmd, stdin=subprocess.PIPE) as proc:
+        for index, (stamp, image, caption) in enumerate(frames):
+            end = frames[index + 1][0] if index + 1 < len(frames) else stamp + 0.04
+            count = round((end - frames[0][0]) * 25) - round(
+                (stamp - frames[0][0]) * 25
+            )
+            canvas = Image.new("RGB", (width, height))
+            canvas.paste(image)
+            ImageDraw.Draw(canvas).rectangle(
+                (0, height - 38, width, height), fill="black"
+            )
+            ImageDraw.Draw(canvas).multiline_text(
+                (5, height - 35), caption, fill="white"
+            )
+            proc.stdin.write(canvas.tobytes() * max(count, 0))
+        proc.stdin.close()
+        if proc.wait():
+            raise RuntimeError(f"Video encoding failed: {output}")
+
+
+def measure(kind, parameter, label, path, video=None, hd=False):
     plant = BulletManipulationPlant(
         object_between_fingers=True, markers=kind == "occlusion"
     )
     sim = plant.sim
+    observer = (
+        BulletManipulationPlant(
+            object_between_fingers=True, markers=kind == "occlusion", egl_observer=True
+        )
+        if hd
+        else None
+    )
     start = np.array(plant.ee_pose("right"))
     obj = plant.object_body
     floor_z = plant.current["object"]["pose"][2]
@@ -48,6 +102,9 @@ def measure(kind, parameter, label, path):
         (start[:3] + [0.33, -0.32, 0.23]).tolist(), start[:3], [0, 0, 1]
     )
     proj = sim.computeProjectionMatrixFOV(44, 1, 0.02, 2)
+    wide_projection = (
+        sim.computeProjectionMatrixFOV(42, 16 / 9, 0.02, 2) if hd else None
+    )
     camera = SceneRGBDIO(plant, path) if kind == "occlusion" else None
     servo = VisualServoSkillBackend()
     publisher = LiveViewPublisher.from_environment({"name": label}, kind)
@@ -62,6 +119,12 @@ def measure(kind, parameter, label, path):
         )
         mid = start[:3] + [0.08, 0, 0]
         obstacle = sim.createMultiBody(0, shape, vis, mid + [0, 0.22, 0])
+        if observer:
+            screen = observer.sim
+            mesh = screen.createVisualShape(
+                screen.GEOM_BOX, halfExtents=half, rgbaColor=[1, 0.35, 0, 1]
+            )
+            shown_obstacle = screen.createMultiBody(0, -1, mesh, mid + [0, 0.22, 0])
     process = None
     if kind == "udp_loss":
         server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -83,6 +146,7 @@ def measure(kind, parameter, label, path):
     phase = "grip"
     goal = start.copy()
     ok = False
+    frames = []
     last_active = False
     picture = None
     observed = None
@@ -254,7 +318,36 @@ def measure(kind, parameter, label, path):
                     ready = (ready or tick) if ok else None
                 plant.set_ee_target("right", goal.tolist())
                 plant.step()
-                if kind != "occlusion" and step % 6 == 0:
+                new_frame = hd or step % 6 == 0 or active != last_active
+                if observer is not None:
+                    screen = observer.sim
+                    arm = plant.bodies["right"]
+                    for index, joint in enumerate(
+                        sim.getJointStates(arm, list(range(sim.getNumJoints(arm))))
+                    ):
+                        screen.resetJointState(
+                            observer.bodies["right"], index, joint[0]
+                        )
+                    screen.resetBasePositionAndOrientation(
+                        observer.object_body, *sim.getBasePositionAndOrientation(obj)
+                    )
+                    if kind == "obstacle":
+                        screen.resetBasePositionAndOrientation(
+                            shown_obstacle, *sim.getBasePositionAndOrientation(obstacle)
+                        )
+                    picture = np.asarray(
+                        screen.getCameraImage(
+                            1280,
+                            720,
+                            view,
+                            wide_projection,
+                            renderer=screen.ER_BULLET_HARDWARE_OPENGL,
+                            flags=screen.ER_NO_SEGMENTATION_MASK,
+                        )[2]
+                    )[:, :, :3]
+                    if kind == "occlusion" and active:
+                        picture = np.zeros_like(picture)
+                elif kind != "occlusion" and new_frame:
                     picture = np.array(
                         sim.getCameraImage(
                             320, 320, view, proj, renderer=sim.ER_TINY_RENDERER
@@ -268,6 +361,31 @@ def measure(kind, parameter, label, path):
                         t1 = tick
                 else:
                     stable = None
+                if (
+                    video is not None
+                    and picture is not None
+                    and (new_frame or t1 or (kind == "occlusion" and step % 4 == 0))
+                ):
+                    state_text = (
+                        "BASELINE"
+                        if t0 is None
+                        else "INJECTION"
+                        if active
+                        else "RECOVERED"
+                        if t1
+                        else "RECOVERING"
+                    )
+                    detail = (
+                        f"ACK={int(acknowledged)} drops={drops}"
+                        if kind == "udp_loss"
+                        else f"blocked={int(hit)} contacts={hits}"
+                        if kind == "obstacle"
+                        else f"{phase} grip={int(bilateral)}"
+                        if kind == "slip"
+                        else act["mode"]
+                    )
+                    caption = f"{label} {state_text} step={step}   {tick - begun:.2f}s\n{detail}"
+                    frames.append((tick, Image.fromarray(picture).copy(), caption))
                 trace.write(
                     json.dumps(
                         dict(
@@ -296,9 +414,16 @@ def measure(kind, parameter, label, path):
             client.close()
         if publisher:
             publisher.close()
+        if observer:
+            observer.close()
         plant.close()
+    if video is not None:
+        save_video(frames, video)
     latency = t1 - t0 if t1 is not None else None
     return dict(
+        camera_fps=(len(frames) - 1) / (frames[-1][0] - frames[0][0])
+        if len(frames) > 1
+        else None,
         sample=label,
         kind=kind,
         parameter=parameter,
@@ -314,8 +439,21 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--kind", choices=CASES, action="append")
+    parser.add_argument(
+        "--record-video",
+        action="store_true",
+        help="Write H.264 MP4 per sample under videos/",
+    )
+    parser.add_argument(
+        "--hd", action="store_true", help="Render each control step at 1280x720 via EGL"
+    )
     args = parser.parse_args()
+    if args.record_video and shutil.which("ffmpeg") is None:
+        parser.error("--record-video requires ffmpeg on PATH")
     args.output.mkdir(parents=True, exist_ok=False)
+    videos = args.output / "videos"
+    if args.record_video:
+        videos.mkdir()
     rows = []
     for i, (kind, params) in enumerate(CASES.items(), 1):
         if args.kind and kind not in args.kind:
@@ -324,7 +462,10 @@ def main():
             label = f"D{i}-0{j}"
             path = args.output / label
             path.mkdir()
-            row = measure(kind, param, label, path)
+            video = videos / f"{label}.mp4" if args.record_video else None
+            row = measure(kind, param, label, path, video, args.hd)
+            if video is not None:
+                row["video"] = str(video.relative_to(args.output))
             rows.append(row)
             print(json.dumps(row), flush=True)
             (args.output / "summary.json").write_text(json.dumps(rows, indent=2))

@@ -192,3 +192,5 @@ The baseline PolicyOnlyPipeline supplies the environment's original task prompt 
 VLABench records predicted actions, joint commands and IK status before physics execution. On a physics exception it writes acceleration diagnostics and reraises the original error. This preserves simulator exceptions separately from normal unsuccessful policies.
 
 Registered HTTP runs return `service_function_seconds`, measured around `run_config` inside the service lock. Integration overhead uses request round-trip time minus that same function duration. The completed stability run uses a local caller and real M12 target-jump configuration, with 153 successful calls over 3706 seconds in the public-source reproduction. Network latency was measured separately through an SSH tunnel.
+
+The HD recovery fixture mirrors measured joint and body poses into a distinct EGL observation client. Its frames feed the live viewer and timestamp-based MP4 encoding. Browser clients consume length-prefixed JPEGs and report their canvas drawing rate.

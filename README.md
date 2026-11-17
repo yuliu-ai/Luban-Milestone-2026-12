@@ -18,6 +18,8 @@
 
 Follow the seven steps in the [完整测试方案](README.zh-CN.md#完整测试方案) to prepare a Linux server and access permissions, obtain the source code, deploy all six environments and model resources, configure the model API, execute the seven milestone suites, monitor background execution, and inspect results. The same section explains optional live simulation viewing through a browser and SSH forwarding. The CPU installation, developer verification and single-episode GPU sections below serve separate purposes and are not prerequisites for this procedure.
 
+For the four recovery scenes, see the [HD recording procedure](docs/milestone-forms/Luban四类扰动恢复测试操作手册.docx) and [twelve recorded episodes](docs/evidence/scene-recovery-hd/videos).
+
 ## Abstract
 
 Luban connects planning, atomic-skill execution, independent verification, memory and experience updates through a task graph. Instructions, multiview observations and available skills define each node's goal, dependencies and completion criteria. Policies produce actions, and a verifier checks subsequent observations and environment feedback. Retries, replanning within a node and selective branch revision preserve progress after local failures. Multiscale memory retains observations, spatial relations and completed-node facts. Experience is evaluated through paired trials and retrieved by task, skill and embodiment conditions, supporting kitchen, tabletop, dual-arm, laboratory and navigation tasks.
